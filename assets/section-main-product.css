@@ -2031,7 +2031,15 @@ a.product__text {
   color: #595959;
   line-height: 12px;
 }
-
+.min_msg {
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.33;
+  margin-top: 16px !important;
+}
+span.one_time_price {
+    text-decoration: line-through;
+}
 /* Mobile responsiveness - Keep same layout */
 @media screen and (max-width: 749px) {
   .fragrance-details__container {

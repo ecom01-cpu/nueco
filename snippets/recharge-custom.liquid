@@ -367,6 +367,7 @@
     // Function to switch to subscription
     function changeToSubscription() {
       console.log('🔀 Recharge Widget: Switching to subscription');
+      document.querySelector("span.one_time_price").style.display = "block";
       if (oneoffTrigger) oneoffTrigger.classList.remove('active');
       if (subscriptionTrigger) subscriptionTrigger.classList.add('active');
       
@@ -387,6 +388,7 @@
     // Function to switch to one-time purchase
     function changeToOneoff() {
       console.log('🔀 Recharge Widget: Switching to one-time purchase');
+      document.querySelector("span.one_time_price").style.display = "none";
       if (oneoffTrigger) oneoffTrigger.classList.add('active');
       if (subscriptionTrigger) subscriptionTrigger.classList.remove('active');
       

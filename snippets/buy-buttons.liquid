@@ -95,6 +95,7 @@
             <span class="button__price" data-price-regular="{{ product.selected_or_first_available_variant.price }}" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
               {{ product.selected_or_first_available_variant.price | money }}
             </span>
+            <span class="one_time_price">{{ product.selected_or_first_available_variant.price | money }}</span>
             {%- render 'loading-spinner' -%}
           </button>
           {%- if show_dynamic_checkout -%}
@@ -115,9 +116,11 @@
           {{ 'products.product.sold_out' | t }}
         </button>
       </div>
-    </div>
+    </div>    
   {%- endif -%}
-
+   {% if product.handle  == 'skin-filter' %}
+      <p class="min_msg">We recommend a minimum of 3 of consistent use to see results</p>
+    {% endif %}
   {%- if show_pickup_availability -%}
     {{ 'component-pickup-availability.css' | asset_url | stylesheet_tag }}
 
