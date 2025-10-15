@@ -1,0 +1,535 @@
+{% comment %}
+  Custom Recharge Subscription Widget
+  Renders subscription options for products with selling plans
+{% endcomment %}
+
+<style>
+/* Tooltip Container */
+.product-form__subscription-wrapper {
+  position: relative;
+}
+
+/* Tooltip Styles */
+.subscription-info-tooltip {
+  display: none;
+  position: absolute;
+  padding: 8px;
+  background: #F8F8F8;
+  border-radius: 4px;
+  z-index: 100;
+  max-width: 200px;
+}
+
+.subscription-info-tooltip p {
+  margin: 0;
+  font-size: 8px;
+  font-weight: 400;
+  line-height: 12px;
+  color: #595959;
+}
+
+/* Desktop positioning - right of subscription box */
+@media screen and (min-width: 750px) {
+  .subscription-info-tooltip {
+    bottom: 0;
+    left: calc(100% + 16px);
+    top: auto;
+    width: 100%;
+  }
+
+  /* Show on hover of info icon - using :has() for parent selection */
+  .product-form__subscription-wrapper:has(.subscription-info-icon:hover) .subscription-info-tooltip {
+    display: block;
+  }
+}
+
+/* Mobile positioning - above subscription box */
+@media screen and (max-width: 749px) {
+  .subscription-info-tooltip {
+    bottom: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    max-width: none;
+  }
+
+  /* Show/hide with active class on mobile */
+  .subscription-info-tooltip.active {
+    display: block;
+  }
+}
+
+/* Make info icon cursor pointer */
+.subscription-info-icon {
+  cursor: pointer;
+}
+</style>
+
+<p class="pdp-usp">{{ product.metafields.custom.usps   }}</p>
+
+{% if product.selling_plan_groups.size > 0 %}
+  {% assign current_variant = product.selected_or_first_available_variant %}
+  {% assign is_subscription_only = false %}
+  {% comment %} Check both boolean true and string "true" for the metafield {% endcomment %}
+  {% if product.requires_selling_plan %}
+    {% assign is_subscription_only = true %}
+  {% elsif product.metafields.custom.show_subscription_options_only == true %}
+    {% assign is_subscription_only = true %}
+  {% elsif product.metafields.custom.show_subscription_options_only == "true" %}
+    {% assign is_subscription_only = true %}
+  {% endif %}
+  
+  <div class="product-form__purchase-type">
+    <!-- One-time purchase option (hidden for subscription-only products) -->
+    {% unless is_subscription_only %}
+      <div class="product-form__oneoff-trigger" data-purchase-type="onetime">
+        <div class="product-form__oneoff-label">
+          <div>
+            <svg class="inactive-circle" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9" cy="8.99023" r="8" stroke="black"/>
+            </svg>
+            <svg class="active-circle" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9" cy="8.99023" r="8" stroke="black"/>
+              <circle cx="9" cy="8.99023" r="6" fill="#00953D"/>
+            </svg>
+          </div>
+          <p>One-time purchase</p>
+        </div>
+      </div>
+    {% endunless %}
+
+    <!-- Subscription option (active by default when subscription plans exist) -->
+    <div class="product-form__subscription-wrapper">
+      <!-- Tooltip - positioned differently on desktop/mobile -->
+      <div class="subscription-info-tooltip">
+        <p>{{ settings.product_subscription_info | default: "Receive your supplements every month on a rolling subscription. No minimum contract, cancel anytime." }}</p>
+      </div>
+
+      <div class="product-form__subscription active" data-purchase-type="subscription">
+      <div class="product-form__subscription-banner">
+        Subscribe & save
+      </div>
+      <div class="product-form__subscription-inner">
+        <div class="product-form__subscription-trigger">
+          <div class="product-form__subscription-label"> 
+            <div>
+              <svg class="inactive-circle" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="9" cy="8.99023" r="8" stroke="black"/>
+              </svg>
+              <svg class="active-circle" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="9" cy="8.99023" r="8" stroke="black"/>
+                <circle cx="9" cy="8.99023" r="6" fill="#00953D"/>
+              </svg>
+            </div>
+
+            <div class="product-form__subscription-select">
+              <p>Subscribe: </p>
+              {% if current_variant.selling_plan_allocations.size > 1 %}
+                <div class="subscription-frequency-toggle">
+                  <p class="subscription-frequency">
+                    {% assign first_plan_name = current_variant.selling_plan_allocations.first.selling_plan.name %}
+                    {% if first_plan_name == "30" %}
+                      Monthly Plan
+                    {% else %}
+                      Monthly Plands
+                    {% endif %}
+                  </p>
+                  <svg class="subscription-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.6665 5.99023L8.52047 9.54398C8.22088 9.80077 7.7788 9.80077 7.4792 9.54398L3.33317 5.99023" stroke="black"/>
+                  </svg>
+                </div>
+              {% elsif current_variant.selling_plan_allocations.size == 1 %}
+                <p class="subscription-frequency subscription-frequency--single">
+                  {% assign first_plan_name = current_variant.selling_plan_allocations.first.selling_plan.name %}
+                  {% if first_plan_name == "30" %}
+                    Monthly Plan
+                  {% else %}
+                  Monthly Plan
+                  {% endif %}
+                </p>
+              {% else %}
+                <p class="subscription-frequency">Select frequency</p>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="product-form__subscription-price">
+            {% if current_variant.selling_plan_allocations.size > 0 %}
+              {% assign first_allocation = current_variant.selling_plan_allocations.first %}
+              {% if first_allocation.compare_at_price %}
+                {% assign savings = first_allocation.compare_at_price | minus: first_allocation.price %}
+                {% assign savings_percentage = savings | times: 100.0 | divided_by: first_allocation.compare_at_price | round %}
+                <p class="subscription-savings">Savings {{ savings_percentage }}%</p>
+              {% endif %}
+            {% endif %}
+          </div>
+
+          <!-- Info icon at the end -->
+          <svg class="subscription-info-icon" width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="5.5" cy="6" r="5.25" stroke="black" stroke-opacity="0.19" stroke-width="0.5"/>
+            <rect x="5" y="4.5" width="1" height="5" fill="#C9C9C9"/>
+            <rect x="5" y="2.5" width="1" height="1" fill="#C9C9C9"/>
+          </svg>
+        </div>
+        
+        <div class="product-form__content">
+          <div class="product-form__frequencies">
+            {% for allocation in current_variant.selling_plan_allocations %}
+              {% assign selling_plan = allocation.selling_plan %}
+              {% assign display_name = selling_plan.name %}
+              {% if selling_plan.name == "30" %}
+                {% assign display_name = "Monthly Plan" %}
+              {% endif %}
+              <div class="product-form__frequency" 
+                   data-selling-plan-id="{{ selling_plan.id }}"
+                   data-price="{{ allocation.price | money }}"
+                   data-compare-at-price="{{ allocation.compare_at_price | money }}"
+                   data-plan-name="{{ display_name }}">
+                {{ display_name }}
+                <div class="frequency__prices">
+                  <p class="frequency__price">{{ allocation.price | money }}</p>
+                  {% if allocation.compare_at_price %}
+                    <p class="frequency__compare_at_price">{{ allocation.compare_at_price | money }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    </div> <!-- Close product-form__subscription-wrapper -->
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔧 Recharge Widget: Initializing...');
+
+    // Tooltip functionality
+    const infoIcon = document.querySelector('.subscription-info-icon');
+    const tooltip = document.querySelector('.subscription-info-tooltip');
+
+    if (infoIcon && tooltip) {
+      // Mobile click functionality
+      if (window.innerWidth <= 749) {
+        infoIcon.addEventListener('click', function(e) {
+          e.stopPropagation();
+          tooltip.classList.toggle('active');
+          console.log('📍 Recharge Widget: Tooltip toggled on mobile');
+        });
+
+        // Close tooltip when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.subscription-info-icon') && !e.target.closest('.subscription-info-tooltip')) {
+            tooltip.classList.remove('active');
+          }
+        });
+      }
+    }
+
+    // Check if product is subscription-only
+    const isSubscriptionOnly = {{ is_subscription_only | json }};
+    console.log('📋 Recharge Widget: Subscription-only product:', isSubscriptionOnly);
+    
+    // Get elements
+    const oneoffTrigger = document.querySelector('.product-form__oneoff-trigger');
+    const subscriptionTrigger = document.querySelector('.product-form__subscription');
+    const frequencyToggle = document.querySelector('.subscription-frequency-toggle');
+    const frequenciesContainer = document.querySelector('.product-form__frequencies');
+    const frequencies = document.querySelectorAll('.product-form__frequency');
+    
+    console.log('🔍 Recharge Widget: Elements found:', {
+      oneoffTrigger: !!oneoffTrigger,
+      subscriptionTrigger: !!subscriptionTrigger,
+      frequencyToggle: !!frequencyToggle,
+      frequenciesContainer: !!frequenciesContainer,
+      frequencyCount: frequencies.length
+    });
+    
+    // Get the specific product form using the passed ID
+    const formId = '{{ product_form_id }}';
+    console.log('📋 Recharge Widget: Looking for form with ID:', formId);
+    
+    const productForm = document.getElementById(formId);
+    console.log('📋 Recharge Widget: Form found:', !!productForm);
+    
+    if (productForm) {
+      console.log('📋 Recharge Widget: Form action:', productForm.action);
+      console.log('📋 Recharge Widget: Form inputs:', Array.from(productForm.querySelectorAll('input')).map(i => ({name: i.name, value: i.value, type: i.type})));
+    }
+    
+    // Get or create selling plan input in the product form
+    let sellingPlanInput = productForm ? productForm.querySelector('input[name="selling_plan"]') : null;
+    console.log('🎯 Recharge Widget: Existing selling_plan input found:', !!sellingPlanInput);
+    
+    if (!sellingPlanInput && productForm) {
+      console.log('➕ Recharge Widget: Creating new selling_plan input...');
+      sellingPlanInput = document.createElement('input');
+      sellingPlanInput.type = 'hidden';
+      sellingPlanInput.name = 'selling_plan';
+      sellingPlanInput.value = '';
+      
+      // Try to add it near the variant ID input for better form integration
+      const variantInput = productForm.querySelector('input[name="id"]');
+      if (variantInput && variantInput.parentNode) {
+        variantInput.parentNode.insertBefore(sellingPlanInput, variantInput.nextSibling);
+        console.log('✅ Recharge Widget: Selling plan input added after variant input');
+      } else {
+        productForm.appendChild(sellingPlanInput);
+        console.log('✅ Recharge Widget: Selling plan input added to end of form');
+      }
+      
+      // Verify it was added
+      const verifyInput = productForm.querySelector('input[name="selling_plan"]');
+      console.log('🔍 Recharge Widget: Verification - input exists in form:', !!verifyInput);
+    }
+    
+    // Function to update subscription selection
+    function updateSubscription(frequency) {
+      // Add null check for frequency parameter
+      if (!frequency) {
+        console.error('❌ Recharge Widget: updateSubscription called with null/undefined frequency');
+        return;
+      }
+
+      const planId = frequency.dataset.sellingPlanId;
+      let planName = frequency.dataset.planName;
+      const price = frequency.dataset.price;
+      const comparePrice = frequency.dataset.compareAtPrice;
+      
+      // Transform "30" to "Monthly Plan" for display
+      if (planName === "30") {
+        planName = "Monthly Plan";
+      }
+      
+      console.log('🔄 Recharge Widget: Updating subscription:', {
+        planId,
+        planName,
+        price,
+        comparePrice
+      });
+      
+      // Update display
+      const frequencyLabel = document.querySelector('.subscription-frequency');
+      const savingsElement = document.querySelector('.subscription-savings');
+
+      if (frequencyLabel && frequencyLabel.classList && !frequencyLabel.classList.contains('subscription-frequency--single')) {
+        frequencyLabel.textContent = planName;
+      }
+      
+      // Calculate and update savings percentage
+      if (savingsElement && comparePrice) {
+        // Parse money values to numbers
+        const priceNum = parseFloat(price.replace(/[^0-9.]/g, ''));
+        const comparePriceNum = parseFloat(comparePrice.replace(/[^0-9.]/g, ''));
+        
+        if (comparePriceNum > 0) {
+          const savings = comparePriceNum - priceNum;
+          const savingsPercentage = Math.round((savings / comparePriceNum) * 100);
+          savingsElement.textContent = `Savings ${savingsPercentage}%`;
+        }
+      }
+      
+      // Update selling plan input
+      if (sellingPlanInput) {
+        sellingPlanInput.value = planId;
+        console.log('✅ Recharge Widget: Selling plan input updated to:', planId);
+        console.log('📝 Recharge Widget: Current form selling_plan value:', sellingPlanInput.value);
+      } else {
+        console.error('❌ Recharge Widget: No selling plan input found to update!');
+      }
+      
+      // Update button price
+      const buttonPrice = document.querySelector('.product-form__submit .button__price');
+      if (buttonPrice) {
+        buttonPrice.textContent = price;
+        console.log('💰 Recharge Widget: Button price updated to:', price);
+      }
+      
+      // Update active frequency
+      frequencies.forEach(f => {
+        if (f && f.classList) {
+          f.classList.remove('active');
+        }
+      });
+      if (frequency && frequency.classList) {
+        frequency.classList.add('active');
+      }
+
+      // Close dropdown
+      if (frequencyToggle && frequencyToggle.classList) {
+        frequencyToggle.classList.remove('active');
+      }
+      if (frequenciesContainer && frequenciesContainer.classList) {
+        frequenciesContainer.classList.remove('active');
+      }
+    }
+    
+    // Function to switch to subscription
+    function changeToSubscription() {
+      console.log('🔀 Recharge Widget: Switching to subscription');
+      if (oneoffTrigger) oneoffTrigger.classList.remove('active');
+      if (subscriptionTrigger) subscriptionTrigger.classList.add('active');
+      
+      // Set first selling plan as default
+      if (frequencies.length > 0 && sellingPlanInput) {
+        const firstFrequency = frequencies[0];
+        if (firstFrequency) {
+          console.log('🎯 Recharge Widget: Setting default frequency:', firstFrequency.dataset.planName);
+          updateSubscription(firstFrequency);
+        } else {
+          console.warn('⚠️ Recharge Widget: First frequency element is null');
+        }
+      } else {
+        console.warn('⚠️ Recharge Widget: No frequencies available or selling plan input missing');
+      }
+    }
+    
+    // Function to switch to one-time purchase
+    function changeToOneoff() {
+      console.log('🔀 Recharge Widget: Switching to one-time purchase');
+      if (oneoffTrigger) oneoffTrigger.classList.add('active');
+      if (subscriptionTrigger) subscriptionTrigger.classList.remove('active');
+      
+      // Clear selling plan
+      if (sellingPlanInput) {
+        sellingPlanInput.value = '';
+        console.log('✅ Recharge Widget: Cleared selling plan input');
+        console.log('📝 Recharge Widget: Current form selling_plan value:', sellingPlanInput.value);
+      } else {
+        console.error('❌ Recharge Widget: No selling plan input found to clear!');
+      }
+      
+      // Update button price to regular price
+      const buttonPrice = document.querySelector('.product-form__submit .button__price');
+      if (buttonPrice) {
+        const regularPrice = buttonPrice.getAttribute('data-price-regular');
+        if (regularPrice) {
+          // Format the price properly without trailing zeros
+          const price = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
+          }).format(regularPrice / 100);
+          // Remove .00 if present
+          const formattedPrice = price.replace(/\.00$/, '');
+          buttonPrice.textContent = formattedPrice;
+          console.log('💰 Recharge Widget: Button price restored to regular price');
+        }
+      }
+    }
+    
+    // Initialize subscription as default for all products with selling plans
+    console.log('🔀 Recharge Widget: Initializing with subscription as default');
+    if (subscriptionTrigger && frequencies.length > 0 && sellingPlanInput) {
+      // Set subscription as active and select first frequency
+      const firstFrequency = frequencies[0];
+      if (firstFrequency) {
+        console.log('🎯 Recharge Widget: Setting default frequency:', firstFrequency.dataset.planName);
+        updateSubscription(firstFrequency);
+      } else {
+        console.warn('⚠️ Recharge Widget: First frequency element is null during initialization');
+      }
+
+      // Make sure the subscription option is visually active
+      if (oneoffTrigger) {
+        oneoffTrigger.classList.remove('active');
+      }
+      subscriptionTrigger.classList.add('active');
+    }
+    
+    // Event listeners
+    if (oneoffTrigger && !isSubscriptionOnly) {
+      oneoffTrigger.addEventListener('click', changeToOneoff);
+      console.log('✅ Recharge Widget: One-off trigger listener attached');
+    } else if (!isSubscriptionOnly) {
+      console.error('❌ Recharge Widget: One-off trigger not found!');
+    }
+
+    if (subscriptionTrigger) {
+      // Only add click listener if not subscription-only (allows switching)
+      if (!isSubscriptionOnly) {
+        subscriptionTrigger.addEventListener('click', changeToSubscription);
+        console.log('✅ Recharge Widget: Subscription trigger listener attached');
+      } else {
+        console.log('ℹ️ Recharge Widget: Subscription-only product - no switching needed');
+      }
+    } else {
+      console.error('❌ Recharge Widget: Subscription trigger not found!');
+    }
+    
+    // Frequency selection
+    frequencies.forEach((frequency, index) => {
+      frequency.addEventListener('click', function() {
+        console.log(`🎯 Recharge Widget: Frequency ${index} clicked:`, frequency.dataset.planName);
+        updateSubscription(frequency);
+      });
+    });
+    console.log(`✅ Recharge Widget: Added listeners to ${frequencies.length} frequency options`);
+    
+    // Toggle frequency dropdown (only if multiple frequencies)
+    if (frequencyToggle) {
+      frequencyToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        console.log('📂 Recharge Widget: Toggling frequency dropdown');
+        this.classList.toggle('active');
+        frequenciesContainer.classList.toggle('active');
+      });
+      console.log('✅ Recharge Widget: Frequency toggle listener attached');
+    } else if (frequencies.length > 1) {
+      console.error('❌ Recharge Widget: Frequency toggle not found!');
+    } else {
+      console.log('ℹ️ Recharge Widget: Single frequency - no dropdown needed');
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.product-form__subscription-select')) {
+        if (frequencyToggle) frequencyToggle.classList.remove('active');
+        if (frequenciesContainer) frequenciesContainer.classList.remove('active');
+      }
+    });
+    
+    // Log final initialization status
+    console.log('🎉 Recharge Widget: Initialization complete!');
+    console.log('📊 Recharge Widget: Summary:', {
+      formFound: !!productForm,
+      sellingPlanInputExists: !!sellingPlanInput,
+      currentSellingPlanValue: sellingPlanInput ? sellingPlanInput.value : 'N/A',
+      frequencyOptionsCount: frequencies.length,
+      isSubscriptionOnly: isSubscriptionOnly,
+      defaultState: 'subscription' // Always subscription when selling plans exist
+    });
+    
+    // Add form submit listener for debugging
+    if (productForm) {
+      productForm.addEventListener('submit', function(e) {
+        console.log('🚀 Recharge Widget: Form being submitted with selling_plan:', sellingPlanInput ? sellingPlanInput.value : 'N/A');
+        
+        // Better way to log FormData
+        const formData = new FormData(productForm);
+        const formDataObj = {};
+        for (let [key, value] of formData.entries()) {
+          formDataObj[key] = value;
+        }
+        console.log('📦 Recharge Widget: All form data:', formDataObj);
+        
+        // Double-check the selling_plan input is in the form
+        const allInputs = productForm.querySelectorAll('input');
+        console.log('🔍 Recharge Widget: All form inputs:', Array.from(allInputs).map(i => ({
+          name: i.name,
+          value: i.value,
+          type: i.type,
+          inDOM: document.contains(i)
+        })));
+        
+        // Check if selling_plan input is actually in the form's DOM
+        if (sellingPlanInput) {
+          console.log('✅ Recharge Widget: Selling plan input is in form:', productForm.contains(sellingPlanInput));
+          console.log('📍 Recharge Widget: Selling plan parent:', sellingPlanInput.parentElement?.id || sellingPlanInput.parentElement?.className);
+        }
+      });
+    }
+  });
+  </script>
+{% endif %}

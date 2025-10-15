@@ -1,0 +1,691 @@
+{% comment %}
+  Custom Yotpo Reviews Display
+  Usage: {% render 'custom-reviews-display', product_id: product.id, product: product %}
+{% endcomment %}
+
+<style>
+
+#yotpo-reviews-main-widget .yotpo-base-layout{
+  display: none; 
+}
+</style>
+
+
+<div id="custom-reviews-container" data-product-id="{{ product_id }}" data-product-title="{{ product.title | escape }}" data-product-sku="{{ product.first_available_variant.sku | default: product.variants.first.sku }}">
+  <div class="reviews-main-content">
+    <div class="reviews-loading">Loading reviews...</div>
+    <div class="reviews-summary" style="display: none;"></div>
+    <button class="write-review-btn" style="display: none;">Write a review</button>
+    <div class="reviews-list" style="display: none;"></div>
+    <div class="review-form" style="display: none;">
+      <div class="form-group">
+        <label>Rating</label>
+        <div class="star-rating">
+          <button class="star" data-rating="1">★</button>
+          <button class="star" data-rating="2">★</button>
+          <button class="star" data-rating="3">★</button>
+          <button class="star" data-rating="4">★</button>
+          <button class="star" data-rating="5">★</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" class="review-title-input" placeholder="Review title">
+      </div>
+      <div class="form-group">
+        <textarea class="review-content-input" placeholder="Write your review here..." rows="4"></textarea>
+      </div>
+      <div class="form-group">
+        <input type="text" class="reviewer-name-input" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <input type="email" class="reviewer-email-input" placeholder="Your email">
+      </div>
+      <button class="submit-review-btn">Submit Review</button>
+      <div class="form-message"></div>
+    </div>
+  </div>
+  <div class="reviews-pagination" style="display: none;">
+    <button class="prev-page">Prev</button>
+    <div class="page-numbers"></div>
+    <button class="next-page">Next</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('custom-reviews-container');
+  const productId = container.dataset.productId;
+  const productTitle = container.dataset.productTitle;
+  const productSku = container.dataset.productSku;
+  const appKey = 'hAQoLTsYGZYkd1hFPhK5g8rrcly7yHFLLB5CKDZB';
+  let currentPage = 1;
+  let totalPages = 1;
+  let maxListHeight = 0;
+  
+  async function fetchReviews(page = 1, shouldScroll = false) {
+    const perPage = 3; // Show 3 reviews per page
+    const url = `https://api-cdn.yotpo.com/v1/widget/${appKey}/products/${productId}/reviews.json?per_page=${perPage}&page=${page}`;
+    
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      
+      if (data.response && data.response.reviews) {
+        displayReviews(data.response.reviews);
+        updatePagination(data.response.pagination);
+        displaySummary(data.response.bottomline);
+        
+        // Hide loading, show content
+        container.querySelector('.reviews-loading').style.display = 'none';
+        container.querySelector('.reviews-summary').style.display = 'block';
+        container.querySelector('.reviews-list').style.display = 'block';
+        
+        // Only show pagination if not in form mode
+        const reviewForm = container.querySelector('.review-form');
+        if (data.response.pagination.total > perPage && reviewForm.style.display !== 'block') {
+          container.querySelector('.reviews-pagination').style.display = 'flex';
+        }
+        
+        // Smooth scroll to top of container after pagination click with offset
+        if (shouldScroll) {
+          const elementPosition = container.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = elementPosition - 50;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+      container.querySelector('.reviews-loading').textContent = 'Error loading reviews';
+    }
+  }
+  
+  function displaySummary(bottomline) {
+    const summaryDiv = container.querySelector('.reviews-summary');
+    if (bottomline) {
+      const averageScore = bottomline.average_score ? bottomline.average_score.toFixed(1) : '0';
+      const totalReviews = bottomline.total_review || 0;
+      summaryDiv.innerHTML = `<p class="reviews-overall">${averageScore} stars on ${totalReviews} Reviews</p>`;
+    }
+    // Show write review button after summary loads
+    container.querySelector('.write-review-btn').style.display = 'block';
+  }
+  
+  function displayReviews(reviews) {
+    const reviewsList = container.querySelector('.reviews-list');
+    reviewsList.innerHTML = '';
+    
+    reviews.forEach((review, index) => {
+      const reviewElement = document.createElement('div');
+      reviewElement.className = 'review-item';
+      
+      // Add data attributes for review metadata
+      if (review.created_at) {
+        reviewElement.setAttribute('data-created-at', review.created_at);
+      }
+      if (review.verified_buyer !== undefined) {
+        reviewElement.setAttribute('data-verified-buyer', review.verified_buyer);
+      }
+      if (review.id) {
+        reviewElement.setAttribute('data-review-id', review.id);
+      }
+      
+      // Extract reviewer name
+      const reviewerName = review.user.display_name || 'Anonymous';
+      
+      // Format rating
+      const rating = review.score ? `${review.score.toFixed(1)} Rating` : '';
+      
+      // Create unique ID for this review
+      const reviewId = `review-${currentPage}-${index}`;
+      
+      reviewElement.innerHTML = `
+        <div class="review-header">
+          <span class="reviewer-name">${reviewerName}</span>
+          <span class="review-rating" style="font-weight: 600">${rating}</span>
+        </div>
+        <h3 class="review-title">${review.title || ''}</h3>
+        <div class="review-content-wrapper">
+          <p class="review-content" id="content-${reviewId}">${review.content || ''}</p>
+          <button class="see-more-btn" id="btn-${reviewId}" style="display: none;">Read more</button>
+        </div>
+      `;
+      
+      reviewsList.appendChild(reviewElement);
+      
+      // Check if content needs truncation and add see more button
+      setTimeout(() => {
+        const contentEl = document.getElementById(`content-${reviewId}`);
+        const btnEl = document.getElementById(`btn-${reviewId}`);
+        
+        if (contentEl && btnEl) {
+          // Check if text is overflowing (more than 2 lines)
+          const lineHeight = parseInt(window.getComputedStyle(contentEl).lineHeight);
+          const maxHeight = lineHeight * 2;
+          
+          // Create a clone to measure actual height
+          const clone = contentEl.cloneNode(true);
+          clone.style.position = 'absolute';
+          clone.style.visibility = 'hidden';
+          clone.style.height = 'auto';
+          clone.style.maxHeight = 'none';
+          clone.style.webkitLineClamp = 'unset';
+          clone.classList.remove('truncated');
+          contentEl.parentNode.appendChild(clone);
+          
+          const actualHeight = clone.scrollHeight;
+          clone.remove();
+          
+          if (actualHeight > maxHeight) {
+            contentEl.classList.add('truncated');
+            btnEl.style.display = 'inline-block';
+            
+            btnEl.onclick = () => {
+              if (contentEl.classList.contains('truncated')) {
+                contentEl.classList.remove('truncated');
+                contentEl.classList.add('expanded');
+                btnEl.textContent = 'See less';
+              } else {
+                contentEl.classList.remove('expanded');
+                contentEl.classList.add('truncated');
+                btnEl.textContent = 'Read more';
+              }
+            };
+          }
+        }
+      }, 10);
+    });
+    
+    // Calculate and store the maximum height (desktop only)
+    setTimeout(() => {
+      if (window.innerWidth >= 768) { // Apply only on desktop
+        const currentHeight = reviewsList.offsetHeight;
+        if (currentHeight > maxListHeight) {
+          maxListHeight = currentHeight;
+        }
+        // Apply the max height as min-height to prevent jumping
+        reviewsList.style.minHeight = maxListHeight + 'px';
+      } else {
+        // Remove min-height on mobile
+        reviewsList.style.minHeight = '';
+      }
+    }, 50);
+  }
+  
+  function updatePagination(pagination) {
+    currentPage = pagination.page;
+    totalPages = Math.ceil(pagination.total / pagination.per_page);
+    
+    const pageNumbers = container.querySelector('.page-numbers');
+    pageNumbers.innerHTML = '';
+    
+    // Show max 4 page numbers like in the design
+    const maxPages = Math.min(4, totalPages);
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(totalPages, startPage + maxPages - 1);
+    
+    // Adjust start if we're near the end
+    if (endPage - startPage < maxPages - 1) {
+      startPage = Math.max(1, endPage - maxPages + 1);
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+      const pageBtn = document.createElement('button');
+      pageBtn.textContent = i;
+      pageBtn.className = i === currentPage ? 'page-number active' : 'page-number';
+      pageBtn.onclick = () => fetchReviews(i, true);
+      pageNumbers.appendChild(pageBtn);
+    }
+    
+    // Update prev/next buttons
+    const prevBtn = container.querySelector('.prev-page');
+    const nextBtn = container.querySelector('.next-page');
+    
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage === totalPages;
+    
+    prevBtn.onclick = () => {
+      if (currentPage > 1) fetchReviews(currentPage - 1, true);
+    };
+    
+    nextBtn.onclick = () => {
+      if (currentPage < totalPages) fetchReviews(currentPage + 1, true);
+    };
+    
+    // Hide pagination if form is visible
+    const reviewForm = container.querySelector('.review-form');
+    if (reviewForm.style.display === 'block') {
+      container.querySelector('.reviews-pagination').style.display = 'none';
+    }
+  }
+  
+  // Toggle form visibility
+  const writeReviewBtn = container.querySelector('.write-review-btn');
+  const reviewForm = container.querySelector('.review-form');
+  const reviewsList = container.querySelector('.reviews-list');
+  const pagination = container.querySelector('.reviews-pagination');
+  let selectedRating = 0;
+  
+  writeReviewBtn.onclick = () => {
+    // Try to click the Yotpo widget's write review button instead
+    const yotpoWriteReviewBtn = document.querySelector('#yotpo-main-widget-btn');
+    
+    if (yotpoWriteReviewBtn) {
+      // If Yotpo widget button exists, click it
+      yotpoWriteReviewBtn.click();
+    } else {
+      // Fallback: Try again with a delay in case widget hasn't loaded yet
+      setTimeout(() => {
+        const delayedYotpoBtn = document.querySelector('#yotpo-main-widget-btn');
+        if (delayedYotpoBtn) {
+          delayedYotpoBtn.click();
+        } else {
+          // If still no Yotpo button, use our custom form as fallback
+          console.log('Yotpo widget button not found, using custom form');
+          toggleCustomForm();
+        }
+      }, 500);
+    }
+  };
+  
+  // Custom form toggle function (fallback)
+  function toggleCustomForm() {
+    const isFormVisible = reviewForm.style.display === 'block';
+    
+    if (isFormVisible) {
+      // Cancel - hide form, show reviews
+      reviewForm.style.display = 'none';
+      reviewsList.style.display = 'block';
+      if (totalPages > 1) {
+        pagination.style.display = 'flex';
+      }
+      writeReviewBtn.textContent = 'Write a review';
+      // Clear form
+      selectedRating = 0;
+      container.querySelectorAll('.star').forEach(s => s.classList.remove('selected'));
+      container.querySelector('.review-title-input').value = '';
+      container.querySelector('.review-content-input').value = '';
+      container.querySelector('.reviewer-name-input').value = '';
+      container.querySelector('.reviewer-email-input').value = '';
+      container.querySelector('.form-message').textContent = '';
+    } else {
+      // Show form, hide reviews
+      reviewForm.style.display = 'block';
+      reviewsList.style.display = 'none';
+      pagination.style.display = 'none';
+      writeReviewBtn.textContent = 'Cancel review';
+    }
+  }
+  
+  // Star rating selection
+  container.querySelectorAll('.star').forEach(star => {
+    star.onclick = () => {
+      selectedRating = parseInt(star.dataset.rating);
+      container.querySelectorAll('.star').forEach((s, index) => {
+        if (index < selectedRating) {
+          s.classList.add('selected');
+        } else {
+          s.classList.remove('selected');
+        }
+      });
+    };
+  });
+  
+  // Submit review
+  container.querySelector('.submit-review-btn').onclick = async () => {
+    const title = container.querySelector('.review-title-input').value;
+    const content = container.querySelector('.review-content-input').value;
+    const name = container.querySelector('.reviewer-name-input').value;
+    const email = container.querySelector('.reviewer-email-input').value;
+    const messageDiv = container.querySelector('.form-message');
+    
+    // Validation
+    if (!selectedRating || !title || !content || !name || !email) {
+      messageDiv.textContent = 'Please fill in all fields';
+      messageDiv.style.color = '#d00';
+      return;
+    }
+    
+    // Submit to Yotpo API
+    const submitBtn = container.querySelector('.submit-review-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+    messageDiv.textContent = '';
+    
+    const requestData = {
+      appkey: appKey,
+      sku: productSku || productId, // Use productId as fallback if no SKU exists
+      product_id: productId,
+      product_title: productTitle,
+      domain: window.location.hostname,
+      product_url: window.location.href,
+      review_content: content,
+      review_score: selectedRating,
+      review_title: title,
+      display_name: name,
+      email: email
+    };
+    
+    try {
+      const response = await fetch(`https://api.yotpo.com/v1/widget/reviews`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData)
+      });
+      
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        console.error('Failed to parse response:', parseError);
+      }
+      
+      if (response.ok && data && (data.code === 200 || data.message === 'ok')) {
+        messageDiv.textContent = 'Review submitted successfully! You will receive a verification email shortly. Your review will appear once verified.';
+        messageDiv.style.color = '#090';
+        
+        // Clear form and return to reviews after 3 seconds
+        setTimeout(() => {
+          writeReviewBtn.click(); // Trigger cancel to return to reviews
+          fetchReviews(1); // Refresh reviews
+        }, 3000);
+      } else if (data?.status?.message === 'duplicate_review') {
+        messageDiv.textContent = 'You have already submitted a review for this product.';
+        messageDiv.style.color = '#d00';
+      } else {
+        messageDiv.textContent = data?.status?.message || data?.error || 'Error submitting review. Please try again.';
+        messageDiv.style.color = '#d00';
+      }
+    } catch (error) {
+      console.error('Error submitting review:', error);
+      messageDiv.textContent = 'Error submitting review. Please try again.';
+      messageDiv.style.color = '#d00';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Review';
+    }
+  };
+  
+  // Initial fetch
+  fetchReviews(1);
+  
+  // Handle window resize to add/remove min-height
+  window.addEventListener('resize', () => {
+    const reviewsList = container.querySelector('.reviews-list'); 
+    if (window.innerWidth < 768) {
+      reviewsList.style.minHeight = '';
+      maxListHeight = 0; // Reset max height for mobile
+    }
+  });
+})();
+</script>
+
+<style>
+  #custom-reviews-container {
+    margin: 20px 0;
+    margin-bottom: 0;
+  }
+  
+  .reviews-list {
+    /* min-height will be dynamically set by JavaScript */
+  }
+  
+  .review-item {
+    margin-bottom: 40px;
+  }
+  
+  .review-header {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 13px;
+    align-items: baseline;
+  }
+  
+  .reviewer-name {
+    font-size: 12px;
+    font-weight: 400;
+    color: #595959;
+  }
+  
+  .review-rating {
+    font-size: 12px;
+    font-weight: 400;
+    color: #000000;
+  }
+  
+  .review-title {
+    font-size: 32px;
+    font-weight: 300;
+    color: #000000;
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+  }
+  
+  .review-content {
+    font-size: 12px;
+    font-weight: 400;
+    color: #595959;
+    line-height: 1.6;
+    margin: 0;
+    transition: all 0.3s ease;
+  }
+  
+  .review-content.truncated {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .review-content.expanded {
+    display: block;
+    -webkit-line-clamp: unset;
+  }
+  
+  .review-content-wrapper {
+    position: relative;
+  }
+  
+  .see-more-btn {
+    font-size: 12px;
+    font-weight: 400;
+    color: #595959;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 4px;
+    text-decoration: underline;
+    display: inline-block;
+    transition: opacity 0.3s ease;
+  }
+  
+  .see-more-btn:hover {
+    opacity: 0.7;
+  }
+  
+  .reviews-pagination {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-top: 30px;
+    min-height: 30px; /* Prevent height jumping */
+  }
+  
+  .page-numbers {
+    display: flex;
+    gap: 40px;
+    min-width: 200px; /* Reserve space for page numbers */
+    justify-content: center;
+  }
+  
+  .prev-page,
+  .next-page {
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .page-number {
+    font-size: 12px;
+    font-weight: 400;
+    color: #000000;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .page-number.active {
+    font-weight: 600;
+  }
+  
+  button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  
+  .reviews-overall {
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0 0 20px 0;
+  }
+  
+  .write-review-btn {
+    font-size: 12px;
+    font-weight: 500;
+    color: #000000;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    margin-bottom: 20px;
+    margin-top: -20px;
+  }
+  
+  .review-form {
+    margin-bottom: 40px;
+    width: 350px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    font-size: 12px;
+    font-weight: 400;
+    color: #595959;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .star-rating {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .star {
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ddd;
+    padding: 0;
+  }
+  
+  .star.selected {
+    color: #000;
+  }
+  
+  .review-title-input,
+  .review-content-input,
+  .reviewer-name-input,
+  .reviewer-email-input {
+    width: 100%;
+    padding: 8px;
+    font-size: 12px;
+    font-family: inherit;
+    border: 1px solid #ddd;
+    box-shadow: none;
+  }
+  
+  .review-title-input:focus,
+  .review-content-input:focus,
+  .reviewer-name-input:focus,
+  .reviewer-email-input:focus {
+    outline: none;
+    border: 1px solid #ddd;
+    box-shadow: none;
+  }
+  
+  .review-content-input {
+    resize: vertical;
+  }
+  
+  .review-title-input::placeholder,
+  .review-content-input::placeholder,
+  .reviewer-name-input::placeholder,
+  .reviewer-email-input::placeholder {
+    font-family: inherit;
+    font-size: 12px;
+  }
+  
+  .submit-review-btn {
+    font-size: 12px;
+    font-weight: 500;
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .submit-review-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .form-message {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .reviews-pagination {
+     gap: 0;
+    }
+  }
+
+
+  @media screen and (min-width: 749px) {
+    #custom-reviews-container {
+      display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 97%;
+    justify-content: space-between;
+    }
+
+    .reviews-pagination{
+      min-height: 0;
+      margin-top: 20px;
+    }
+
+    .image-with-text__reviews{
+      height: 100%;
+    }
+  }
+</style>

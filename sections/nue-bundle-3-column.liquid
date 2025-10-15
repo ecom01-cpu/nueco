@@ -1,0 +1,303 @@
+{{ 'nue-bundle-3-column.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="nue-bundle-3-column{% unless section.settings.full_width %} page-width{% endunless %}{% if section.settings.full_width %} full-width color-{{ section.settings.color_scheme }}{% endif %}">
+  <div class="nue-bundle-3-column__container{% if section.settings.full_width %} page-width{% endif %} gradient section-{{ section.id }}-padding">
+    {%- if section.settings.product != blank -%}
+      <a href="{{ section.settings.product.url }}" class="nue-bundle-3-column__link">
+    {%- endif -%}
+    <div class="nue-bundle-3-column__content{% unless section.settings.full_width %} color-{{ section.settings.color_scheme }}{% endunless %}">
+      <div class="nue-bundle-3-column__col-1">
+        {%- if section.settings.title != blank -%}
+          <h2 class="nue-bundle-3-column__title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: 1;"
+            {% endif %}
+          >
+            {{ section.settings.title }}
+          </h2>
+        {%- endif -%}
+
+        {%- comment -%} Move subscription variables here before price display {%- endcomment -%}
+        {%- if section.settings.product != blank -%}
+          {%- assign is_subscription_only = section.settings.product.requires_selling_plan -%}
+          {%- assign first_selling_plan_id = null -%}
+
+          {%- if is_subscription_only and section.settings.product.selected_or_first_available_variant.selling_plan_allocations.size > 0 -%}
+            {%- assign first_selling_plan_id = section.settings.product.selected_or_first_available_variant.selling_plan_allocations.first.selling_plan.id -%}
+          {%- endif -%}
+        {%- endif -%}
+
+        <div class="nue-bundle-3-column__details{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+            style="--animation-order: 2;"
+          {% endif %}
+        >
+          {%- if section.settings.product != blank -%}
+            <span class="nue-bundle-3-column__price">
+              {%- if is_subscription_only and section.settings.product.selected_or_first_available_variant.selling_plan_allocations.size > 0 -%}
+                {{ section.settings.product.selected_or_first_available_variant.selling_plan_allocations.first.price | money }}
+              {%- else -%}
+                {{ section.settings.product.price | money }}
+              {%- endif -%}
+            </span>
+          {%- endif -%}
+          {%- if section.settings.product != blank -%}
+            <span class="nue-bundle-3-column__rating" data-product-id="{{ section.settings.product.id }}">
+              <span class="rating-placeholder">Loading...</span>
+            </span>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.description != blank -%}
+          <div class="nue-bundle-3-column__description{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: 3;"
+            {% endif %}
+          >
+            {{ section.settings.description }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.product != blank -%}
+          
+          <div class="nue-bundle-3-column__button{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: 4;"
+            {% endif %}
+          >
+            <product-form data-section-id="{{ section.id }}">
+              <form method="post" action="/cart/add" id="product-form-{{ section.id }}" accept-charset="UTF-8" class="form" enctype="multipart/form-data" data-type="add-to-cart-form">
+                <input type="hidden" name="form_type" value="product">
+                <input type="hidden" name="utf8" value="✓">
+                <input type="hidden" name="id" value="{{ section.settings.product.selected_or_first_available_variant.id }}" class="product-variant-id">
+                
+                {%- if is_subscription_only and first_selling_plan_id -%}
+                  <input
+                    type="hidden"
+                    name="selling_plan"
+                    value="{{ first_selling_plan_id }}"
+                  >
+                {%- endif -%}
+                
+                <button
+                  id="ProductSubmitButton-{{ section.id }}"
+                  type="submit"
+                  name="add"
+                  class="nue-bundle-3-column__quick-add-button button"
+                  {% if section.settings.product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                  onclick="event.stopPropagation();"
+                >
+                  <span>
+                    {%- if section.settings.product.selected_or_first_available_variant.available -%}
+                      {{ section.settings.button_label | default: 'Add to Cart' }}
+                    {%- else -%}
+                      {{ 'products.product.sold_out' | t }}
+                    {%- endif -%}
+                  </span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <div class="loading__spinner hidden">
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      class="spinner"
+                      viewBox="0 0 66 66"
+                      width="20"
+                      height="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                    </svg>
+                  </div>
+                </button>
+              </form>
+            </product-form>
+          </div>
+        {%- endif -%}
+      </div>
+      
+      <div class="nue-bundle-3-column__col-2{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        {% if settings.animations_reveal_on_scroll %}
+          data-cascade
+          style="--animation-order: 5;"
+        {% endif %}
+      >
+        {%- if section.settings.image_1 != blank -%}
+          <img
+            src="{{ section.settings.image_1 | image_url: width: 600 }}"
+            alt="{{ section.settings.image_1.alt | escape }}"
+            loading="lazy"
+            width="{{ section.settings.image_1.width }}"
+            height="{{ section.settings.image_1.height }}"
+          >
+        {%- endif -%}
+      </div>
+      
+      <div class="nue-bundle-3-column__col-3{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        {% if settings.animations_reveal_on_scroll %}
+          data-cascade
+          style="--animation-order: 6;"
+        {% endif %}
+      >
+        {%- if section.settings.image_2 != blank -%}
+          <img
+            src="{{ section.settings.image_2 | image_url: width: 600 }}"
+            alt="{{ section.settings.image_2.alt | escape }}"
+            loading="lazy"
+            width="{{ section.settings.image_2.width }}"
+            height="{{ section.settings.image_2.height }}"
+          >
+        {%- endif -%}
+      </div>
+    </div>
+    {%- if section.settings.product != blank -%}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const ratingElements = document.querySelectorAll('.nue-bundle-3-column__rating[data-product-id]');
+  const appKey = 'hAQoLTsYGZYkd1hFPhK5g8rrcly7yHFLLB5CKDZB';
+
+  async function fetchBundleRating(productId) {
+    try {
+      const url = `https://api-cdn.yotpo.com/v1/widget/${appKey}/products/${productId}/reviews.json?per_page=1&page=1`;
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.response && data.response.bottomline) {
+        const bottomline = data.response.bottomline;
+        return {
+          rating: bottomline.average_score ? bottomline.average_score.toFixed(1) : '0',
+          count: bottomline.total_review || 0
+        };
+      }
+    } catch (error) {
+      console.error('Error fetching bundle rating:', error);
+    }
+    return null;
+  }
+
+  ratingElements.forEach(async (element) => {
+    const productId = element.dataset.productId;
+    if (productId) {
+      const ratingData = await fetchBundleRating(productId);
+      if (ratingData && ratingData.rating && ratingData.count > 0) {
+        element.innerHTML = `${ratingData.rating} Rating`;
+      } else {
+        // Hide the rating element if no reviews
+        element.style.display = 'none';
+      }
+    }
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "NUE Bundle 3 Column",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Gut Method"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Support the foundation of your overall health—your gut—with our bestselling duo, expertly formulated to ease bloating and promote better digestion, mood, sleep, skin, and immunity."
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Add Method to Cart"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "default": false,
+      "info": "When enabled, the color scheme will apply to the full width container"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 52
+    }
+  ],
+  "presets": [
+    {
+      "name": "NUE Bundle 3 Column"
+    }
+  ]
+}
+{% endschema %}

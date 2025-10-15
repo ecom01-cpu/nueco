@@ -1,0 +1,1008 @@
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  #product-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+  }
+
+  .full-width-grid-item {
+    grid-column: 1 / -1;
+  }
+
+  /* Adjust full-width-promo-card when used in grid cell */
+  #product-grid li:not(.full-width-grid-item) .full-width-promo-card {
+    height: 100%;
+    min-height: 400px;
+  }
+  
+  #product-grid li:not(.full-width-grid-item) .full-width-promo-card__content {
+    padding: 40px 30px;
+  }
+  
+  #product-grid li:not(.full-width-grid-item) .full-width-promo-card__heading {
+    font-size: 24px;
+  }
+  
+  /* Double promo card - spans 2 columns on desktop */
+  .promo-card-double-wrapper {
+    grid-column: span 1;
+  }
+
+
+@media screen and (min-width: 750px) {
+  #product-grid {
+    gap: 50px;
+    grid-template-columns: 1fr 1fr ; 
+  }
+  
+  .promo-card-double-wrapper {
+    grid-column: span 2;
+  }
+}
+
+
+  @media screen and (min-width: 1200px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    #product-grid {
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+      gap: 50px;
+    }
+    
+    /* Desktop adjustments for full-width-promo-card in grid */
+    #product-grid li:not(.full-width-grid-item) .full-width-promo-card__content {
+      padding: 56px;
+      padding-left: 0;
+      padding-right: 30px;
+    }
+
+    .full-width-promo-card--side .full-width-promo-card__image{
+      padding-right: 20px;
+    }
+    
+    #product-grid li:not(.full-width-grid-item) .full-width-promo-card__heading {
+      /* font-size: 32px; */
+      font-size: 40px;
+      line-height: 48px;
+    }
+    
+    /* Ensure double promo card spans correctly in 3-column grid */
+    .promo-card-double-wrapper {
+      grid-column: span 2;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
+  {%- paginate collection.products by section.settings.products_per_page -%}
+    <div class="">
+
+      <div
+        class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        id="ProductGridContainer"
+        {% if settings.animations_reveal_on_scroll %}
+          data-cascade
+        {% endif %}
+      >
+        {%- if collection.products.size == 0 -%}
+          <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
+            <div class="loading-overlay gradient"></div>
+            <div class="title-wrapper center">
+              <h2 class="title title--primary">
+                {{ 'sections.collection_template.empty' | t -}}
+                <br>
+                {{
+                  'sections.collection_template.use_fewer_filters_html'
+                  | t: link: collection.url, class: 'underlined-link link'
+                }}
+              </h2>
+            </div>
+          </div>
+        {%- else -%}
+          <div
+            class="collection page-width"
+          >
+            <div class="loading-overlay gradient"></div>
+            <ul
+              id="product-grid"
+              data-id="{{ section.id }}"
+              class="grid product-grid"
+            >
+              {%- assign promo_blocks = section.blocks | where: 'type', 'promo_card' -%}
+              {%- assign side_promo_blocks = section.blocks | where: 'type', 'promo_card_side' -%}
+              {%- assign double_promo_blocks = section.blocks | where: 'type', 'promo_card_double' -%}
+              {%- assign full_width_blocks = section.blocks | where: 'type', 'full_width_promo' -%}
+              
+              {%- comment -%} Combine all promo card types {%- endcomment -%}
+              {%- assign all_promo_blocks = promo_blocks | concat: side_promo_blocks | concat: double_promo_blocks -%}
+              {%- assign active_promo_blocks = all_promo_blocks -%}
+              {%- assign item_count = 0 -%}
+              {%- assign current_row = 1 -%}
+              {%- assign items_per_row = 2 -%}
+              {%- if section.settings.columns_desktop == '3' -%}
+                {%- assign items_per_row = 3 -%}
+              {%- endif -%}
+              
+              {%- comment -%} Check for full-width promos at row 1 {%- endcomment -%}
+              {%- for fw_block in full_width_blocks -%}
+                {%- if fw_block.settings.row_position == 1 -%}
+                  <li class="full-width-grid-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                    {% if settings.animations_reveal_on_scroll %}
+                      data-cascade
+                      style="--animation-order: 0;"
+                    {% endif %}
+                  >
+                    {% render 'full-width-promo-card', block: fw_block, lazy_load: false %}
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+              
+              {%- assign product_index = 0 -%}
+              {%- for product in collection.products -%}
+                {%- assign product_index = product_index | plus: 1 -%}
+                
+                {%- comment -%} Check if we should insert a promo card before this product {%- endcomment -%}
+                {%- for block in active_promo_blocks -%}
+                  {%- if block.settings.position == product_index -%}
+                    {%- if block.type == 'promo_card_double' -%}
+                      {%- assign item_count = item_count | plus: 2 -%}
+                    {%- else -%}
+                      {%- assign item_count = item_count | plus: 1 -%}
+                    {%- endif -%}
+                    
+                    {%- comment -%} Check if this new item starts a new row {%- endcomment -%}
+                    {%- assign new_row = item_count | minus: 1 | divided_by: items_per_row | plus: 1 -%}
+                    {%- if new_row > current_row -%}
+                      {%- assign current_row = new_row -%}
+                      {%- for fw_block in full_width_blocks -%}
+                        {%- if fw_block.settings.row_position == current_row -%}
+                          <li class="full-width-grid-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                            {% if settings.animations_reveal_on_scroll %}
+                              data-cascade
+                              style="--animation-order: {{ item_count }};"
+                            {% endif %}
+                          >
+                            {% render 'full-width-promo-card', block: fw_block, lazy_load: true %}
+                          </li>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+                    
+                    <li
+                      class="{% if block.type == 'promo_card_double' %}promo-card-double-wrapper {% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                      {% if settings.animations_reveal_on_scroll %}
+                        data-cascade
+                        style="--animation-order: {{ item_count }};"
+                      {% endif %}
+                    >
+                      {%- if block.type == 'promo_card_side' -%}
+                        {% render 'full-width-promo-card', block: block, lazy_load: true, is_side_card: true %}
+                      {%- elsif block.type == 'promo_card_double' -%}
+                        {% render 'promo-card-double', block: block, lazy_load: true %}
+                      {%- else -%}
+                        {% render 'promo-card', block: block, lazy_load: true %}
+                      {%- endif -%}
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+                
+                {%- comment -%} Now render the product {%- endcomment -%}
+                {%- assign item_count = item_count | plus: 1 -%}
+                
+                {%- comment -%} Check if this product starts a new row {%- endcomment -%}
+                {%- assign new_row = item_count | minus: 1 | divided_by: items_per_row | plus: 1 -%}
+                {%- if new_row > current_row -%}
+                  {%- assign current_row = new_row -%}
+                  {%- for fw_block in full_width_blocks -%}
+                    {%- if fw_block.settings.row_position == current_row -%}
+                      <li class="full-width-grid-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                        {% if settings.animations_reveal_on_scroll %}
+                          data-cascade
+                          style="--animation-order: {{ item_count }};"
+                        {% endif %}
+                      >
+                        {% render 'full-width-promo-card', block: fw_block, lazy_load: true %}
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+                
+                {%- comment -%} Render the product card {%- endcomment -%}
+                {% assign lazy_load = false %}
+                {%- if item_count > 2 -%}
+                  {%- assign lazy_load = true -%}
+                {%- endif -%}
+                <li
+                  class="{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                  {% if settings.animations_reveal_on_scroll %}
+                    data-cascade
+                    style="--animation-order: {{ item_count }};"
+                  {% endif %}
+                >
+                  {% render 'card-product-nue',
+                    card_product: product,
+                    section_id: section.id,
+                    lazy_load: lazy_load,
+                    layout: section.settings.product_card_type
+                  %}
+                </li>
+              {%- endfor -%}
+              
+              {%- comment -%} Check if any promo cards should be inserted after all products {%- endcomment -%}
+              {%- assign final_product_position = product_index | plus: 1 -%}
+              {%- for block in active_promo_blocks -%}
+                {%- if block.settings.position >= final_product_position -%}
+                  {%- if block.type == 'promo_card_double' -%}
+                    {%- assign item_count = item_count | plus: 2 -%}
+                  {%- else -%}
+                    {%- assign item_count = item_count | plus: 1 -%}
+                  {%- endif -%}
+                  
+                  {%- comment -%} Check if this new item starts a new row {%- endcomment -%}
+                  {%- assign new_row = item_count | minus: 1 | divided_by: items_per_row | plus: 1 -%}
+                  {%- if new_row > current_row -%}
+                    {%- assign current_row = new_row -%}
+                    {%- for fw_block in full_width_blocks -%}
+                      {%- if fw_block.settings.row_position == current_row -%}
+                        <li class="full-width-grid-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                          {% if settings.animations_reveal_on_scroll %}
+                            data-cascade
+                            style="--animation-order: {{ item_count }};"
+                          {% endif %}
+                        >
+                          {% render 'full-width-promo-card', block: fw_block, lazy_load: true %}
+                        </li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                  <li
+                    class="{% if block.type == 'promo_card_double' %}promo-card-double-wrapper {% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                    {% if settings.animations_reveal_on_scroll %}
+                      data-cascade
+                      style="--animation-order: {{ block.settings.position }};"
+                    {% endif %}
+                  >
+                    {%- if block.type == 'promo_card_side' -%}
+                      {% render 'full-width-promo-card', block: block, lazy_load: true, is_side_card: true %}
+                    {%- elsif block.type == 'promo_card_double' -%}
+                      {% render 'promo-card-double', block: block, lazy_load: true %}
+                    {%- else -%}
+                      {% render 'promo-card', block: block, lazy_load: true %}
+                    {%- endif -%}
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+
+            {%- if paginate.pages > 1 -%}
+              {% render 'pagination', paginate: paginate, anchor: '' %}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endpaginate -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-product-grid.name",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 36,
+      "step": 1,
+      "default": 16,
+      "label": "t:sections.main-collection-product-grid.settings.products_per_page.label"
+    },
+    {
+      "type": "select",
+      "id": "product_card_type",
+      "label": "Product card type",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center aligned"
+        },
+        {
+          "value": "grid",
+          "label": "Left aligned with swatches"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "default": "3",
+      "label": "Desktop columns",
+      "options": [
+        {
+          "value": "2",
+          "label": "2 columns"
+        },
+        {
+          "value": "3",
+          "label": "3 columns"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "info": "t:sections.all.colors.has_cards_info",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "promo_card",
+      "name": "1 card promo",
+      "settings": [
+        {
+          "type": "range",
+          "id": "position",
+          "min": 1,
+          "max": 24,
+          "step": 1,
+          "default": 3,
+          "label": "Position in grid"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "Select a video from Files. Video takes precedence over image if both are set."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image (optional)",
+          "info": "Different image for mobile devices"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "\"I love this product. It makes my skin feel clean, soft and fresh.\""
+        },
+        {
+          "type": "text",
+          "id": "subtitle_bold",
+          "label": "Subtitle (bold)",
+          "default": "Adriana B."
+        },
+        {
+          "type": "text",
+          "id": "subtitle_light",
+          "label": "Subtitle (light)",
+          "default": "Barrier Culture Cleanser"
+        },
+        { 
+          "type": "richtext",
+          "id": "description",
+          "label": "Description (optional)"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "image_overlay_opacity",
+          "min": 0,
+          "max": 80,
+          "step": 10,
+          "unit": "%",
+          "label": "Darken image",
+          "default": 30
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Content position",
+          "options": [
+            {"value": "top-left", "label": "Top Left"},
+            {"value": "top-center", "label": "Top Center"},
+            {"value": "top-right", "label": "Top Right"},
+            {"value": "center-left", "label": "Center Left"},
+            {"value": "center", "label": "Center"},
+            {"value": "center-right", "label": "Center Right"},
+            {"value": "bottom-left", "label": "Bottom Left"},
+            {"value": "bottom-center", "label": "Bottom Center"},
+            {"value": "bottom-right", "label": "Bottom Right"}
+          ],
+          "default": "bottom-center"
+        },
+        {
+          "type": "header",
+          "content": "Padding settings"
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 142,
+          "step": 2,
+          "unit": "px",
+          "label": "Desktop padding top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 142,
+          "step": 2,
+          "unit": "px",
+          "label": "Desktop padding bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile padding top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile padding bottom",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "full_width_promo",
+      "name": "Full width promo card",
+      "settings": [
+        {
+          "type": "range",
+          "id": "row_position",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "default": 2,
+          "label": "Row position"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color",
+          "default": "#000000"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Left image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "Select a video from Files. Video takes precedence over image if both are set."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image (optional)",
+          "info": "Different image for mobile devices"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "The Gut Health Challenge You Haven't Tried Yet"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description (optional)"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "A soothing spray designed to calm body and mind post-workout or before bed."
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Read More"
+        }, 
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "section_height",
+          "min": 25,
+          "max": 100,
+          "step": 1,
+          "unit": "vw",
+          "label": "Section height",
+          "default": 40,
+          "info": "Height as percentage of viewport width"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_image_only",
+          "label": "Show image full width only",
+          "default": false,
+          "info": "Display only the image covering the entire section"
+        },
+        {
+          "type": "select",
+          "id": "content_position_mobile",
+          "label": "Content position (Mobile)",
+          "info": "Position when 'Show image full width only' is enabled",
+          "options": [
+            {"value": "top-left", "label": "Top Left"},
+            {"value": "top-center", "label": "Top Center"},
+            {"value": "top-right", "label": "Top Right"},
+            {"value": "center-left", "label": "Center Left"},
+            {"value": "center", "label": "Center"},
+            {"value": "center-right", "label": "Center Right"},
+            {"value": "bottom-left", "label": "Bottom Left"},
+            {"value": "bottom-center", "label": "Bottom Center"},
+            {"value": "bottom-right", "label": "Bottom Right"}
+          ],
+          "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "content_position_desktop",
+          "label": "Content position (Desktop)",
+          "info": "Position when 'Show image full width only' is enabled",
+          "options": [
+            {"value": "top-left", "label": "Top Left"},
+            {"value": "top-center", "label": "Top Center"},
+            {"value": "top-right", "label": "Top Right"},
+            {"value": "center-left", "label": "Center Left"},
+            {"value": "center", "label": "Center"},
+            {"value": "center-right", "label": "Center Right"},
+            {"value": "bottom-left", "label": "Bottom Left"},
+            {"value": "bottom-center", "label": "Bottom Center"},
+            {"value": "bottom-right", "label": "Bottom Right"}
+          ],
+          "default": "center"
+        },
+        {
+          "type": "range",
+          "id": "image_overlay_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 10,
+          "unit": "%",
+          "label": "Darken image",
+          "info": "Only applies when 'Show image full width only' is enabled",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Padding settings"
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 142,
+          "step": 2,
+          "unit": "px",
+          "label": "Desktop padding top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 142,
+          "step": 2,
+          "unit": "px",
+          "label": "Desktop padding bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile padding top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile padding bottom",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "promo_card_side",
+      "name": "Side promo card",
+      "settings": [
+        {
+          "type": "range",
+          "id": "position",
+          "min": 1,
+          "max": 24,
+          "step": 1,
+          "default": 2,
+          "label": "Position in grid",
+          "info": "Odd numbers = left side, Even numbers = right side"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color",
+          "default": "#000000"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Left image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "Select a video from Files. Video takes precedence over image if both are set."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image (optional)",
+          "info": "Different image for mobile devices"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image focal point",
+          "default": "center",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "The Gut Health Challenge You Haven't Tried Yet"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description (optional)"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "A soothing spray designed to calm body and mind post-workout or before bed."
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Read More"
+        }, 
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "section_height",
+          "min": 25,
+          "max": 100,
+          "step": 1,
+          "unit": "vw",
+          "label": "Section height",
+          "default": 25,
+          "info": "Height as percentage of viewport width"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_image_only",
+          "label": "Show image full width only",
+          "default": false,
+          "info": "Display only the image covering the entire section"
+        },
+        {
+          "type": "select",
+          "id": "content_position_mobile",
+          "label": "Content position (Mobile)",
+          "info": "Position when 'Show image full width only' is enabled",
+          "options": [
+            {"value": "top-left", "label": "Top Left"},
+            {"value": "top-center", "label": "Top Center"},
+            {"value": "top-right", "label": "Top Right"},
+            {"value": "center-left", "label": "Center Left"},
+            {"value": "center", "label": "Center"},
+            {"value": "center-right", "label": "Center Right"},
+            {"value": "bottom-left", "label": "Bottom Left"},
+            {"value": "bottom-center", "label": "Bottom Center"},
+            {"value": "bottom-right", "label": "Bottom Right"}
+          ],
+          "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "content_position_desktop",
+          "label": "Content position (Desktop)",
+          "info": "Position when 'Show image full width only' is enabled",
+          "options": [
+            {"value": "top-left", "label": "Top Left"},
+            {"value": "top-center", "label": "Top Center"},
+            {"value": "top-right", "label": "Top Right"},
+            {"value": "center-left", "label": "Center Left"},
+            {"value": "center", "label": "Center"},
+            {"value": "center-right", "label": "Center Right"},
+            {"value": "bottom-left", "label": "Bottom Left"},
+            {"value": "bottom-center", "label": "Bottom Center"},
+            {"value": "bottom-right", "label": "Bottom Right"}
+          ],
+          "default": "center"
+        },
+        {
+          "type": "range",
+          "id": "image_overlay_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 10,
+          "unit": "%",
+          "label": "Darken image",
+          "info": "Only applies when 'Show image full width only' is enabled",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Padding settings"
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 142,
+          "step": 2,
+          "unit": "px",
+          "label": "Desktop padding top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 142,
+          "step": 2,
+          "unit": "px",
+          "label": "Desktop padding bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile padding top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile padding bottom",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "promo_card_double",
+      "name": "Double promo card",
+      "settings": [
+        {
+          "type": "range",
+          "id": "position",
+          "min": 1,
+          "max": 24,
+          "step": 1,
+          "default": 3,
+          "label": "Position in grid"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "Select a video from Files. Video takes precedence over image if both are set."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image (optional)",
+          "info": "Different image for mobile devices"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "The Art of Feeling Well, through the eyes of Patricia Zhou"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "A soothing spray designed to calm both body and mind post-workout or before bed."
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Read More"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color (desktop only)",
+          "default": "#000000"
+        },
+        {
+          "type": "header",
+          "content": "Padding settings"
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 142,
+          "step": 2,
+          "unit": "px",
+          "label": "Desktop padding top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 142,
+          "step": 2,
+          "unit": "px",
+          "label": "Desktop padding bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile padding top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile padding bottom",
+          "default": 0
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

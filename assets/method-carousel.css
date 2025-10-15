@@ -1,0 +1,285 @@
+.methodCarousel-wrapper {
+  overflow: hidden;
+  background-color: var(--nue-light-grey);
+  padding-top: 88px;
+  text-align: center;
+}
+
+.methodCarousel-container {
+  margin-top: 5.5rem;
+}
+
+.method-swiper {
+  width: 100%;
+  overflow: visible !important;
+} 
+
+.title-section-header {
+  display: grid;
+
+  gap: 24px;
+}
+
+.title-section-header h2 {
+  font-size: 56px;
+  font-weight: 100;
+  line-height: 1;
+  letter-spacing: -0.13rem;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.title-section-header p {
+  font-family: var(--font-heading-family);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.333;
+  margin: 0;
+  margin-bottom: 24px;
+  text-wrap: balance;
+}
+
+.methodCarousel-nav {
+  display: inline-flex;
+  gap: 0.1rem;
+  margin-bottom: 2.5rem;
+  justify-content: left;
+  background: var(--nue-white);
+  border-radius: 2.5rem;
+  padding: 0.5rem 0.8rem;
+}
+
+.method-nav-pill {
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--nue-white);
+  background: transparent;
+  color: var(--color-grey-text);
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+  border-radius: 2rem;
+  font-size: 0.75em;
+  font-weight: 400;
+  line-height: 1.333;
+}
+
+.method-nav-pill.active {
+  background: var(--nue-black);
+  color: var(--nue-white);
+  font-weight: 600;
+}
+
+.method-swiper {
+  width: 100%;
+  overflow: visible;
+}
+
+.swiper-slide {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* Slide container */
+.method-slide-content {
+  background: var(--nue-white);
+  padding: 8px;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Main image wrapper */
+.method-main-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 846 / 432;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+/* Main image */
+.method-main-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content area - Mobile first */
+.method-content-area {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 24px;
+  text-align: left;
+
+}
+
+.method-content-left {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.method-title {
+  font-size: 38px;
+  font-weight: 100;
+  letter-spacing: -0.09rem;
+  margin: 0;
+  line-height: 1;
+  max-width: 152px;
+}
+
+.method-small-image-wrapper {
+  position: relative;
+
+}
+
+.method-small-image {
+  max-width: 100px;
+  height: auto;
+}
+
+.method-small-image.desktop-image {
+  display: none;
+}
+
+.method-small-image.mobile-image {
+  display: block;
+}
+
+.method-content-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.method-text {
+  font-size: 10px;
+  line-height: 12px;
+  margin: 0;
+}
+
+.method-button {
+  align-self: flex-start;
+}
+
+
+
+/* Desktop styles */
+@media screen and (min-width: 750px) {
+  .method-slide-content {
+    padding: 15px;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+
+  .method-small-image-wrapper {
+    position: relative;
+    max-width: 145px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .title-section-header {
+    grid-template-columns: 1fr 1fr;
+  
+    gap: var(--grid-desktop-horizontal-spacing);
+  }
+
+  .method-main-image-wrapper {
+
+    margin-bottom: 48px;
+  }
+
+  .title-section-header h2{
+    font-size: 104px;
+    line-height: 104px;
+  }
+  
+  .title-section-header p{
+    font-size: 24px;
+
+  }
+
+  .method-content-area {
+    display: grid;
+    grid-template-columns: 1fr 274px;
+    gap: 86px;
+    padding: 0;
+  }
+  
+  .method-content-left {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1px;
+    min-width: 0;
+  }
+  
+  .method-title {
+    font-size: 72px;
+    flex-shrink: 0;
+    max-width: 313px;
+  }
+  
+  .method-small-image {
+    flex: 1;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .method-small-image.desktop-image {
+    display: block;
+  }
+
+  .method-small-image.mobile-image {
+    display: none;
+  }
+  
+  .method-content-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 10px;
+  }
+  
+  .method-text {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .methodCarousel-wrapper {
+
+    padding: 142px 0;
+    text-align: left;
+  }
+}
+
+
+
+
+
+.template-product .methodCarousel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.template-product .methodCarousel-nav {
+  margin-bottom: 4rem;
+  background-color: var(--nue-light-grey);
+}
+.template-product .method-nav-pill {
+  border: 0 none;
+}
+.template-product .method-nav-pill.active {
+  background-color: var(--nue-white);
+  color: var(--nue-black);
+}

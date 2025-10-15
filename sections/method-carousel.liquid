@@ -1,0 +1,331 @@
+
+
+{{ 'method-carousel.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}">
+<script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
+
+<div class="methodCarousel-wrapper section-{{ section.id }}-padding">
+  {% if section.settings.title != blank or section.settings.body_text != blank %}
+  <div class="page-width">
+    <div class="title-section-header">
+      {% if section.settings.title != blank %}
+      <h2>{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.body_text != blank %}
+      <div>
+        <p>{{ section.settings.body_text }}</p>
+        {% render 'button', cta_title: section.settings.cta_title, cta_link: section.settings.cta_link %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="page-width">
+    <div class="methodCarousel-container">
+      {% if section.blocks.size > 0 %}
+      <div class="methodCarousel-nav">
+        {% for block in section.blocks %}
+          {% assign nav_text = block.settings.nav_text | default: 'Method' %}
+          <button class="method-nav-pill {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.index0 }}" data-text="{{ nav_text }}">
+            {{ nav_text }}
+          </button>
+        {% endfor %}
+      </div>
+
+      <div class="swiper method-swiper">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+          <div class="swiper-slide">
+            <div class="method-slide-content">
+              {% if block.settings.main_image %}
+                <div class="method-main-image-wrapper">
+                  {{ block.settings.main_image | image_url: width: 1692 | image_tag: class: 'method-main-image', loading: 'lazy', widths: '846, 1269, 1692', sizes: '(min-width: 750px) 846px, 100vw' }}
+                </div>
+              {% else %}
+                <div class="method-main-image-wrapper">
+                  <img src="https://dummyimage.com/846x432/ded3de/000000.jpg&text=%C3%97" class="method-main-image" width="846" height="432" loading="lazy">
+                </div>
+              {% endif %}
+              
+              <div class="method-content-area">
+                <div class="method-content-left">
+                  <h3 class="method-title">{{ block.settings.title | default: 'Method' }}</h3>
+                  {% if block.settings.small_image or block.settings.small_image_mobile %}
+                    <div class="method-small-image-wrapper">
+                      {% if block.settings.small_image %}
+                        {{ block.settings.small_image | image_url: width: 1000 | image_tag: class: 'method-small-image desktop-image', loading: 'lazy' }}
+                      {% endif %}
+                      {% if block.settings.small_image_mobile %}
+                        {{ block.settings.small_image_mobile | image_url: width: 600 | image_tag: class: 'method-small-image mobile-image', loading: 'lazy' }}
+                      {% elsif block.settings.small_image %}
+                        {{ block.settings.small_image | image_url: width: 600 | image_tag: class: 'method-small-image mobile-image', loading: 'lazy' }}
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+                
+                <div class="method-content-right">
+                  {% if block.settings.text %}
+                    <p class="method-text">{{ block.settings.text }}</p>
+                  {% endif %}
+                  {% if block.settings.button_text and block.settings.button_link %}
+                    <a href="{{ block.settings.button_link }}" class="method-button button button--primary">
+                      {{ block.settings.button_text }}
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script>
+  function initMethodCarousel() {
+    const methodSwiper = document.querySelector('.method-swiper');
+    if (!methodSwiper) return;
+    
+    // Destroy existing swiper instance if it exists
+    if (window.methodSwiperInstance) {
+      window.methodSwiperInstance.destroy(true, true);
+    }
+    
+    // Initialize new swiper
+    window.methodSwiperInstance = new Swiper('.method-swiper', {
+      slidesPerView: 1.2,
+      spaceBetween: 12,
+      centeredSlides: false,
+      loop: false,
+      autoplay: false,
+      grabCursor: true,
+      touchEventsTarget: 'container',
+      breakpoints: {
+        750: {
+          slidesPerView: 1.5,
+          spaceBetween: 20,
+        }
+      }
+    });
+
+    const navPills = document.querySelectorAll('.method-nav-pill');
+
+    navPills.forEach((pill) => {
+      pill.addEventListener('click', function () {
+        const slideIndex = parseInt(this.getAttribute('data-slide'));
+        window.methodSwiperInstance.slideTo(slideIndex);
+
+        navPills.forEach((p) => p.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    window.methodSwiperInstance.on('slideChange', function () {
+      const activeIndex = window.methodSwiperInstance.activeIndex;
+      navPills.forEach((pill, index) => {
+        pill.classList.toggle('active', index === activeIndex);
+      });
+    });
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', initMethodCarousel);
+  
+  // Reinitialize when theme editor changes sections
+  if (Shopify.designMode) {
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.target.querySelector('.method-swiper')) {
+        setTimeout(initMethodCarousel, 100);
+      }
+    });
+    
+    document.addEventListener('shopify:block:select', function(event) {
+      if (event.target.closest('.method-swiper')) {
+        const slideIndex = Array.from(event.target.parentNode.children).indexOf(event.target);
+        if (window.methodSwiperInstance) {
+          window.methodSwiperInstance.slideTo(slideIndex);
+        }
+      }
+    });
+  }
+</script>
+
+{% schema %}
+  {
+    "name": "Method Carousel",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "For Whole Body Health"
+      },
+      {
+        "type": "text",
+        "id": "body_text",
+        "label": "Body text",
+        "default": "Taking care of your health is as much an art as it is a science. We pair potent ingredients with proven formulations to craft supplements for whole body health. You'll find us in every room of your home and every part of your day."
+      },
+      {
+        "type": "text",
+        "id": "cta_title",
+        "label": "CTA Title",
+        "default": "Explore Our Methods"
+      },
+      {
+        "type": "url",
+        "id": "cta_link",
+        "label": "CTA Link",
+        "default": "/collections/all"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.all.padding.section_padding_heading"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 142,
+        "step": 2,
+        "unit": "px",
+        "label": "Desktop padding top",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 142,
+        "step": 2,
+        "unit": "px",
+        "label": "Desktop padding bottom",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile padding top",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile padding bottom",
+        "default": 40
+      }
+    ],
+    "blocks": [
+      {
+        "type": "method_slide",
+        "name": "Method Slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "main_image",
+            "label": "Main Image"
+          },
+          {
+            "type": "text",
+            "id": "nav_text",
+            "label": "Navigation Button Text",
+            "default": "Gut method"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Gut method"
+          },
+          {
+            "type": "image_picker",
+            "id": "small_image",
+            "label": "Small Image (Desktop)"
+          },
+          {
+            "type": "image_picker",
+            "id": "small_image_mobile",
+            "label": "Small Image (Mobile)",
+            "info": "Optional mobile version. Falls back to desktop image if not set."
+          },
+          {
+            "type": "textarea",
+            "id": "text",
+            "label": "Description Text",
+            "default": "Support the foundation of your overall health—your gut—with our bestselling duo, expertly formulated to ease bloating and promote better digestion, mood, sleep, skin, and immunity."
+          },
+          {
+            "type": "text",
+            "id": "button_text",
+            "label": "Button Text",
+            "default": "Shop Gut Method"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Method Carousel",
+        "category": "Custom",
+        "blocks": [
+          {
+            "type": "method_slide",
+            "settings": {
+              "title": "Gut method"
+            }
+          },
+          {
+            "type": "method_slide",
+            "settings": {
+              "title": "Skin method"
+            }
+          },
+          {
+            "type": "method_slide",
+            "settings": {
+              "title": "Body method"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  {% endschema %}

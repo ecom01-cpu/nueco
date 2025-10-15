@@ -1,0 +1,273 @@
+/* Nue Product Card Component */
+
+/* Base Card Styles */
+.card-product-nue {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-align: center;
+  gap: 16px;
+}
+
+.card-product-nue__link {
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+
+/* Image Wrapper & Images */
+.card-product-nue__image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%; /* 1:1 aspect ratio */
+  overflow: hidden;
+}
+
+.card-product-nue__image-wrapper img {
+  width: 100%;
+}
+
+.card-product-nue__image,
+.card-product-nue__placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Hover Effect */
+.card-product-nue__image--hover {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.card-product-nue__image-wrapper:hover .card-product-nue__image--hover {
+  opacity: 1;
+}
+
+/* Content Area */
+.card-product-nue__content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+}
+
+.card-product-nue__content-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-product-nue__info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex-grow: 1;
+}
+
+/* Typography */
+.card-product-nue__title {
+  margin: 0;
+  font-size: 22px;
+
+}
+
+.card-product-nue__description {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-grey-text);
+  max-width: 261px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Add to Cart Button */
+.card-product-nue__button {
+  width: fit-content ;
+  margin: 0 auto;
+}
+
+.card-product-nue__button .plus path{
+  transition: all 0.3s ease;
+}
+
+.card-product-nue__button:hover .plus path{
+  /* stroke: white; */
+}
+
+
+
+.card-product-nue__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.card-product-nue__button svg {
+  position: relative;
+  top: -1px;
+}
+
+/* Loading State */
+.card-product-nue__button .loading__spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+}
+
+.card-product-nue__button .loading__spinner svg .path {
+  stroke: white !important;
+}
+
+.card-product-nue__button.loading > * {
+  visibility: hidden;
+}
+
+.card-product-nue__button.loading .loading__spinner {
+  visibility: visible;
+}
+
+/* Swatches */
+.card-product-nue__swatches {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.card-product-nue__swatch-item {
+  text-align: center;
+  position: relative;
+}
+
+.card-product-nue__swatch {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin: 0 auto;
+}
+
+.card-product-nue__swatch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-product-nue__swatch-label {
+  font-size: 12px;
+  margin: 8px 0 0 0;
+  line-height: 1.2;
+  position: relative;
+}
+
+/* Active Swatch Indicator */
+.card-product-nue__swatch-item.active .card-product-nue__swatch-label::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-nue-green);
+  border-radius: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -12px;
+}
+
+/* Grid Layout Variant */
+.card-product-nue--grid {
+  text-align: left;
+}
+
+.card-product-nue--grid .card-product-nue__image--hover{
+  opacity: 1;
+}
+
+.card-product-nue--grid .card-product-nue__title {
+  text-align: left;
+}
+
+.card-product-nue--grid .card-product-nue__description {
+  text-align: left;
+  margin-left: 0;
+}
+
+.card-product-nue--grid .card-product-nue__button {
+  margin: 0;
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 749px) {
+  .card-product-nue__swatch {
+    width: 30px;
+    height: 30px;
+  }
+
+  .card-product-nue__swatch-label {
+    font-size: 10px;
+  }
+}
+
+.card-product-nue__swatches:hover{
+  cursor: default;
+}
+
+@media screen and (max-width: 750px) {
+  .card-product-nue__button{
+    padding-top: 15px;
+    padding-bottom: 13px;
+  }
+}
+
+/* iOS Mobile Styles */
+@supports (-webkit-touch-callout: none) {
+  @media screen and (max-width: 750px) {
+    .card-product-nue__button{
+      padding-top: 16px;
+      padding-bottom: 12px;
+    }
+
+    .card-product-nue__button svg {
+      position: relative;
+      top: -3px;
+    }
+  }
+}
+
+
+@media screen and (min-width: 750px) {
+  .card-product-nue--grid .card-product-nue__content-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+    gap: 20px;
+  }
+
+  .card-product-nue--grid .card-product-nue__title{
+    font-size: 56px;
+    max-width: 289px;
+    line-height: 56px;
+    margin-bottom: 10px;
+  }
+
+  .card-product-nue {
+    gap: 40px;
+  }
+
+  .card-product-nue--grid .card-product-nue__swatches {
+    margin-top: 0;
+    justify-content: flex-end;
+  }
+
+  .card-product-nue__title{
+    font-size: 24px;
+    
+  }
+}

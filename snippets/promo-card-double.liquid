@@ -1,0 +1,65 @@
+{% comment %}
+  Renders a double-width promotional card with image/video and text
+  
+  Accepts:
+  - block: {Object} Block object with settings
+  - class: {String} Additional CSS classes (optional)
+  - lazy_load: {Boolean} Whether to lazy load the image. Default: true (optional)
+  
+  Usage:
+  {% render 'promo-card-double', block: block %}
+{% endcomment %}
+
+{{ 'promo-card-double.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .promo-card-double-wrapper {
+    padding-top: {{ block.settings.padding_top_mobile | default: 0 }}px;
+    padding-bottom: {{ block.settings.padding_bottom_mobile | default: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .promo-card-double-wrapper {
+      padding-top: {{ block.settings.padding_top | default: 0 }}px;
+      padding-bottom: {{ block.settings.padding_bottom | default: 0 }}px;
+      height: 100%;
+    }
+  }
+</style>
+
+<div class="promo-card-double-wrapper">
+  <div class="promo-card-double{% if class %} {{ class }}{% endif %}" style="--promo-bg-color: {{ block.settings.background_color }};">
+    <div class="promo-card-double__image-wrapper">
+    {%- if block.settings.video != blank -%}
+      {{ block.settings.video | video_tag: class: 'promo-card-double__image', autoplay: true, loop: true, muted: true, controls: false }}
+    {%- elsif block.settings.image != blank -%}
+      {%- if block.settings.mobile_image != blank -%}
+        {{ block.settings.image | image_url: width: 1200 | image_tag: class: 'promo-card-double__image promo-card-double__image--desktop', loading: lazy_load | default: 'lazy' }}
+        {{ block.settings.mobile_image | image_url: width: 600 | image_tag: class: 'promo-card-double__image promo-card-double__image--mobile', loading: lazy_load | default: 'lazy' }}
+      {%- else -%}
+        {{ block.settings.image | image_url: width: 1200 | image_tag: class: 'promo-card-double__image', loading: lazy_load | default: 'lazy' }}
+      {%- endif -%}
+    {%- else -%}
+      <div style="width: 100%; height: 100%; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+        <p style="opacity: 0.5;">Image placeholder</p>
+      </div>
+    {%- endif -%}
+  </div>
+  
+  <div class="promo-card-double__content" style="color: {{ block.settings.text_color }};">
+    {%- if block.settings.heading != blank -%}
+      <h3 class="promo-card-double__heading" style="color: {{ block.settings.text_color }};">{{ block.settings.heading }}</h3>
+    {%- endif -%}
+    
+    <div class="promo-card-double__footer">
+      {%- if block.settings.subtitle != blank -%}
+        <p class="promo-card-double__subtitle" style="color: {{ block.settings.text_color }};">{{ block.settings.subtitle }}</p>
+      {%- endif -%}
+      
+      {%- if block.settings.link_text != blank and block.settings.link_url != blank -%}
+        <a style="color: {{ block.settings.text_color }};" href="{{ block.settings.link_url }}" class="promo-card-double__link" style="color: {{ block.settings.text_color }};">{{ block.settings.link_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,389 @@
+/* Fragrance Filter (Hexagon Container) Styles */
+
+/* Mobile First Base Styles */
+.fragranceFilter-wrapper {
+  background-color: var(--nue-white);
+  /* padding: 2em 0 3em; */
+  --circle-size: 70px;
+  --orbit-radius: 90px;
+  --animation-duration: 90s;
+}
+
+@media screen and (min-width: 750px) {
+  .fragranceFilter-wrapper {
+    /* padding: 4em 0 5em; */
+    --circle-size: 170px;
+    --orbit-radius: 210px;
+  }
+}
+
+.hexagon-container {
+  position: relative;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hexagon-container .filter-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 60px;
+  z-index: 20;
+}
+@media screen and (min-width: 750px) {
+  .hexagon-container .filter-wrapper {
+    margin-bottom: 105px;
+  }
+
+  .hexagon-container {
+
+    min-height: calc(var(--orbit-radius) * 2 + var(--circle-size) + 200px);
+ 
+  }
+}
+
+
+
+.hexagon-container .filter-option {
+  cursor: pointer;
+  position: relative;
+  font-style: italic;
+}
+
+.hexagon-container .filter-option.active::after {
+  content: '';
+  position: absolute;
+  bottom: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #04953D;
+}
+
+
+@media screen and (min-width: 750px) {
+  .hexagon-container .filter-option.active::after {
+
+    bottom: -14px;
+
+  }
+}
+
+.hexagon-container .sets-wrapper {
+  position: relative;
+  width: 100%;
+  height: calc(var(--orbit-radius) * 2 + var(--circle-size));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hexagon-container .circle-set {
+  position: absolute;
+  width: calc(var(--orbit-radius) * 2 + var(--circle-size));
+  height: calc(var(--orbit-radius) * 2 + var(--circle-size));
+  pointer-events: none;
+}
+
+.hexagon-container .circle-set.active {
+  pointer-events: auto;
+}
+
+.hexagon-container .circle-set:not(.active) {
+  pointer-events: none;
+}
+
+.hexagon-container .center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  transition: opacity 0.6s ease;
+  margin: 0;
+  pointer-events: none;
+}
+
+.hexagon-container .circle-set:not(.active) .center-text {
+  opacity: 0;
+}
+
+.hexagon-container .circles-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hexagon-container .circle-image {
+  width: 100%;
+  height: 100%;
+  isolation: isolate;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s ease;
+}
+
+.hexagon-container .circle-set.active .circles-wrapper {
+  animation: ff-rotate var(--animation-duration) linear infinite;
+}
+
+.hexagon-container .circle-set.active .circle-image {
+  animation: ff-counter-rotate var(--animation-duration) linear infinite;
+}
+
+.hexagon-container .circle-set:not(.active) .circles-wrapper {
+  animation: none;
+}
+
+.hexagon-container .circle {
+  position: absolute;
+  width: var(--circle-size);
+  height: var(--circle-size);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--orbit-radius))
+    rotate(calc(-1 * var(--angle)));
+  text-decoration: none;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.8s ease, opacity 0.8s ease;
+  pointer-events: auto;
+  isolation: isolate;
+  background-size: cover;
+  background-position: center;
+}
+
+.hexagon-container .circle-set:not(.active) .circle {
+  filter: blur(8px);
+  opacity: 0.9;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.hexagon-container .circle-set.active .circle {
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.hexagon-container .circle-set.active .circle:hover {
+  z-index: 2;
+}
+
+/* Left edge - RIGHT half of hexagon (circles 6, 1, 2) */
+.hexagon-container .circle-set:not(.active) .circle:nth-child(6) {
+  /* 300° */
+  transform: translate(
+    calc(-60vw - var(--circle-size) / 2),
+    calc(var(--circle-size) / -2 + var(--orbit-radius) * 0.866)
+  );
+}
+
+.hexagon-container .circle-set:not(.active) .circle:nth-child(1) {
+  /* 0° */
+  transform: translate(calc(-60vw), calc(var(--circle-size) / -2));
+}
+
+.hexagon-container .circle-set:not(.active) .circle:nth-child(2) {
+  /* 60° */
+  transform: translate(
+    calc(-60vw - var(--circle-size) / 2),
+    calc(var(--circle-size) / -2 + var(--orbit-radius) * -0.866)
+  );
+}
+
+/* Right edge - LEFT half of hexagon (circles 3, 4, 5) */
+.hexagon-container .circle-set:not(.active) .circle:nth-child(3) {
+  /* 120° */
+  transform: translate(
+    calc(60vw - var(--circle-size) / 2),
+    calc(calc(var(--circle-size) / -2) + var(--orbit-radius) * -0.866)
+  );
+}
+
+.hexagon-container .circle-set:not(.active) .circle:nth-child(4) {
+  /* 180° */
+  transform: translate(calc(60vw - var(--circle-size)), calc(var(--circle-size) / -2))
+}
+
+.hexagon-container .circle-set:not(.active) .circle:nth-child(5) {
+  /* 240° */
+  transform: translate(
+    calc(60vw - var(--circle-size) / 2),
+    calc(calc(var(--circle-size) / -2) + var(--orbit-radius) * 0.866)
+  );
+}
+
+@media screen and (min-width: 750px) {
+  /* Left edge - RIGHT half of hexagon (circles 6, 1, 2) */
+  .hexagon-container .circle-set:not(.active) .circle:nth-child(6) {
+    /* 300° */
+    transform: translate(
+      calc(-50vw - var(--circle-size) / 2),
+      calc(var(--circle-size) / -2 + var(--orbit-radius) * 0.866)
+    );
+  }
+
+  .hexagon-container .circle-set:not(.active) .circle:nth-child(1) {
+    /* 0° */
+    transform: translate(calc(-50vw), calc(var(--circle-size) / -2));
+  }
+
+  .hexagon-container .circle-set:not(.active) .circle:nth-child(2) {
+    /* 60° */
+    transform: translate(
+      calc(-50vw - var(--circle-size) / 2),
+      calc(var(--circle-size) / -2 + var(--orbit-radius) * -0.866)
+    );
+  }
+
+  /* Right edge - LEFT half of hexagon (circles 3, 4, 5) */
+  .hexagon-container .circle-set:not(.active) .circle:nth-child(3) {
+    /* 120° */
+    transform: translate(
+      calc(50vw - var(--circle-size) / 2),
+      calc(calc(var(--circle-size) / -2) + var(--orbit-radius) * -0.866)
+    );
+  }
+
+  .hexagon-container .circle-set:not(.active) .circle:nth-child(4) {
+    /* 180° */
+    transform: translate(calc(50vw - var(--circle-size)), calc(var(--circle-size) / -2))
+  }
+
+  .hexagon-container .circle-set:not(.active) .circle:nth-child(5) {
+    /* 240° */
+    transform: translate(
+      calc(50vw - var(--circle-size) / 2),
+      calc(calc(var(--circle-size) / -2) + var(--orbit-radius) * 0.866)
+    );
+  }
+}
+
+.hexagon-container .circle-content {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.hexagon-container .circle-set.active .circle-image::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110%;
+  height: 110%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: inherit;
+  filter: blur(16px);
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.hexagon-container .circle-set.active .circle-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: inherit;
+  filter: blur(12px) saturate(1.5);
+  opacity: 0;
+  transform: translateY(10px) scale(0.9);
+  transition: all 0.4s ease-in-out;
+  z-index: -3;
+  pointer-events: none;
+}
+
+.hexagon-container .circle-set.active .circle-image:hover::before {
+  opacity: 0.7;
+}
+
+.hexagon-container .circle-set.active .circle-image:hover::after {
+  opacity: 0.8;
+}
+
+.hexagon-container h2 {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.25;
+  margin: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .hexagon-container h2 {
+    font-size: 32px;
+  }
+}
+
+.hexagon-container h3 {
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .hexagon-container h3 {
+    font-size: 56px;
+  }
+}
+
+.hexagon-container .circle-set:not(.active) .circle-content {
+  animation: none;
+}
+
+.hexagon-container .circle-set:not(.active) .circle:hover .circle-content {
+  transform: scale(1.05);
+}
+
+.hexagon-container .circle-content span {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: #fff;
+}
+
+@media screen and (min-width: 750px) {
+  .hexagon-container .circle-content span {
+    font-size: 1.25em;
+  }
+}
+
+@keyframes ff-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ff-counter-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}

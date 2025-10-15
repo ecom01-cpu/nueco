@@ -1,0 +1,187 @@
+{% comment %}
+  Renders a NUE product card
+
+  Accepts:
+  - card_product: {Object} Product Liquid object
+  - section_id: {String} The ID of the section that contains this card
+  - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+  - layout: {String} Layout type - 'center' or 'grid'. Default: 'center' (optional)
+
+  Usage:
+  {% render 'card-product-nue', card_product: product %}
+  {% render 'card-product-nue', card_product: product, layout: 'grid' %}
+{% endcomment %}
+
+{{ 'card-product-nue.css' | asset_url | stylesheet_tag }}
+
+{%- if card_product and card_product != empty -%}
+  {%- assign card_layout = layout | default: 'center' -%}
+  <div class="card-product-nue{% if card_layout == 'grid' %} card-product-nue--grid{% endif %}">
+    <a href="{{ card_product.url }}" class="card-product-nue__link">
+      {%- liquid
+        assign primary_image = card_product.featured_media
+        assign hover_image = null
+        
+        if card_product.metafields.custom.plp_card_image != blank
+          assign primary_image = card_product.metafields.custom.plp_card_image
+        endif
+        
+        if card_product.metafields.custom.plp_card_hover_image != blank
+          assign hover_image = card_product.metafields.custom.plp_card_hover_image
+        endif
+      -%}
+      
+      {%- if primary_image -%}
+        <div class="card-product-nue__image-wrapper">
+          <img
+            srcset="
+              {%- if primary_image.width >= 165 -%}{{ primary_image | image_url: width: 165 }} 165w,{%- endif -%}
+              {%- if primary_image.width >= 360 -%}{{ primary_image | image_url: width: 360 }} 360w,{%- endif -%}
+              {%- if primary_image.width >= 533 -%}{{ primary_image | image_url: width: 533 }} 533w,{%- endif -%}
+              {%- if primary_image.width >= 720 -%}{{ primary_image | image_url: width: 720 }} 720w,{%- endif -%}
+              {%- if primary_image.width >= 940 -%}{{ primary_image | image_url: width: 940 }} 940w,{%- endif -%}
+              {%- if primary_image.width >= 1066 -%}{{ primary_image | image_url: width: 1066 }} 1066w,{%- endif -%}
+              {{ primary_image | image_url }} {{ primary_image.width }}w
+            "
+            src="{{ primary_image | image_url: width: 533 }}"
+            sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+            alt="{{ primary_image.alt | escape }}"
+            class="card-product-nue__image card-product-nue__image--primary"
+            {% unless lazy_load == false %}
+              loading="lazy"
+            {% endunless %}
+            width="{{ primary_image.width }}"
+            height="{{ primary_image.height }}"
+          >
+          
+          {%- if hover_image -%}
+            <img
+              srcset="
+                {%- if hover_image.width >= 165 -%}{{ hover_image | image_url: width: 165 }} 165w,{%- endif -%}
+                {%- if hover_image.width >= 360 -%}{{ hover_image | image_url: width: 360 }} 360w,{%- endif -%}
+                {%- if hover_image.width >= 533 -%}{{ hover_image | image_url: width: 533 }} 533w,{%- endif -%}
+                {%- if hover_image.width >= 720 -%}{{ hover_image | image_url: width: 720 }} 720w,{%- endif -%}
+                {%- if hover_image.width >= 940 -%}{{ hover_image | image_url: width: 940 }} 940w,{%- endif -%}
+                {%- if hover_image.width >= 1066 -%}{{ hover_image | image_url: width: 1066 }} 1066w,{%- endif -%}
+                {{ hover_image | image_url }} {{ hover_image.width }}w
+              "
+              src="{{ hover_image | image_url: width: 533 }}"
+              sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+              alt="{{ hover_image.alt | escape }}"
+              class="card-product-nue__image card-product-nue__image--hover"
+              loading="lazy"
+              width="{{ hover_image.width }}"
+              height="{{ hover_image.height }}"
+            >
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        <div class="card-product-nue__image-wrapper">
+          {{ 'product-1' | placeholder_svg_tag: 'card-product-nue__placeholder' }}
+        </div>
+      {%- endif -%}
+    </a>
+
+    <div class="card-product-nue__content">
+      <div class="card-product-nue__info">
+        <a href="{{ card_product.url }}" class="card-product-nue__content-link">
+          <h3 class="card-product-nue__title">{{ card_product.title | escape }}</h3>
+          
+          {%- if card_layout == 'grid' and card_product.metafields.custom.fragrance_filter != blank -%}
+            <div class="card-product-nue__swatches">
+              {%- for fragrance in card_product.metafields.custom.fragrance_filter.value -%}
+                {%- if fragrance.image != blank -%}
+                  <div class="card-product-nue__swatch-item">
+                    <div class="card-product-nue__swatch">
+                      <img
+                        src="{{ fragrance.image | image_url: width: 80 }}"
+                        alt="{{ fragrance.title | escape }}"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                      >
+                    </div>
+                    {%- if fragrance.title != blank -%}
+                      <p class="card-product-nue__swatch-label">{{ fragrance.title }}</p>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </a>
+
+        {%- if card_product.metafields.custom.plp_card_short_description != blank -%}
+          <p class="card-product-nue__description">{{ card_product.metafields.custom.plp_card_short_description }}</p>
+        {%- endif -%} 
+
+        {% assign product_form_id = 'product-form-' | append: section_id | append: card_product.id %}
+        {%- assign is_subscription_only = false -%}
+        {%- if card_product.requires_selling_plan or card_product.metafields.custom.show_subscription_options_only == true or card_product.metafields.custom.show_subscription_options_only == "true" -%}
+          {%- assign is_subscription_only = true -%}
+        {%- endif -%}
+        {%- assign first_selling_plan_id = null -%}
+
+        {%- comment -%} Get first selling plan ID if any subscription options are available {%- endcomment -%}
+        {%- if card_product.selected_or_first_available_variant.selling_plan_allocations.size > 0 -%}
+          {%- assign first_selling_plan_id = card_product.selected_or_first_available_variant.selling_plan_allocations.first.selling_plan.id -%}
+        {%- endif -%}
+        
+        {%- if card_product.available -%}
+          <product-form data-section-id="{{ section_id }}">
+            {%- form 'product',
+              card_product,
+              id: product_form_id,
+              class: 'form',
+              novalidate: 'novalidate',
+              data-type: 'add-to-cart-form'
+            -%}
+              <input
+                type="hidden"
+                name="id"
+                value="{{ card_product.selected_or_first_available_variant.id }}"
+                {% if card_product.selected_or_first_available_variant.available == false %}
+                  disabled
+                {% endif %}
+              >
+              
+              {%- comment -%} Add subscription selling plan if any subscription option exists {%- endcomment -%}
+              {%- if first_selling_plan_id -%}
+                <input
+                  type="hidden"
+                  name="selling_plan"
+                  value="{{ first_selling_plan_id }}"
+                >
+              {%- endif -%}
+              <button
+                type="submit"
+                name="add"
+                class="card-product-nue__button button"
+                aria-haspopup="dialog"
+                {% if card_product.selected_or_first_available_variant.available == false %}
+                  disabled
+                {% endif %}
+              >
+
+              
+                {%- if card_product.selected_or_first_available_variant.selling_plan_allocations.size > 0 -%}
+                  <span>{{ card_product.selected_or_first_available_variant.selling_plan_allocations.first.price | money }}</span>
+                {%- else -%}
+                  <span>{{ card_product.price | money }}</span>
+                {%- endif -%}
+                <svg class="plus" width="10" height="9" viewBox="0 0 10 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.757812 4.5H5.00045M9.24309 4.5H5.00045M5.00045 4.5V0.257359M5.00045 4.5L5.00045 8.74264" stroke="#04953D"/>
+                </svg>
+                {%- render 'loading-spinner' -%}
+              </button>
+            {%- endform -%}
+          </product-form>
+        {%- else -%}
+          <button class="card-product-nue__button button" disabled>
+            <span>{{ 'products.product.sold_out' | t }}</span>
+          </button>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}

@@ -1,0 +1,91 @@
+/* Nuecode Modal Styles */
+
+/* Override modal button styles for both nuecode and nue-collapsible-content sections */
+.nuecode-wrapper .nue-collapsible-content .nutrition-modal__button {
+  font-size: 12px !important;
+  letter-spacing: normal;
+  font-weight: 400;
+  display: inline-block; 
+  font-family: var(--font-body-family);
+  text-decoration: underline !important;
+    text-align: left;
+    line-height: 1.5em;
+}
+
+.nue-collapsible-content .nutrition-modal__button{
+  font-size: 16px;
+  text-decoration: none !important;
+  font-family: var(--font-body-family) !important;
+  font-weight: 100;
+  text-transform: none;
+}
+
+/* Ensure modal buttons inherit accordion content typography when needed */
+.accordion__content .nutrition-modal__opener,
+.rich-text__text .nutrition-modal__opener {
+  margin-top: 1rem;
+}
+
+/* Modal button hover state */
+.nuecode-wrapper .nutrition-modal__button:hover,
+.nue-collapsible-content .nutrition-modal__button:hover {
+  text-decoration-thickness: 0.2rem;
+}
+
+/* Ensure proper spacing when modal button is the last element */
+.accordion__content .nutrition-modal__opener:last-child,
+.rich-text__text .nutrition-modal__opener:last-child {
+  margin-bottom: 0;
+}
+
+/* Mobile responsive adjustments */
+@media screen and (max-width: 749px) {
+  .nuecode-wrapper .nutrition-modal__button {
+
+  }
+
+  .nue-collapsible-content .nutrition-modal__button{
+
+  }
+}
+
+/* Richtext modal button styles */
+.nutrition-modal__button--richtext {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.nutrition-modal__richtext {
+  display: inline-block;
+}
+
+.nutrition-modal__richtext p {
+  margin: 0;
+  display: inline;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.nutrition-modal__richtext a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/* Ensure richtext inherits button styles */
+.nue-collapsible-content .nutrition-modal__richtext p {
+  font-size: 16px;  
+  font-family: var(--font-body-family) !important;
+  font-weight: 100;
+}
+
+.nue-collapsible-content .nutrition-modal__richtext a {
+  /* font-size: 16px;  
+  text-decoration: underline;
+  font-family: var(--font-body-family) !important;
+  font-weight: 100; */
+  text-decoration: underline;
+}

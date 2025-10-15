@@ -1,0 +1,142 @@
+/* Fragrance Hero Styles */
+.fragranceHero-wrapper {
+  background-color: var(--nue-white);
+  /* margin: 0 0 4.5em; */
+  text-align: center;
+  position: relative;
+  view-timeline-name: --scroll-up-lock-timeline;
+  view-timeline-axis: block;
+}
+
+/* Clickable wrapper styles */
+.fragranceHero-clickable-wrapper {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.fragranceHero-clickable-wrapper:hover {
+  opacity: 0.95;
+}
+
+.fragranceHero-clickable-wrapper:focus {
+  outline: none;
+}
+
+/* Ensure text doesn't get link styling */
+.fragranceHero-clickable-wrapper .fragranceHero-eyebrow,
+.fragranceHero-clickable-wrapper .fragranceHero-title {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+
+.fragranceHero-eyebrow {
+  font-family: var(--font-heading-family);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 24px;
+  max-width: 650px;
+  margin: 0 auto 24px;
+  padding: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .fragranceHero-eyebrow {
+    font-size: 32px;
+    line-height: 40px;
+    margin-bottom: 38px;
+  }
+}
+
+.fragranceHero-title {
+  font-size: 56px;
+  font-weight: 100;
+  line-height: 56px;
+  letter-spacing: -0.02rem;
+  margin: 0;
+  padding: 0;
+  max-width: 810px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 750px) {
+  .fragranceHero-title {
+    font-size: 180px;
+    line-height: 148px;
+  }
+}
+
+.fragranceHero-img {
+  overflow: hidden;
+  max-width: 1920px;
+  margin: -10px auto 0;
+  animation: scroll-up-lock linear;
+  animation-timeline: --scroll-up-lock-timeline;
+  animation-range: entry 30% exit 70%;
+  animation-fill-mode: forwards;
+}
+
+@media screen and (min-width: 750px) {
+  .fragranceHero-img {
+    animation-range: entry 10% exit 50%;
+  }
+}
+
+.fragranceHero-img img {
+  width: calc(100% + 120px);
+  margin-left: -60px;
+  height: auto;
+}
+
+@media screen and (min-width: 750px) {
+  .fragranceHero-img img {
+    width: calc(100% + 170px);
+    margin-left: -85px;
+    height: auto;
+  }
+}
+
+.fragranceHero-cta {
+  margin-top: 30px;
+}
+
+@media screen and (min-width: 749px) {
+
+  .fragranceHero-cta {
+    margin-top: 4.5em;
+  }
+}
+
+
+@media screen and (min-width: 1997px) {
+  .fragranceHero-img {
+    overflow: visible;
+  }
+  .fragranceHero-cta {
+    margin-top: 4.5em;
+  }
+}
+
+@keyframes scroll-up-lock {
+  0% {
+    transform: translateY(5vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media screen and (min-width: 750px) {
+  @keyframes scroll-up-lock {
+    0% {
+      transform: translateY(20vh);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+}

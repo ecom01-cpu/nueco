@@ -1,0 +1,468 @@
+{{ 'header.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}">
+<script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
+<script src="{{ 'header.js' | asset_url }}" defer></script>
+
+<header class="cm-header" data-theme="light">
+  <div class="cm-header__container">
+    <!-- Hamburger Menu -->
+    <button class="cm-header__hamburger" aria-label="Open menu" onclick="document.querySelector('.cm-mega-menu').open()">
+      <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line y1="0.855469" x2="19" y2="0.855469" stroke="currentColor"/>
+        <line y1="8.85547" x2="19" y2="8.85547" stroke="currentColor"/>
+        <line y1="16.8555" x2="19" y2="16.8555" stroke="currentColor"/>
+      </svg>
+    </button>
+
+    <!-- Logo -->
+    <a href="{{ routes.root_url }}" class="cm-header__logo" aria-label="{{ shop.name }}">
+      {% if section.settings.logo_black %}
+        <img 
+          class="cm-header__logo-black" 
+          src="{{ section.settings.logo_black | image_url }}"
+          alt="{{ shop.name }}"
+          loading="eager"
+        >
+      {% endif %}
+      {% if section.settings.logo_white %}
+        <img 
+          class="cm-header__logo-white" 
+          src="{{ section.settings.logo_white | image_url }}"
+          alt="{{ shop.name }}"
+          loading="eager"
+        >
+      {% endif %}
+    </a>
+
+    <!-- Cart Dot -->
+    <button class="cm-header__cart-dot" aria-label="Open cart" onclick="document.querySelector('cart-drawer').open()">
+      <span class="cm-header__cart-indicator{% if cart.item_count > 0 %} cm-header__cart-indicator--has-items{% endif %}">
+        {% if cart.item_count > 0 %}
+          <span class="cm-header__cart-count">{{ cart.item_count }}</span>
+        {% endif %}
+      </span>
+    </button>
+  </div>
+</header>
+
+<!-- The Art of Text - Homepage Only -->
+{% if template == 'index' %}
+  {% if section.settings.art_of_text %}
+    <div class="cm-art-text-homepage">
+      <span class="cm-art-text-homepage__text">{{ section.settings.art_of_text }}</span>
+    </div>
+  {% endif %}
+{% endif %}
+
+<!-- Mega Menu -->
+<div class="cm-mega-menu">
+  <div class="cm-mega-menu__overlay"></div>
+  <nav class="cm-mega-menu__container">
+    <!-- Left Sidebar -->
+    <div class="cm-mega-menu__sidebar">
+      <!-- Close Button -->
+      <button class="cm-mega-menu__close" aria-label="Close menu">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.5 0.5L8.75 8.75M17 17L8.75 8.75M8.75 8.75L17 0.5M8.75 8.75L0.5 17" stroke="black"/>
+        </svg>
+      </button>
+      
+      <!-- The Art of Text -->
+      {% if section.settings.art_of_text %}
+        <span class="cm-mega-menu__art-text">{{ section.settings.art_of_text }}</span>
+      {% endif %}
+    </div>
+    
+    <!-- Menu Content -->
+    <div class="cm-mega-menu__content">
+      <!-- Top Navigation -->
+      <nav class="cm-mega-menu__nav">
+        {% if section.settings.menu %}
+          {% assign menu = linklists[section.settings.menu] %}
+          {% for link in menu.links %}
+            <a href="{{ link.url }}" class="cm-mega-menu__nav-item">{{ link.title }}</a>
+          {% endfor %}
+        {% endif %}
+        
+        {% if section.settings.usa_text and section.settings.usa_link %}
+          <a href="{{ section.settings.usa_link }}" class="cm-mega-menu__nav-item cm-mega-menu__nav-item--usa">
+            {{ section.settings.usa_text }}
+          </a>
+        {% endif %}
+      </nav>
+      
+      <!-- Links Sections Container -->
+      <div class="cm-mega-menu__sections">
+        <!-- Links Sections -->
+        {% for block in section.blocks %}
+        {% if block.type == 'links' %}
+          <div class="cm-links-section" data-card-style="{{ block.settings.card_style }}">
+            <div class="cm-links-header">
+              <h2 class="cm-links-title">{{ block.settings.title }}</h2>
+              {% assign card_count = 0 %}
+              {% for i in (1..10) %}
+                {% capture card_image %}card{{ i }}_image{% endcapture %}
+                {% if block.settings[card_image] %}
+                  {% assign card_count = card_count | plus: 1 %}
+                {% endif %}
+              {% endfor %}
+              {% if card_count > 0 %}
+                <span class="cm-links-count">{{ card_count }}</span>
+              {% endif %}
+            </div>
+            
+            <div class="swiper cm-links-swiper">
+              <div class="swiper-wrapper">
+                {% for i in (1..10) %}
+                  {% capture card_image %}card{{ i }}_image{% endcapture %}
+                  {% capture card_title %}card{{ i }}_title{% endcapture %}
+                  {% capture card_subtitle %}card{{ i }}_subtitle{% endcapture %}
+                  {% capture card_link %}card{{ i }}_link{% endcapture %}
+                  
+                  {% if block.settings[card_image] %}
+                    <div class="swiper-slide">
+                      <a href="{{ block.settings[card_link] }}" class="cm-link-card cm-link-card--{{ block.settings.card_style }}">
+                        <div class="cm-link-card__image">
+                          <img src="{{ block.settings[card_image] | image_url }}" alt="{{ block.settings[card_title] }}" loading="lazy">
+                        </div>
+                        <h3 class="cm-link-card__title">{{ block.settings[card_title] }}</h3>
+                        {% if block.settings[card_subtitle] %}
+                          <p class="cm-link-card__subtitle">{{ block.settings[card_subtitle] |  newline_to_br }}</p>
+                        {% endif %}
+                      </a>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </nav>
+</div>
+
+<script>
+  // Set theme based on template
+  document.addEventListener('DOMContentLoaded', function() {
+    const header = document.querySelector('.cm-header');
+    const collectionHero = document.querySelector('.collection-hero[data-header-light="true"]');
+    const isIndexOrFragrance = document.body.classList.contains('template-index');
+    
+    // Use light theme if: index/fragrance page OR collection has light header enabled
+    const useLightTheme = isIndexOrFragrance || collectionHero !== null;
+    
+    if (header) {
+        header.setAttribute('data-theme', useLightTheme ? 'light' : 'dark');
+        console.log('Header theme:', useLightTheme ? 'light' : 'dark');
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom Header",
+  "tag": "section",
+  "class": "cm-header-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_black",
+      "label": "Black Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_white",
+      "label": "White Logo"
+    },
+    {
+      "type": "text",
+      "id": "art_of_text",
+      "label": "The Art of... Text",
+      "default": "The Art of..."
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation Menu"
+    },
+    {
+      "type": "text",
+      "id": "usa_text",
+      "label": "USA Link Text",
+      "default": "USA"
+    },
+    {
+      "type": "url",
+      "id": "usa_link",
+      "label": "USA Link URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "links",
+      "name": "Links",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Section Title",
+          "default": "The Methods"
+        },
+        {
+          "type": "select",
+          "id": "card_style",
+          "label": "Card Style (for all cards)",
+          "options": [
+            {"value": "small", "label": "Small Card"},
+            {"value": "standard", "label": "Standard Card"},
+            {"value": "large", "label": "Large Card"}
+          ],
+          "default": "standard"
+        },
+        {
+          "type": "header",
+          "content": "Card 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "card1_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card1_title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "card1_subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "url",
+          "id": "card1_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "card2_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card2_title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "card2_subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "url",
+          "id": "card2_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "card3_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card3_title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "card3_subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "url",
+          "id": "card3_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "card4_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card4_title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "card4_subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "url",
+          "id": "card4_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 5"
+        },
+        {
+          "type": "image_picker",
+          "id": "card5_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card5_title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "card5_subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "url",
+          "id": "card5_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 6"
+        },
+        {
+          "type": "image_picker",
+          "id": "card6_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card6_title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "card6_subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "url",
+          "id": "card6_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 7"
+        },
+        {
+          "type": "image_picker",
+          "id": "card7_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card7_title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "card7_subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "url",
+          "id": "card7_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 8"
+        },
+        {
+          "type": "image_picker",
+          "id": "card8_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card8_title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "card8_subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "url",
+          "id": "card8_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 9"
+        },
+        {
+          "type": "image_picker",
+          "id": "card9_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card9_title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "card9_subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "url",
+          "id": "card9_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 10"
+        },
+        {
+          "type": "image_picker",
+          "id": "card10_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card10_title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "card10_subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "url",
+          "id": "card10_link",
+          "label": "Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

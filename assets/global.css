@@ -1,0 +1,26 @@
+
+
+
+:root {
+  --nue-black: #000;
+  --nue-white: #fff;
+  --nue-light-grey: #f8f8f8;
+  --nue-green: #04953d;
+  --nue-light-green: #edf8f1;
+
+  --header-height: 64px; /* For seamless loading. It will be overriden once calculated */
+}
+
+
+
+main#MainContent {
+  margin-top: calc(var(--header-height) * -1);
+}
+
+.page-width {
+  max-width: 1680px;
+}
+
+.page-width--product{
+  max-width: 1017px;
+}

@@ -1,0 +1,123 @@
+/* About Us Page Modifications - All styles prepended with .template-suffix-about */
+
+
+
+.template-suffix-about .nue-collapsible-content .rich-text__text{
+  font-family: var(--font-body-family);
+}
+
+.template-suffix-about .nue-collapsible-content .rich-text__text a{
+  color: #04953D;
+}
+
+.template-suffix-about .nue-product-slider-section{
+  background-color: white;
+}
+
+.template-suffix-about .image-with-text__content .button{
+  border: none;
+  background-color: #EFF8F2;
+  color: #429348;
+}
+
+.template-suffix-about .image-with-text__content .button:hover{
+  background-color: #DDF3E5;
+  border-color: #DDF3E5;
+}
+
+.template-suffix-about .image-with-text__content .button:before, .template-suffix-about .image-with-text__content .button:after{
+  display: none;
+}
+
+
+
+@media screen and (max-width: 750px) {
+  .template-suffix-about .banner__media img{
+    /* object-fit: cover;
+    object-position: 59% 65%;
+    filter: brightness(0.9); */
+  }
+
+  .template-suffix-about .banner__content{
+    align-items: end;
+  }
+
+  .template-suffix-about .nue-collapsible-content .rich-text__text p{
+    
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .image-with-text__grid--reverse .image-with-text__text h5{
+    font-weight: 100;
+    letter-spacing: calc(var(--font-heading-scale) * 0.06rem);
+    color: rgb(var(--color-foreground));
+    word-break: break-word;
+    font-family: var(--font-heading-family);
+    font-style: var(--font-heading-style);
+    font-size: calc(var(--font-heading-scale) * 1.5rem);
+  }
+}
+
+
+@media screen and (min-width: 750px) {
+  .template-suffix-about .image-with-text__heading.hxxl{
+    font-size: 104px;
+    line-height: 104px;
+    max-width: 526px;
+  }
+
+  .template-suffix-about .image-with-text__text h5{
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 1;
+  }
+
+  .template-suffix-about .image-with-text__text h4{
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 1;
+    font-weight: 300;
+  }
+
+  .template-suffix-about .image-with-text__content{
+    padding-top: 0;
+    padding-right: 72px;
+  }
+
+  .template-suffix-about .grid:not(.image-with-text__grid--reverse) .image-with-text__content{
+    padding-left: 52px;
+  }
+
+  .template-suffix-about .grid:not(.image-with-text__grid--reverse) .image-with-text__media-item{
+    width: 42%;
+  }
+
+  .template-suffix-about .nue-collapsible-content .rich-text__text{
+    
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .template-suffix-about .banner__heading{
+    font-size: 80px;
+    line-height: 72px;
+    
+  }
+
+  .template-suffix-about .banner__text p{
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 400;
+    max-width: 489px;
+  }
+
+  .grid__item .accordion:first-of-type summary{
+    max-width: 172px;
+  }
+
+  .grid__item .accordion:last-of-type summary{
+    max-width: 172px;
+  }
+
+}

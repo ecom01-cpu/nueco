@@ -1,0 +1,107 @@
+/* Custom Rating Display Styles */
+.custom-rating-display {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+
+/* Hide rating wrapper content until transformed to prevent flicker */
+.rating-wrapper {
+  min-height: 20px;
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+}
+
+.rating-wrapper[data-custom-transformed="true"] {
+  opacity: 1;
+}
+
+.custom-rating-value {
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  color: #04953D !important;
+  margin: 0 !important;
+  text-decoration: none !important;
+}
+
+.custom-rating-count {
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  color: #000000 !important;
+  margin: 0 !important;
+  text-transform: capitalize;
+  text-decoration: none !important;
+}
+
+/* Ensure the custom rating display works well in different contexts */
+.product .custom-rating-display,
+.card-wrapper .custom-rating-display {
+  margin: 0.5rem 0;
+  text-decoration: none !important;
+}
+
+/* For product pages */
+.product--no-media .custom-rating-display {
+  justify-content: center;
+}
+
+/* Hide original rating elements when custom display is active */
+.rating-wrapper[data-custom-transformed="true"] .rating,
+.rating-wrapper[data-custom-transformed="true"] .rating-text,
+.rating-wrapper[data-custom-transformed="true"] .rating-count {
+  display: none;
+}
+
+/* Yotpo specific overrides */
+[data-yotpo-element-id][data-custom-transformed="true"] .yotpo-stars,
+[data-yotpo-element-id][data-custom-transformed="true"] .text-m,
+[data-yotpo-element-id][data-custom-transformed="true"] .sr-only {
+  display: none;
+}
+
+.yotpo-bottomline[data-custom-transformed="true"] > *:not(.custom-rating-display) {
+  display: none;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 749px) {
+  .custom-rating-display {
+    gap: 8px;
+  }
+}
+
+/* Accessibility improvements handled in JavaScript */
+
+/* Integration with existing theme styles */
+.rating-wrapper .custom-rating-display {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+/* Ensure proper spacing in different layouts */
+.product-form .custom-rating-display {
+  margin-bottom: 1rem;
+}
+
+.card-information .custom-rating-display {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* For quick view or modal contexts */
+.product-modal .custom-rating-display {
+  margin: 0.5rem 0;
+}
+
+/* Ensure the text doesn't wrap */
+.custom-rating-value,
+.custom-rating-count {
+  white-space: nowrap;
+}
+
+[class*="yotpo-display-"][class*="yotpo-reviews-star-ratings-"][style] .custom-rating-count, [class*="yotpo-display-"][class*="yotpo-reviews-star-ratings-"][style] .custom-rating-value{
+  font-family: var(--font-body-family) !important; 
+}

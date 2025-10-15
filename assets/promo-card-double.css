@@ -1,0 +1,135 @@
+.promo-card-double {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  height: 100%;
+  grid-column: span 2;
+}
+
+.promo-card-double__image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.promo-card-double__image { 
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.promo-card-double__image--desktop {
+  display: none;
+}
+
+.promo-card-double__image--mobile {
+  display: block;
+}
+
+.promo-card-double__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px 16px;
+  display: grid;
+  grid-gap: 16px;
+  margin: 0;
+}
+
+.promo-card-double__heading {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 32px;
+}
+
+.promo-card-double__subtitle {
+  margin: 0;
+  font-size: 10px;
+  line-height: 16px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.promo-card-double__link {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 500;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Desktop styles */
+@media screen and (min-width: 750px) {
+  .promo-card-double__image--desktop {
+    display: block;
+  }
+  
+  .promo-card-double__image--mobile {
+    display: none;
+  }
+  
+  .promo-card-double {
+    display: grid;
+    grid-template-rows: 1fr auto;
+  }
+  
+  .promo-card-double__image-wrapper {
+    position: relative;
+    height: 0;
+    padding-bottom: 50%; /* Aspect ratio for image area */
+    overflow: hidden;
+  }
+  
+  .promo-card-double__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .promo-card-double__content {
+    position: relative;
+    padding: 52px 40px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 48px;
+    background-color: var(--promo-bg-color, #000000);
+  }
+  
+  .promo-card-double__heading {
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 40px;
+    margin: 0;
+  }
+  
+  .promo-card-double__footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 6px;
+  }
+  
+  .promo-card-double__subtitle {
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 1;
+  }
+  
+  .promo-card-double__link {
+    font-size: 12px;
+    font-weight: 400;
+  }
+}
+
+/* Handle grid-specific responsive behavior */
+@media screen and (max-width: 749px) {
+  .promo-card-double {
+    grid-column: 1 / -1;
+  }
+}

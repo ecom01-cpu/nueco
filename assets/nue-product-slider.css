@@ -1,0 +1,179 @@
+.nue-product-slider-section {
+  /* padding: 40px 0; */
+  background-color: #F8F8F8;
+}
+
+.nue-product-slider-heading {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 40px;
+  font-weight: 300;
+  margin-top: 0;
+}
+
+.nue-product-slider {
+  /* overflow: visible !important; */
+  position: relative;
+}
+
+.nue-product-slider .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
+
+.nue-product-slider .swiper-slide {
+  width: auto;
+  height: auto;
+}
+
+.nue-product-slide-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.nue-product-slide-link:hover img {
+  transform: scale(1.01);
+}
+
+.nue-product-slide-image {
+  position: relative;
+  /* aspect-ratio: 1 / 1; */
+  overflow: hidden;
+  /* background: #f5f5f5; */
+  border-radius: 8px;
+}
+
+.nue-product-slide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: 0.3s;
+}
+
+.nue-product-slide-placeholder {
+  display: block;
+  position: relative;
+}
+
+.nue-product-slide-placeholder .placeholder-svg {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.nue-product-slide-info {
+  text-align: center;
+  margin-top: 0px; /* Mobile margin */
+}
+
+.nue-product-slide-title {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  margin: 0;
+  font-family: 'FaktPro', sans-serif;
+  text-align: center;
+  opacity: 1; /* Always visible on mobile */
+  transition: opacity 0.3s ease;
+}
+
+
+/* Mobile styles */
+@media screen and (max-width: 749px) {
+  .nue-product-slider-section {
+    /* padding: 30px 0; */
+  }
+
+  .nue-product-slide-image img {
+    transform: scale(1.1);
+  }
+  
+  .nue-product-slider-heading {
+    font-size: 40px;
+    margin-bottom: 30px;
+  }
+  
+  .nue-product-slide-image {
+    /* width: 160px;
+    height: 160px; */
+  }
+  
+  .nue-product-slide-placeholder .placeholder-svg {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+/* Desktop styles */
+@media screen and (min-width: 750px) {
+  .nue-product-slide-image {
+    /* width: 280px;
+    height: 280px; */
+  }
+  
+  .nue-product-slide-placeholder .placeholder-svg {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .nue-product-slide-info {
+    margin-top: 0px; /* Desktop margin */
+  }
+  
+  /* Hide title by default on desktop */
+  .nue-product-slide-title {
+    opacity: 0;
+  }
+  
+  /* Show title on hover - desktop only */
+  .swiper-slide:hover .nue-product-slide-title {
+    opacity: 1;
+  }
+}
+
+/* Large desktop */
+@media screen and (min-width: 1200px) {
+  .nue-product-slide-image {
+    /* width: 320px; */
+    height: 500px;
+  }
+  
+  .nue-product-slide-placeholder .placeholder-svg {
+    width: 320px;
+    height: 320px;
+  }
+}
+
+/* Disable swiper grabbing when autoplaying */
+.nue-product-slider.swiper-autoplay-running {
+  cursor: default;
+}
+
+/* Smooth infinite scroll effect */
+.nue-product-slider .swiper-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+/* CSS-based continuous scroll animation */
+@keyframes continuousScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.nue-product-slider .swiper-wrapper.continuous-scroll {
+  animation: continuousScroll linear infinite;
+  animation-play-state: running;
+}
+
+.nue-product-slider .swiper-wrapper.continuous-scroll:hover {
+  animation-play-state: paused;
+}

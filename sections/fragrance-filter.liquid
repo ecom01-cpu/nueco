@@ -1,0 +1,823 @@
+{% comment %} TODO: set href locations for each filter {% endcomment %}
+{{ 'fragrance-filter.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<style>
+  {% comment %} Emotion Images - Use custom or default {% endcomment %}
+  .hexagon-container .circle-set[data-set='emotion'] .circle:nth-child(1) .circle-image {
+    background-image: url({% if section.settings.emotion_image_1 %}{{ section.settings.emotion_image_1 | image_url: width: 340 }}{% else %}{{ 'filter-joy.png' | asset_img_url: 'original' }}{% endif %});
+  }
+  .hexagon-container .circle-set[data-set='emotion'] .circle:nth-child(2) .circle-image {
+    background-image: url({% if section.settings.emotion_image_2 %}{{ section.settings.emotion_image_2 | image_url: width: 340 }}{% else %}{{ 'filter-destress.png' | asset_img_url: 'original' }}{% endif %});
+  }
+  .hexagon-container .circle-set[data-set='emotion'] .circle:nth-child(3) .circle-image {
+    background-image: url({% if section.settings.emotion_image_3 %}{{ section.settings.emotion_image_3 | image_url: width: 340 }}{% else %}{{ 'filter-sleep.png' | asset_img_url: 'original' }}{% endif %});
+  }
+  .hexagon-container .circle-set[data-set='emotion'] .circle:nth-child(4) .circle-image {
+    background-image: url({% if section.settings.emotion_image_4 %}{{ section.settings.emotion_image_4 | image_url: width: 340 }}{% else %}{{ 'filter-comfort.png' | asset_img_url: 'original' }}{% endif %});
+  }
+  .hexagon-container .circle-set[data-set='emotion'] .circle:nth-child(5) .circle-image {
+    background-image: url({% if section.settings.emotion_image_5 %}{{ section.settings.emotion_image_5 | image_url: width: 340 }}{% else %}{{ 'filter-connect.png' | asset_img_url: 'original' }}{% endif %});
+  }
+  .hexagon-container .circle-set[data-set='emotion'] .circle:nth-child(6) .circle-image {
+    background-image: url({% if section.settings.emotion_image_6 %}{{ section.settings.emotion_image_6 | image_url: width: 340 }}{% else %}{{ 'filter-energy.png' | asset_img_url: 'original' }}{% endif %});
+  } 
+
+  {% comment %} Scent Images - Use custom or default {% endcomment %}
+  .hexagon-container .circle-set[data-set='scent'] .circle:nth-child(1) .circle-image {
+    background-image: url({% if section.settings.scent_image_1 %}{{ section.settings.scent_image_1 | image_url: width: 340 }}{% else %}{{ 'filter-pepper.png' | asset_img_url: 'original' }}{% endif %});
+  }
+  .hexagon-container .circle-set[data-set='scent'] .circle:nth-child(2) .circle-image {
+    background-image: url({% if section.settings.scent_image_2 %}{{ section.settings.scent_image_2 | image_url: width: 340 }}{% else %}{{ 'filter-gourmand.png' | asset_img_url: 'original' }}{% endif %});
+  }
+  .hexagon-container .circle-set[data-set='scent'] .circle:nth-child(3) .circle-image {
+    background-image: url({% if section.settings.scent_image_3 %}{{ section.settings.scent_image_3 | image_url: width: 340 }}{% else %}{{ 'filter-floral.png' | asset_img_url: 'original' }}{% endif %});
+  }
+  .hexagon-container .circle-set[data-set='scent'] .circle:nth-child(4) .circle-image {
+    background-image: url({% if section.settings.scent_image_4 %}{{ section.settings.scent_image_4 | image_url: width: 340 }}{% else %}{{ 'filter-marine.png' | asset_img_url: 'original' }}{% endif %});
+  }
+  .hexagon-container .circle-set[data-set='scent'] .circle:nth-child(5) .circle-image {
+    background-image: url({% if section.settings.scent_image_5 %}{{ section.settings.scent_image_5 | image_url: width: 340 }}{% else %}{{ 'filter-wood.png' | asset_img_url: 'original' }}{% endif %});
+  }
+  .hexagon-container .circle-set[data-set='scent'] .circle:nth-child(6) .circle-image {
+    background-image: url({% if section.settings.scent_image_6 %}{{ section.settings.scent_image_6 | image_url: width: 340 }}{% else %}{{ 'filter-oud.png' | asset_img_url: 'original' }}{% endif %});
+  }
+
+  {% comment %} Modal Styles {% endcomment %}
+  .fragrance-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .fragrance-modal-container {
+    position: relative;
+    background-color: #FFFFFF;
+    max-width: 485px;
+    width: 100%;
+    padding: 40px 20px;
+    border-radius: 0;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  @media screen and (min-width: 750px) {
+    .fragrance-modal-container {
+      padding: 66px 40px;
+    }
+  }
+
+  .fragrance-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 10;
+  }
+
+  .fragrance-modal-close:hover {
+    opacity: 0.7;
+  }
+
+  .fragrance-modal-heading {
+    font-size: 40px;
+    font-weight: 100;
+    line-height: 48px;
+    margin-bottom: 38px;
+    margin-top: 0;
+    color: {{ section.settings.modal_text_color }};
+  }
+
+  .fragrance-modal-richtext p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 20px;
+  }
+
+  .fragrance-modal-form-label {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 24px;
+    margin-bottom: 20px;
+    font-family: Canela, Assistant, sans-serif;
+  }
+
+  .fragrance-modal-form {
+    margin-top: 30px;
+  }
+
+  .fragrance-modal-form .field__input {
+    background-color: transparent;
+    padding: 12px 50px 12px 16px;
+    color: {{ section.settings.modal_text_color }} !important;
+  }
+
+  .fragrance-modal-form .field__input::placeholder {
+    color: {{ section.settings.modal_text_color }};
+    opacity: 0.7;
+  }
+
+  .fragrance-modal-form .newsletter-form__button {
+    background-color: transparent !important;
+  }
+
+  .fragrance-modal-form .newsletter-form__button:hover {
+    opacity: 0.7;
+  }
+
+  @media screen and (max-width: 749px) {
+    .fragrance-modal-heading {
+      font-size: 32px;
+      line-height: 40px;
+      margin-bottom: 24px;
+    }
+
+    .fragrance-modal-richtext p {
+      /* font-size: 18px;
+      line-height: 26px; */
+    }
+
+    .fragrance-modal-form-label {
+      font-size: 16px;
+      line-height: 22px;
+    }
+  }
+</style>
+
+
+
+<div class="fragranceFilter-wrapper section-{{ section.id }}-padding">
+  <div class="page-widthx">
+    <div class="hexagon-container">
+      <h2>{{ section.settings.title }}</h2>
+      <div class="filter-wrapper">
+        <h2 class="filter-option active" data-set="emotion">Emotion</h2>
+        <h2>or</h2>
+        <h2 class="filter-option" data-set="scent">Scent</h2>
+      </div>
+
+      <div class="sets-wrapper">
+        <div class="circle-set active" data-set="emotion">
+          <h3 class="center-text">Emotion</h3>
+          <div class="circles-wrapper">
+            <a href="/collections/fragrances-2025?filter_type=emotion&filter={{ section.settings.emotion_text_1 }}" class="circle" style="--angle: 0deg; --index: 1" data-clickable="true" data-open-modal="{% if section.settings.emotion_modal_1 %}true{% else %}false{% endif %}">
+              <div class="circle-image">
+                <div class="circle-content">
+                  <span>{{ section.settings.emotion_text_1 }}</span>
+                </div>
+              </div>
+            </a>
+            <a href="/collections/fragrances-2025?filter_type=emotion&filter={{ section.settings.emotion_text_2 }}" class="circle" style="--angle: 60deg; --index: 2" data-clickable="true" data-open-modal="{% if section.settings.emotion_modal_2 %}true{% else %}false{% endif %}">
+              <div class="circle-image">
+                <div class="circle-content">
+                  <span>{{ section.settings.emotion_text_2 }}</span>
+                </div>
+              </div>
+            </a>
+            <a href="/collections/fragrances-2025?filter_type=emotion&filter={{ section.settings.emotion_text_3 }}" class="circle" style="--angle: 120deg; --index: 3" data-clickable="true" data-open-modal="{% if section.settings.emotion_modal_3 %}true{% else %}false{% endif %}">
+              <div class="circle-image">
+                <div class="circle-content">
+                  <span>{{ section.settings.emotion_text_3 }}</span>
+                </div>
+              </div>
+            </a>
+            <a href="/collections/fragrances-2025?filter_type=emotion&filter={{ section.settings.emotion_text_4 }}" class="circle" style="--angle: 180deg; --index: 4" data-clickable="true" data-open-modal="{% if section.settings.emotion_modal_4 %}true{% else %}false{% endif %}">
+              <div class="circle-image">
+                <div class="circle-content">
+                  <span>{{ section.settings.emotion_text_4 }}</span>
+                </div>
+              </div>
+            </a>
+            <a href="/collections/fragrances-2025?filter_type=emotion&filter={{ section.settings.emotion_text_5 }}" class="circle" style="--angle: 240deg; --index: 5" data-clickable="true" data-open-modal="{% if section.settings.emotion_modal_5 %}true{% else %}false{% endif %}">
+              <div class="circle-image">
+                <div class="circle-content">
+                  <span>{{ section.settings.emotion_text_5 }}</span>
+                </div>
+              </div>
+            </a>
+            <a href="/collections/fragrances-2025?filter_type=emotion&filter={{ section.settings.emotion_text_6 }}" class="circle" style="--angle: 300deg; --index: 6" data-clickable="true" data-open-modal="{% if section.settings.emotion_modal_6 %}true{% else %}false{% endif %}">
+              <div class="circle-image">
+                <div class="circle-content">
+                  <span>{{ section.settings.emotion_text_6 }}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="circle-set" data-set="scent">
+          <h3 class="center-text">Scent</h3>
+          <div class="circles-wrapper">
+            <a href="/collections/fragrances-2025?filter_type=scent&filter={{ section.settings.scent_text_1 }}" class="circle" style="--angle: 0deg; --index: 1" data-clickable="true" data-open-modal="{% if section.settings.scent_modal_1 %}true{% else %}false{% endif %}">
+              <div class="circle-image">
+                <div class="circle-content">
+                  <span>{{ section.settings.scent_text_1 }}</span>
+                </div>
+              </div>
+            </a>
+            <a href="/collections/fragrances-2025?filter_type=scent&filter={{ section.settings.scent_text_2 }}" class="circle" style="--angle: 60deg; --index: 2" data-clickable="true" data-open-modal="{% if section.settings.scent_modal_2 %}true{% else %}false{% endif %}">
+              <div class="circle-image">
+                <div class="circle-content">
+                  <span>{{ section.settings.scent_text_2 }}</span>
+                </div>
+              </div>
+            </a>
+            <a href="/collections/fragrances-2025?filter_type=scent&filter={{ section.settings.scent_text_4 }}" class="circle" style="--angle: 120deg; --index: 3" data-clickable="true" data-open-modal="{% if section.settings.scent_modal_4 %}true{% else %}false{% endif %}">
+              <div class="circle-image">
+                <div class="circle-content">
+                  <span>{{ section.settings.scent_text_4 }}</span>
+                </div>
+              </div>
+            </a>
+            <a href="/collections/fragrances-2025?filter_type=scent&filter={{ section.settings.scent_text_3 }}" class="circle" style="--angle: 180deg; --index: 4" data-clickable="true" data-open-modal="{% if section.settings.scent_modal_3 %}true{% else %}false{% endif %}">
+              <div class="circle-image">
+                <div class="circle-content">
+                  <span>{{ section.settings.scent_text_3 }}</span>
+                </div>
+              </div>
+            </a>
+            <a href="/collections/fragrances-2025?filter_type=scent&filter={{ section.settings.scent_text_5 }}" class="circle" style="--angle: 240deg; --index: 5" data-clickable="true" data-open-modal="{% if section.settings.scent_modal_5 %}true{% else %}false{% endif %}">
+              <div class="circle-image">
+                <div class="circle-content">
+                  <span>{{ section.settings.scent_text_5 }}</span>
+                </div>
+              </div>
+            </a>
+            <a href="/collections/fragrances-2025?filter_type=scent&filter={{ section.settings.scent_text_6 }}" class="circle" style="--angle: 300deg; --index: 6" data-clickable="true" data-open-modal="{% if section.settings.scent_modal_6 %}true{% else %}false{% endif %}">
+              <div class="circle-image">
+                <div class="circle-content">
+                  <span>{{ section.settings.scent_text_6 }}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} Modal Structure {% endcomment %}
+<div class="fragrance-modal-overlay" id="fragranceModal" style="display: none;">
+  <div class="fragrance-modal-container" style="background-color: {{ section.settings.modal_background_color }}; color: {{ section.settings.modal_text_color }}; {% if section.settings.modal_background_image %}background-image: url({{ section.settings.modal_background_image | image_url: width: 1000 }}); background-size: cover; background-position: center;{% endif %}">
+    <button class="fragrance-modal-close" type="button" aria-label="Close modal">
+      <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_38_17933)">
+          <path d="M1.35938 0.651245L13.0408 12.6512" stroke="{{ section.settings.modal_text_color }}"/>
+          <path d="M12.3242 0.651245L0.642773 12.6512" stroke="{{ section.settings.modal_text_color }}"/>
+        </g>
+        <defs>
+          <clipPath id="clip0_38_17933">
+            <rect width="14" height="13" fill="white"/>
+          </clipPath>
+        </defs>
+      </svg>
+    </button>
+    
+    <div class="fragrance-modal-content">
+      {% if section.settings.modal_heading != blank %}
+        <h2 class="fragrance-modal-heading">{{ section.settings.modal_heading }}</h2>
+      {% endif %}
+      
+      {% if section.settings.modal_richtext != blank %}
+        <div class="fragrance-modal-richtext">
+          {{ section.settings.modal_richtext }}
+        </div>
+      {% endif %}
+      
+      <div class="fragrance-modal-form-wrapper">
+        {% if section.settings.modal_form_label != blank %}
+          <div class="fragrance-modal-form-label">
+            {{ section.settings.modal_form_label | newline_to_br }}
+          </div>
+        {% endif %}
+        
+        {%- form 'customer', id: 'FragranceModalForm', class: 'fragrance-modal-form newsletter-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter,nue-fragrance-filter">
+          <div class="newsletter-form__field-wrapper">
+            <div class="field">
+              <input
+                id="FragranceModalEmail"
+                type="email"
+                name="contact[email]"
+                class="field__input"
+                value="{{ form.email }}"
+                aria-required="true"
+                autocorrect="off"
+                autocapitalize="off"
+                autocomplete="email"
+                placeholder="{{ 'newsletter.label' | t }}"
+                required
+                style="border-color: {{ section.settings.modal_text_color }}; color: {{ section.settings.modal_text_color }} !important;"
+              >
+              <label class="field__label" for="FragranceModalEmail">
+                {{ 'newsletter.label' | t }}
+              </label>
+              <button
+                type="submit"
+                class="newsletter-form__button field__button"
+                name="commit"
+                id="FragranceModalSubmit"
+                aria-label="{{ 'newsletter.button_label' | t }}"
+                style="background-color: transparent;"
+              >
+                <span class="svg-wrapper">
+                  <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L9 9L1 17" stroke="{{ section.settings.modal_text_color }}"/>
+                  </svg>
+                </span>
+              </button>
+            </div>
+            {%- if form.errors -%}
+              <small class="newsletter-form__message form__message" id="FragranceModalForm-error">
+                {{- form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email -}}
+              </small>
+            {%- endif -%}
+          </div>
+          {%- if form.posted_successfully? -%}
+            <h3
+              class="newsletter-form__message newsletter-form__message--success form__message"
+              id="FragranceModalForm-success"
+              tabindex="-1"
+              autofocus
+            >
+              {{- 'newsletter.success' | t }}
+            </h3>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const container = document.querySelector('.hexagon-container');
+    const filterOptions = container.querySelectorAll('.filter-option');
+    const circleSets = container.querySelectorAll('.circle-set');
+    const circles = container.querySelectorAll('.circle');
+
+    function switchSet(targetSet) {
+      filterOptions.forEach((opt) => {
+        opt.classList.toggle('active', opt.dataset.set === targetSet);
+      });
+
+      circleSets.forEach((set) => {
+        set.classList.toggle('active', set.dataset.set === targetSet);
+      });
+    }
+
+    filterOptions.forEach((option) => {
+      option.addEventListener('click', () => {
+        switchSet(option.dataset.set);
+      });
+    });
+
+    // Modal functionality
+    const modal = document.getElementById('fragranceModal');
+    if (!modal) {
+      console.error('Modal element not found! Check if #fragranceModal exists');
+      return;
+    }
+    const modalClose = modal.querySelector('.fragrance-modal-close');
+    const modalOverlay = modal;
+
+    function openModal() {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) {
+        closeModal();
+      }
+    });
+
+    // Handle ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.style.display === 'flex') {
+        closeModal();
+      }
+    });
+
+    circles.forEach((circle) => {
+        circle.addEventListener('click', (e) => {
+          // Always prevent default first
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const circleSet = circle.closest('.circle-set');
+          const isActiveSet = circleSet.classList.contains('active');
+          const shouldOpenModal = circle.dataset.openModal === 'true';
+          
+          console.log('Circle clicked - prevented default:', {
+            isActiveSet,
+            shouldOpenModal,
+            modalData: circle.dataset.openModal
+          });
+          
+          if (!isActiveSet) {
+            // If not the active set, switch to it
+            switchSet(circleSet.dataset.set);
+          } else if (shouldOpenModal) {
+            // If active set AND modal is enabled, open modal
+            openModal();
+          } else {
+            // If active set but no modal, manually navigate
+            window.location.href = circle.href;
+          }
+      });
+      
+      // Hover handlers
+      circle.addEventListener('mouseenter', () => {
+          const circleSet = circle.closest('.circle-set');
+          if (circleSet.classList.contains('active')) {
+            const wrapper = circle.closest('.circles-wrapper');
+            const contents = wrapper.querySelectorAll('.circle-image');
+            wrapper.style.animationPlayState = 'paused';
+            contents.forEach((content) => {
+              content.style.animationPlayState = 'paused';
+            });
+          }
+      });
+
+      circle.addEventListener('mouseleave', () => {
+          const circleSet = circle.closest('.circle-set');
+          if (circleSet.classList.contains('active')) {
+            const wrapper = circle.closest('.circles-wrapper');
+            const contents = wrapper.querySelectorAll('.circle-image');
+            wrapper.style.animationPlayState = 'running';
+            contents.forEach((content) => {
+              content.style.animationPlayState = 'running';
+            });
+          }
+      });
+    });
+  })(); // End IIFE
+</script>
+
+
+
+{% schema %}
+  {
+    "name": "Fragrance Filter",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Browse fragrance by"
+      },
+      {
+        "type": "header",
+        "content": "Emotion Images"
+      },
+      {
+        "type": "image_picker",
+        "id": "emotion_image_1",
+        "label": "Emotion One Image",
+        "info": "Leave blank to use default"
+      },
+      {
+        "type": "text",
+        "id": "emotion_text_1",
+        "label": "Emotion One Text",
+        "default": "Joy"
+      },
+      {
+        "type": "image_picker",
+        "id": "emotion_image_2",
+        "label": "Emotion Two Image",
+        "info": "Leave blank to use default"
+      },
+      {
+        "type": "text",
+        "id": "emotion_text_2",
+        "label": "Emotion Two Text",
+        "default": "Destress"
+      },
+      {
+        "type": "image_picker",
+        "id": "emotion_image_3",
+        "label": "Emotion Three Image",
+        "info": "Leave blank to use default"
+      },
+      {
+        "type": "text",
+        "id": "emotion_text_3",
+        "label": "Emotion Three Text",
+        "default": "Sleep"
+      },
+      {
+        "type": "image_picker",
+        "id": "emotion_image_4",
+        "label": "Emotion Four Image",
+        "info": "Leave blank to use default"
+      },
+      {
+        "type": "text",
+        "id": "emotion_text_4",
+        "label": "Emotion Four Text",
+        "default": "Comfort"
+      },
+      {
+        "type": "image_picker",
+        "id": "emotion_image_5",
+        "label": "Emotion Five Image",
+        "info": "Leave blank to use default"
+      },
+      {
+        "type": "text",
+        "id": "emotion_text_5",
+        "label": "Emotion Five Text",
+        "default": "Connect"
+      },
+      {
+        "type": "image_picker",
+        "id": "emotion_image_6",
+        "label": "Emotion Six Image",
+        "info": "Leave blank to use default"
+      },
+      {
+        "type": "text",
+        "id": "emotion_text_6",
+        "label": "Emotion Six Text",
+        "default": "Energy"
+      },
+      {
+        "type": "header",
+        "content": "Emotion Modal Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "emotion_modal_1",
+        "label": "Open modal for Emotion One instead of link",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "emotion_modal_2",
+        "label": "Open modal for Emotion Two instead of link",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "emotion_modal_3",
+        "label": "Open modal for Emotion Three instead of link",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "emotion_modal_4",
+        "label": "Open modal for Emotion Four instead of link",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "emotion_modal_5",
+        "label": "Open modal for Emotion Five instead of link",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "emotion_modal_6",
+        "label": "Open modal for Emotion Six instead of link",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Scent Images"
+      },
+      {
+        "type": "image_picker",
+        "id": "scent_image_1",
+        "label": "Scent One Image",
+        "info": "Leave blank to use default"
+      },
+      {
+        "type": "text",
+        "id": "scent_text_1",
+        "label": "Scent One Text",
+        "default": "Pepper"
+      },
+      {
+        "type": "image_picker",
+        "id": "scent_image_2",
+        "label": "Scent Two Image",
+        "info": "Leave blank to use default"
+      },
+      {
+        "type": "text",
+        "id": "scent_text_2",
+        "label": "Scent Two Text",
+        "default": "Gourmand"
+      },
+      {
+        "type": "image_picker",
+        "id": "scent_image_3",
+        "label": "Scent Three Image",
+        "info": "Leave blank to use default"
+      },
+      {
+        "type": "text",
+        "id": "scent_text_3",
+        "label": "Scent Three Text",
+        "default": "Floral"
+      },
+      {
+        "type": "image_picker",
+        "id": "scent_image_4",
+        "label": "Scent Four Image",
+        "info": "Leave blank to use default"
+      },
+      {
+        "type": "text",
+        "id": "scent_text_4",
+        "label": "Scent Four Text",
+        "default": "Marine"
+      },
+      {
+        "type": "image_picker",
+        "id": "scent_image_5",
+        "label": "Scent Five Image",
+        "info": "Leave blank to use default"
+      },
+      {
+        "type": "text",
+        "id": "scent_text_5",
+        "label": "Scent Five Text",
+        "default": "Wood"
+      },
+      {
+        "type": "image_picker",
+        "id": "scent_image_6",
+        "label": "Scent Six Image",
+        "info": "Leave blank to use default"
+      },
+      {
+        "type": "text",
+        "id": "scent_text_6",
+        "label": "Scent Six Text",
+        "default": "Oud"
+      },
+      {
+        "type": "header",
+        "content": "Scent Modal Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "scent_modal_1",
+        "label": "Open modal for Scent One instead of link",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "scent_modal_2",
+        "label": "Open modal for Scent Two instead of link",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "scent_modal_3",
+        "label": "Open modal for Scent Three instead of link",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "scent_modal_4",
+        "label": "Open modal for Scent Four instead of link",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "scent_modal_5",
+        "label": "Open modal for Scent Five instead of link",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "scent_modal_6",
+        "label": "Open modal for Scent Six instead of link",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Modal Content Settings"
+      },
+      {
+        "type": "text",
+        "id": "modal_heading",
+        "label": "Modal Heading",
+        "default": "Comfort, Bottled."
+      },
+      {
+        "type": "richtext",
+        "id": "modal_richtext",
+        "label": "Modal Content",
+        "default": "<p>There's a fragrance that feels like home.<br>A fragrance that stirs memories you can't quite place.</p><p>Our next chapter in functional fragrance explores the science of nostalgia: how familiarity can calm the body, soften the edges of stress, and remind you of the comfort you've always carried within.</p><p>It's not about going back in time, it's about finding a way back to yourself.</p>"
+      },
+      {
+        "type": "textarea",
+        "id": "modal_form_label",
+        "label": "Form Label Text",
+        "default": "Be the first to know\nSign up to unlock early access"
+      },
+      {
+        "type": "color",
+        "id": "modal_background_color",
+        "label": "Modal Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "modal_text_color",
+        "label": "Modal Text Color",
+        "default": "#5935D6"
+      },
+      {
+        "type": "image_picker",
+        "id": "modal_background_image",
+        "label": "Modal Background Image",
+        "info": "Optional background image for modal"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.all.padding.section_padding_heading"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 142,
+        "step": 2,
+        "unit": "px",
+        "label": "Desktop padding top",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 142,
+        "step": 2,
+        "unit": "px",
+        "label": "Desktop padding bottom",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile padding top",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile padding bottom",
+        "default": 40
+      }
+    ]
+  }
+  {% endschema %}

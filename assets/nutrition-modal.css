@@ -1,0 +1,156 @@
+/* Nutrition Modal Styles */
+
+/* Modal Container */
+.nutrition-modal {
+  box-sizing: border-box;
+  opacity: 0;
+  position: fixed;
+  visibility: hidden;
+  z-index: -1;
+  margin: 0 auto;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nutrition-modal[open] {
+  opacity: 1;
+  visibility: visible;
+  z-index: 101;
+}
+
+/* Modal Content Box */
+.nutrition-modal__content {
+  background-color: rgb(var(--color-background));
+  position: relative;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: var(--popup-corner-radius);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .nutrition-modal__content {
+    max-width: 800px;
+    max-height: 85vh;
+    padding: 3rem;
+  }
+}
+
+/* Close Button */
+.nutrition-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgb(var(--color-background));
+  border: 1px solid rgba(var(--color-foreground), 0.1);
+  border-radius: 50%;
+  width: 3.6rem;
+  height: 3.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-short) ease;
+  z-index: 1;
+}
+
+.nutrition-modal__close:hover {
+  background-color: rgba(var(--color-foreground), 0.05);
+  border-color: rgba(var(--color-foreground), 0.2);
+}
+
+.nutrition-modal__close svg {
+  width: 1.9rem;
+  height: 1.9rem;
+  color: rgb(var(--color-foreground));
+}
+
+/* Modal Button Opener */
+.nutrition-modal__opener {
+  display: inline-block;
+  margin-top: 0;
+}
+
+.nutrition-modal__button {
+  text-transform: lowercase; 
+  letter-spacing: 0.05em;
+  font-weight: 400;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+  text-decoration-thickness: 0.1rem;
+  transition: text-decoration-thickness var(--duration-short) 
+ease;
+  font-size: 10px;
+  letter-spacing: normal;
+
+}
+
+.nutrition-modal__button:hover {
+  text-decoration-thickness: 0.2rem;
+}
+
+/* Images Container */
+.nutrition-modal__images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Responsive Image Display */
+.nutrition-modal__image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.nutrition-modal__image--desktop {
+  display: none;
+}
+
+.nutrition-modal__image--mobile {
+  display: block;
+}
+
+@media screen and (min-width: 750px) {
+  .nutrition-modal__image--desktop {
+    display: block;
+  }
+  
+  .nutrition-modal__image--mobile {
+    display: none;
+  }
+}
+
+/* Accessibility Focus States */
+.nutrition-modal__content:focus-visible {
+  outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
+  outline-offset: 0.3rem;
+}
+
+.nutrition-modal__close:focus-visible {
+  outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
+  outline-offset: 0.3rem;
+}
+
+/* Smooth Transitions */
+.nutrition-modal {
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Prevent body scroll when modal is open */
+body.overflow-hidden {
+  overflow: hidden;
+}

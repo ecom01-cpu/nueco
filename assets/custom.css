@@ -1,0 +1,131 @@
+/* Custom CSS for Nueco theme */
+
+/* CSS Variables */
+:root {
+  --color-grey-text: #595959;
+  --color-light-green: #EDF8F1;
+  --color-nue-green: #04953D;
+}
+
+/* Make header elements black on non-index and non-fragrance pages
+body:not(.template-index):not(.template-suffix-fragrance) header * {
+  color: #000000 !important;
+}
+
+body:not(.template-index):not(.template-suffix-fragrance) header svg path,
+body:not(.template-index):not(.template-suffix-fragrance) header svg circle,
+body:not(.template-index):not(.template-suffix-fragrance) header svg rect,
+body:not(.template-index):not(.template-suffix-fragrance) header svg line,
+body:not(.template-index):not(.template-suffix-fragrance) header svg polyline,
+body:not(.template-index):not(.template-suffix-fragrance) header svg polygon,
+body:not(.template-index):not(.template-suffix-fragrance) header svg ellipse {
+  fill: #000000 !important;
+  stroke: #000000 !important;   
+} */
+
+/* Hide header tagline on non-index pages */
+body:not(.template-index) header .tagline {
+  display: none;
+}
+
+
+
+/* Typography */
+
+/* Layout */
+
+/* Components */
+
+/* Image and text content */
+.image-with-text__grid--reverse .image-with-text__content {
+  padding-left: 0;
+}
+.grid:not(.image-with-text__grid--reverse) .image-with-text__content {
+  padding-right: 0;
+}
+/* collection */
+div.bestsellers {
+  background-color: transparent;
+}
+.bestsellers .card__content {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out ;
+  text-align: center;
+}
+.bestsellers .card-wrapper:hover .card__content {
+  opacity: 1;
+  visibility: visible;
+}
+.bestsellers .price {
+  text-align: center;
+}
+.bestsellers .card-wrapper:hover a {
+  text-decoration: none;
+}
+.bestsellers .card--standard .card__inner {
+  background-color: transparent;
+}
+.bestsellers .price,
+.bestsellers .card__inner .card__content {
+  display: none;
+}
+.bestsellers .card__heading {
+  text-transform: capitalize;
+}
+.bestsellers slider-component .slider__slide {
+  width: 50%;
+  max-width: 50%;
+}
+
+/* Image and text */
+.image-with-text__content--desktop-center .image-with-text__heading {
+  font-size: 8rem;
+  font-weight: 100;
+  line-height: 0.9;
+  letter-spacing: -0.16rem;
+}
+.image-with-text__content--desktop-center .image-with-text__text p {
+  font-family: var(--font-heading-family);
+  font-weight: 100;
+  font-size: 1.8rem;
+  line-height: 1.33;
+  color: var(--nue-black);
+}
+
+/* Pages */
+
+/* Responsive */
+@media screen and (max-width: 749.99px) {
+  .image-with-text .image-with-text__content {
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+
+  .template-suffix-fragrance #product-grid{
+    row-gap: 50px;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .image-with-text .image-with-text__content {
+    padding-top: 0;
+  }
+  .image-with-text__content--desktop-center .image-with-text__heading {
+    margin-bottom: 76px;
+    margin-top: 0;
+    max-width: 250px;
+  }
+  .image-with-text__content--desktop-center .image-with-text__text {
+    max-width: 482px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .image-with-text__content--desktop-center .image-with-text__text p {
+    font-size: 2.4rem;
+  }
+  .bestsellers slider-component .slider__slide {
+    width: 25%;
+    max-width: 25%;
+  }
+}

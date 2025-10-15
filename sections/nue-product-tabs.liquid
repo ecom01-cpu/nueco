@@ -1,0 +1,530 @@
+{% comment %} Nue Product Tabs Section {% endcomment %}
+
+{{ 'nue-product-tabs.css' | asset_url | stylesheet_tag }}
+{{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+
+<style>
+
+  .nue-product-text-overlay-richtext * {
+    margin-bottom: 0;
+    line-height: 115%;
+  }
+
+  .nue-product-text-overlay-richtext p {
+    font-size: 12px;
+  }
+
+  .nue-product-before-after-small-richtext *{
+    margin-bottom: 0;
+    line-height: 115%;
+  }
+
+  .nue-product-text-overlay-richtext *:first-of-type {
+    margin-top: 30px;
+  }
+</style>
+
+<div class="nue-product-tabs-slider">
+  <style>
+    @media screen and (min-width: 750px) {
+      .nue-product-tabs-slider {
+        --min-section-height: {{ section.settings.min_section_height }}vw;
+      }
+      .nue-product-tabs-slider .swiper-slide {
+        min-height: var(--min-section-height);
+      }
+    }
+    @media screen and (max-width: 749px) {
+      .nue-product-tabs-slider {
+        --min-section-height-mobile: {{ section.settings.min_section_height_mobile }}vw;
+      }
+      .nue-product-tabs-slider .swiper-slide {
+        min-height: var(--min-section-height-mobile);
+      }
+    }
+  </style>
+  <div class="page-width">
+
+    <div class="productCarousel-container">
+      <div class="productCarousel-nav">
+        {% for block in section.blocks %}
+          <button class="nue-product-nav-pill {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.index0 }}">
+            {{ block.settings.tab_title }}
+          </button>
+        {% endfor %}
+      </div>
+
+      <div class="swiper nue-product-swiper">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+          <div class="swiper-slide">
+            {% if block.type == 'tab' %}
+              <div class="nue-product-image-wrapper">
+                {% if block.settings.tab_image %}
+                  <div class="nue-product-image-item">
+                    <img src="{{ block.settings.tab_image | image_url }}" alt="{{ block.settings.tab_title }}">
+                  </div>
+                {% endif %}
+                {% if block.settings.tab_second_image %}
+                  <div class="nue-product-image-item">
+                    <img src="{{ block.settings.tab_second_image | image_url }}" alt="Details of {{ block.settings.tab_title }}">
+                  </div>
+                {% endif %}
+              </div>
+            {% elsif block.type == 'stats' %}
+              <div class="nue-product-stats-wrapper {% if block.settings.desktop_image_position == 'right' %}image-right{% endif %}" style="--desktop-image-width: {{ block.settings.desktop_image_width | default: 50 }}%;">
+                <div class="nue-product-stats-image">
+                  {% if block.settings.stats_image %}
+                    <img src="{{ block.settings.stats_image | image_url }}" alt="{{ block.settings.stats_title }}">
+                  {% endif %}
+                </div>
+                <div class="nue-product-stats-content">
+                  {% if block.settings.stats_title %}
+                    <h3 class="nue-product-stats-title">{{ block.settings.stats_title }}</h3>
+                  {% endif %}
+                  
+                  <div class="nue-product-stats-list">
+                    {% if block.settings.stat_one_heading != blank %}
+                      <div class="nue-product-stat-item">
+                        <div class="nue-product-stat-heading">{{ block.settings.stat_one_heading }}</div>
+                        <div class="nue-product-stat-copy">{{ block.settings.stat_one_copy }}</div>
+                      </div>
+                    {% endif %}
+                    
+                    {% if block.settings.stat_two_heading != blank %}
+                      <div class="nue-product-stat-item">
+                        <div class="nue-product-stat-heading">{{ block.settings.stat_two_heading }}</div>
+                        <div class="nue-product-stat-copy">{{ block.settings.stat_two_copy }}</div>
+                      </div>
+                    {% endif %}
+                    
+                    {% if block.settings.stat_three_heading != blank %}
+                      <div class="nue-product-stat-item">
+                        <div class="nue-product-stat-heading">{{ block.settings.stat_three_heading }}</div>
+                        <div class="nue-product-stat-copy">{{ block.settings.stat_three_copy }}</div>
+                      </div>
+                    {% endif %}
+                  </div>
+                  
+                  {% if block.settings.footer_text %}
+                    <div class="nue-product-stats-footer">{{ block.settings.footer_text }}</div>
+                  {% endif %}
+                </div>
+              </div>
+            {% elsif block.type == 'before_after' %}
+              {% if block.settings.mobile_image_height and block.settings.mobile_image_height != 100 %}
+                <style>
+                  @media screen and (max-width: 749.99px) {
+                    .nue-product-before-after-block-{{ block.id }} .nue-product-before-after-image {
+                      aspect-ratio: 1 / {{ block.settings.mobile_image_height | divided_by: 100.0 }};
+                    }
+                  }
+                </style>
+              {% endif %}
+              <div class="nue-product-before-after-wrapper nue-product-before-after-block-{{ block.id }} {% if block.settings.desktop_image_position == 'right' %}image-right{% endif %}" style="--desktop-image-width: {{ block.settings.desktop_image_width | default: 50 }}%;">
+                <div class="nue-product-before-after-image">
+                  {% if block.settings.before_after_image %}
+                    <img src="{{ block.settings.before_after_image | image_url }}" alt="{{ block.settings.main_title }}">
+                  {% endif %}
+                </div>
+                <div class="nue-product-before-after-content">
+                  <div class="nue-product-before-after-top">
+                    {% if block.settings.small_image_title %}
+                      <div class="nue-product-before-after-small-title">{{ block.settings.small_image_title }}</div>
+                    {% endif %}
+
+                    {% if block.settings.small_image %}
+                      <div class="nue-product-before-after-small-image">
+                        <img src="{{ block.settings.small_image | image_url }}" alt="{{ block.settings.small_image_title }}">
+                      </div>
+                    {% endif %}
+                  </div>
+                  
+                  <div class="nue-product-before-after-bottom">
+                    {% if block.settings.main_title %}
+                      <h3 class="nue-product-before-after-title">{{ block.settings.main_title }}</h3>
+                    {% endif %}
+                    {% if block.settings.small_image_richtext %}
+                      <div class="nue-product-before-after-small-richtext">
+                        {{ block.settings.small_image_richtext }}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% elsif block.type == 'timeline' %}
+              <div class="nue-product-timeline-wrapper {% if block.settings.desktop_image_position == 'right' %}image-right{% endif %}" style="--desktop-image-width: {{ block.settings.desktop_image_width | default: 50 }}%;">
+                <div class="nue-product-timeline-image">
+                  {% if block.settings.timeline_image %}
+                    <img src="{{ block.settings.timeline_image | image_url }}" alt="{{ block.settings.timeline_header }}">
+                  {% endif %}
+                </div>
+                <div class="nue-product-timeline-content">
+                  {% if block.settings.timeline_header %}
+                    <h3 class="nue-product-timeline-header">{{ block.settings.timeline_header }}</h3>
+                  {% endif %}
+                  
+                  <div class="nue-product-timeline-list">
+                    {% if block.settings.time_one_heading != blank %}
+                      <div class="nue-product-timeline-item" data-aos="fade-up">
+                        <div class="nue-product-timeline-dot"></div>
+                        <div class="nue-product-timeline-content-item">
+                          <div class="nue-product-timeline-heading">{{ block.settings.time_one_heading }}</div>
+                          <div class="nue-product-timeline-subtitle">{{ block.settings.time_one_subtitle }}</div>
+                        </div>
+                      </div>
+                    {% endif %}
+                    
+                    {% if block.settings.time_two_heading != blank %}
+                      <div class="nue-product-timeline-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="nue-product-timeline-dot"></div>
+                        <div class="nue-product-timeline-content-item">
+                          <div class="nue-product-timeline-heading">{{ block.settings.time_two_heading }}</div>
+                          <div class="nue-product-timeline-subtitle">{{ block.settings.time_two_subtitle }}</div>
+                        </div>
+                      </div>
+                    {% endif %}
+                    
+                    {% if block.settings.time_three_heading != blank %}
+                      <div class="nue-product-timeline-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="nue-product-timeline-dot"></div>
+                        <div class="nue-product-timeline-content-item">
+                          <div class="nue-product-timeline-heading">{{ block.settings.time_three_heading }}</div>
+                          <div class="nue-product-timeline-subtitle">{{ block.settings.time_three_subtitle }}</div>
+                        </div>
+                      </div>
+                    {% endif %}
+                    
+                    {% if block.settings.time_four_heading != blank %}
+                      <div class="nue-product-timeline-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="nue-product-timeline-dot"></div>
+                        <div class="nue-product-timeline-content-item">
+                          <div class="nue-product-timeline-heading">{{ block.settings.time_four_heading }}</div>
+                          <div class="nue-product-timeline-subtitle">{{ block.settings.time_four_subtitle }}</div>
+                        </div>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% elsif block.type == 'text_overlay' %}
+              <div class="nue-product-text-overlay-wrapper">
+                {% if block.settings.text_color %}
+                  <style>
+                    .nue-product-text-overlay-block-{{ block.id }} .nue-product-text-overlay-richtext,
+                    .nue-product-text-overlay-block-{{ block.id }} .nue-product-text-overlay-richtext * {
+                      color: {{ block.settings.text_color }} !important;
+                      line-height: 115%;
+                    }
+                  </style>
+                {% endif %}
+                {% if block.settings.override_mobile_title_size %}
+                  <style>
+                    @media screen and (max-width: 749px) {
+                      .nue-product-text-overlay-block-{{ block.id }} .nue-product-text-overlay-title {
+                        font-size: {{ block.settings.mobile_title_size }}px !important;
+                        line-height: 1.2 !important;
+                      }
+                    }
+                  </style>
+                {% endif %}
+                <div class="nue-product-text-overlay-bg">
+                  {% if block.settings.background_image %}
+                    <picture>
+                      {% if block.settings.mobile_background_image %}
+                        <source media="(max-width: 749px)" srcset="{{ block.settings.mobile_background_image | image_url }}">
+                      {% endif %}
+                      <img src="{{ block.settings.background_image | image_url }}" alt="{{ block.settings.title }}">
+                    </picture>
+                  {% endif %}
+                </div>
+                <div class="nue-product-text-overlay-content nue-product-text-overlay-block-{{ block.id }} text-position-{{ block.settings.desktop_text_position | default: 'center-center' }} text-position-mobile-{{ block.settings.mobile_text_position | default: 'center-center' }} text-align-{{ block.settings.desktop_text_alignment | default: 'center' }} text-align-mobile-{{ block.settings.mobile_text_alignment | default: 'center' }}" style="--text-container-width: {{ block.settings.text_container_width | default: 50 }}%; {% if block.settings.text_color %}color: {{ block.settings.text_color }};{% endif %}">
+                  <div class="nue-product-text-overlay-inner">
+                    {% if block.settings.title %}
+                      <h3 style="color: {{ block.settings.text_color   }}; margin: 0" class="nue-product-text-overlay-title title-size-{{ block.settings.title_size | default: 'medium' }}">{{ block.settings.title |  newline_to_br }}</h3>
+                    {% endif %}
+                    {% if block.settings.rich_text %}
+                      <div class="nue-product-text-overlay-richtext">
+                        {{ block.settings.rich_text }}
+                      </div>
+                    {% endif %}
+                    {% if block.settings.content_image %}
+                      <div class="nue-product-text-overlay-image">
+                        <img src="{{ block.settings.content_image | image_url }}" alt="{{ block.settings.title }}">
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
+<script src="{{ 'nue-product-tabs-swiper.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Nue Product Tabs",
+  "settings": [
+    {
+      "type": "range",
+      "id": "min_section_height",
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "unit": "vw",
+      "label": "Minimum Section Height (Desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "min_section_height_mobile",
+      "min": 50,
+      "max": 200,
+      "step": 5,
+      "unit": "vw",
+      "label": "Minimum Section Height (Mobile)",
+      "default": 100
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stats",
+      "name": "Stats",
+      "settings": [
+        { "type": "text", "id": "tab_title", "label": "Tab Title" },
+        { "type": "image_picker", "id": "stats_image", "label": "Image" },
+        { "type": "text", "id": "stats_title", "label": "Title" },
+        { "type": "text", "id": "stat_one_heading", "label": "Stat 1 Heading" },
+        { "type": "text", "id": "stat_one_copy", "label": "Stat 1 Copy" },
+        { "type": "text", "id": "stat_two_heading", "label": "Stat 2 Heading" },
+        { "type": "text", "id": "stat_two_copy", "label": "Stat 2 Copy" },
+        { "type": "text", "id": "stat_three_heading", "label": "Stat 3 Heading" },
+        { "type": "text", "id": "stat_three_copy", "label": "Stat 3 Copy" },
+        { "type": "text", "id": "footer_text", "label": "Footer Text" },
+        {
+          "type": "range",
+          "id": "desktop_image_width",
+          "min": 30,
+          "max": 70,
+          "step": 1,
+          "unit": "%",
+          "label": "Desktop Image Width",
+          "default": 50
+        },
+        {
+          "type": "select",
+          "id": "desktop_image_position",
+          "label": "Desktop Image Position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        }
+      ]
+    },
+    {
+      "type": "before_after",
+      "name": "Before & After",
+      "settings": [
+        { "type": "text", "id": "tab_title", "label": "Tab Title" },
+        { "type": "image_picker", "id": "before_after_image", "label": "Before/After Image" },
+        { "type": "text", "id": "small_image_title", "label": "Small Image Title" },
+       
+        { "type": "image_picker", "id": "small_image", "label": "Small Image" },
+        { "type": "text", "id": "main_title", "label": "Main Title" },
+        { "type": "richtext", "id": "small_image_richtext", "label": "Rich Text (Optional)" },
+        {
+          "type": "range",
+          "id": "desktop_image_width",
+          "min": 30,
+          "max": 70,
+          "step": 1,
+          "unit": "%",
+          "label": "Desktop Image Width",
+          "default": 50
+        },
+        {
+          "type": "select",
+          "id": "desktop_image_position",
+          "label": "Desktop Image Position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "mobile_image_height",
+          "min": 50,
+          "max": 150,
+          "step": 5,
+          "unit": "%",
+          "label": "Mobile Image Height",
+          "default": 100,
+          "info": "Adjusts aspect ratio on mobile. 100 = square (1:1), 50 = taller (1:0.5), 150 = wider (1:1.5)"
+        }
+      ]
+    },
+    {
+      "type": "timeline",
+      "name": "Timeline",
+      "settings": [
+        { "type": "text", "id": "tab_title", "label": "Tab Title" },
+        { "type": "image_picker", "id": "timeline_image", "label": "Timeline Image" },
+        { "type": "text", "id": "timeline_header", "label": "Header Text" },
+        { "type": "text", "id": "time_one_heading", "label": "Time 1 Heading" },
+        { "type": "text", "id": "time_one_subtitle", "label": "Time 1 Subtitle" },
+        { "type": "text", "id": "time_two_heading", "label": "Time 2 Heading" },
+        { "type": "text", "id": "time_two_subtitle", "label": "Time 2 Subtitle" },
+        { "type": "text", "id": "time_three_heading", "label": "Time 3 Heading" },
+        { "type": "text", "id": "time_three_subtitle", "label": "Time 3 Subtitle" },
+        { "type": "text", "id": "time_four_heading", "label": "Time 4 Heading" },
+        { "type": "text", "id": "time_four_subtitle", "label": "Time 4 Subtitle" },
+        {
+          "type": "range",
+          "id": "desktop_image_width",
+          "min": 30,
+          "max": 70,
+          "step": 1,
+          "unit": "%",
+          "label": "Desktop Image Width",
+          "default": 50
+        },
+        {
+          "type": "select",
+          "id": "desktop_image_position",
+          "label": "Desktop Image Position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        }
+      ]
+    },
+    {
+      "type": "text_overlay",
+      "name": "Text Overlay",
+      "settings": [
+        { "type": "text", "id": "tab_title", "label": "Tab Title" },
+        { "type": "image_picker", "id": "background_image", "label": "Background Image" },
+        { "type": "image_picker", "id": "mobile_background_image", "label": "Mobile Background Image (optional)" },
+        {
+          "type": "range",
+          "id": "text_container_width",
+          "min": 20,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "label": "Text Container Width",
+          "default": 50
+        },
+        {
+          "type": "select",
+          "id": "desktop_text_position",
+          "label": "Desktop Text Position",
+          "options": [
+            { "value": "top-left", "label": "Top Left" },
+            { "value": "top-center", "label": "Top Center" },
+            { "value": "top-right", "label": "Top Right" },
+            { "value": "center-left", "label": "Center Left" },
+            { "value": "center-center", "label": "Center" },
+            { "value": "center-right", "label": "Center Right" },
+            { "value": "bottom-left", "label": "Bottom Left" },
+            { "value": "bottom-center", "label": "Bottom Center" },
+            { "value": "bottom-right", "label": "Bottom Right" }
+          ],
+          "default": "center-center"
+        },
+        {
+          "type": "select",
+          "id": "mobile_text_position",
+          "label": "Mobile Text Position",
+          "options": [
+            { "value": "top-left", "label": "Top Left" },
+            { "value": "top-center", "label": "Top Center" },
+            { "value": "top-right", "label": "Top Right" },
+            { "value": "center-left", "label": "Center Left" },
+            { "value": "center-center", "label": "Center" },
+            { "value": "center-right", "label": "Center Right" },
+            { "value": "bottom-left", "label": "Bottom Left" },
+            { "value": "bottom-center", "label": "Bottom Center" },
+            { "value": "bottom-right", "label": "Bottom Right" }
+          ],
+          "default": "center-center"
+        },
+        {
+          "type": "select",
+          "id": "desktop_text_alignment",
+          "label": "Desktop Text Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "mobile_text_alignment",
+          "label": "Mobile Text Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        { "type": "textarea", "id": "title", "label": "Title" },
+        {
+          "type": "select",
+          "id": "title_size",
+          "label": "Title Size",
+          "options": [
+            { "value": "medium", "label": "Medium (40px)" },
+            { "value": "large", "label": "Large (57px)" }
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "checkbox",
+          "id": "override_mobile_title_size",
+          "label": "Override Title Size on Mobile",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "mobile_title_size",
+          "min": 18,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile Title Font Size",
+          "default": 32,
+          "info": "Only applies when mobile override is checked"
+        },
+        { "type": "richtext", "id": "rich_text", "label": "Text Content (Optional)" },
+        { "type": "color", "id": "text_color", "label": "Text Color" },
+        { "type": "image_picker", "id": "content_image", "label": "Content Image" }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Nue Product Tabs",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

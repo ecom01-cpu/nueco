@@ -1,0 +1,305 @@
+<style>
+  .article-main {
+    padding: 0;
+  }
+  
+  .article-main__title {
+    font-size: 104px;
+    font-weight: 250;
+    text-align: center;
+    margin-top: 140px;
+    margin-bottom: 32px;
+    line-height: 1;
+  }
+  
+  .article-main__excerpt {
+    font-size: 32px;
+    font-weight: 300;
+    text-align: center;
+    margin: 0;
+    line-height: 40px;
+    font-family: Canela, Assistant, sans-serif;
+    font-style: var(--font-heading-style);
+    color: black;
+    max-width: 1015px;
+    margin: auto;
+  }
+  
+  .article-main__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 48px 0;
+  }
+  
+  .article-main__content {
+    max-width: 882px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .article-main__content p, .article-main__content ul, .article-main__content li {
+    font-size: 20px;
+    line-height: 24px;
+    list-style: disc;
+  }
+
+  .article-main__content h3 {
+    font-size: 32px;
+    line-height: 24px;
+    font-family: Canela, Assistant, sans-serif;
+    font-style: var(--font-heading-style);
+  }
+  
+  .article-main__content img,
+  .article-main__content iframe {
+    width: calc(100% + (var(--page-width, 1400px) - 882px));
+    max-width: var(--page-width, 1385px);
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    height: auto;
+    display: block;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    padding-left: 56px;
+    padding-right: 56px;
+    border: none;
+  }
+
+  .article-main__content .card__media img{
+    width: 100%;
+  }
+
+  .article-main__content .card__media{
+    width: 100%;
+  }
+
+  .yotpo-clr{
+    display: none;
+  }
+
+  .card-information__buttons{
+    color: #04953D;
+  }
+  
+  .article-main__content iframe {
+    aspect-ratio: 16/9;
+  }
+
+  .article-products {
+    display: grid;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 76px;
+    justify-content: center;
+  }
+
+  .article-products .card-product-nue{
+    width: 100%;
+  }
+
+  @media screen and (min-width: 750px) {
+    .article-products .card-product-nue {
+      width: 33.33%;
+    }
+  }
+
+  .article-main__content .card__media{
+    width: 100%;
+    position: relative;
+  }
+
+  @media screen and (min-width: 1200px) {
+    .article-products .card-product-nue {
+      width: 25%;
+    }
+  }
+
+  @media screen and (max-width: 750px) {
+    .article-main__title{
+      font-size: 40px;
+      line-height: 48px;
+    }
+
+    .article-main__excerpt{
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .article-main__content p{
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .article-main__content iframe {
+      width: 100%;
+      max-width: 100%;
+      left: 0;
+      transform: none;
+      padding-left: 0;
+      padding-right: 0;
+      aspect-ratio: 15/9;
+      height: auto;
+      margin: 0;
+    }
+
+    .article-main__image--desktop {
+      display: none;
+    }
+
+    .article-main__image--mobile {
+      display: block;
+    }
+ }
+
+  @media screen and (min-width: 751px) {
+    .article-main__image--mobile {
+      display: none;
+    }
+
+    .article-main__image--desktop {
+      display: block;
+    }
+  }
+</style>
+
+{% assign sections = shop.metafields.acf_settings.article_layouts | where: 'id', article.id | first | map: 'sections' | where: 'visible' %}
+
+<article class="article-main">
+  <div class="page-width">
+    <h1 class="article-main__title">
+      {{ article.title | escape }}
+    </h1>
+    
+    {%- if article.excerpt != blank -%}
+      <div class="article-main__excerpt">
+        {{ article.excerpt }}
+      </div>
+    {%- endif -%}
+    
+    {%- if article.image -%}
+      <img
+        class="article-main__image article-main__image--desktop"
+        src="{{ article.image | image_url: width: 2400 }}"
+        srcset="
+          {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
+          {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
+          {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
+          {% if article.image.width >= 2200 %}{{ article.image | image_url: width: 2200 }} 2200w,{% endif %}
+          {% if article.image.width >= 3000 %}{{ article.image | image_url: width: 3000 }} 3000w,{% endif %}
+          {{ article.image | image_url }} {{ article.image.width }}w
+        "
+        sizes="100vw"
+        loading="eager"
+        width="{{ article.image.width }}"
+        height="{{ article.image.height }}"
+        alt="{{ article.image.alt | escape }}"
+      >
+    {%- endif -%}
+    
+    {%- if article.metafields.custom.optional_mobile_image -%}
+      <img
+        class="article-main__image article-main__image--mobile"
+        src="{{ article.metafields.custom.optional_mobile_image | image_url: width: 750 }}"
+        srcset="
+          {% if article.metafields.custom.optional_mobile_image.width >= 375 %}{{ article.metafields.custom.optional_mobile_image | image_url: width: 375 }} 375w,{% endif %}
+          {% if article.metafields.custom.optional_mobile_image.width >= 550 %}{{ article.metafields.custom.optional_mobile_image | image_url: width: 550 }} 550w,{% endif %}
+          {% if article.metafields.custom.optional_mobile_image.width >= 750 %}{{ article.metafields.custom.optional_mobile_image | image_url: width: 750 }} 750w,{% endif %}
+          {{ article.metafields.custom.optional_mobile_image | image_url }} {{ article.metafields.custom.optional_mobile_image.width }}w
+        "
+        sizes="100vw"
+        loading="eager"
+        width="{{ article.metafields.custom.optional_mobile_image.width }}"
+        height="{{ article.metafields.custom.optional_mobile_image.height }}"
+        alt="{{ article.metafields.custom.optional_mobile_image.alt | default: article.image.alt | escape }}"
+      >
+    {%- elsif article.image -%}
+      <img
+        class="article-main__image article-main__image--mobile"
+        src="{{ article.image | image_url: width: 750 }}"
+        srcset="
+          {% if article.image.width >= 375 %}{{ article.image | image_url: width: 375 }} 375w,{% endif %}
+          {% if article.image.width >= 550 %}{{ article.image | image_url: width: 550 }} 550w,{% endif %}
+          {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
+          {{ article.image | image_url }} {{ article.image.width }}w
+        "
+        sizes="100vw"
+        loading="eager"
+        width="{{ article.image.width }}"
+        height="{{ article.image.height }}"
+        alt="{{ article.image.alt | escape }}"
+      >
+    {%- endif -%}
+    
+    <div class="article-main__content rte">
+      {{ article.content }}
+
+      {% for section in sections %}
+        {% case section.name %}
+          {% when 'wysiwyg_section' %}
+     
+            {% if article.metafields.accentuate.wysiwyg[section.index] != blank %}
+              <div class="article-template__wysiwyg">
+                {{ article.metafields.accentuate.wysiwyg[section.index] }}
+              </div>
+            {% endif %}
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</article>
+
+<div class="article-products page-width">
+  {% for section in sections %}
+    {% case section.name %}
+      {% when 'shop_the_article_section' %}
+        {% if article.metafields.accentuate.shop_the_article[section.index] != blank %}
+          {% assign shop_the_article = article.metafields.accentuate.shop_the_article[section.index] | split: '|' %}
+          <p>testimng</p>
+          {% comment %}
+            <div class="article-template__shop-the-article--title fakt-15 m-fakt-12">
+              {% if article.metafields.accentuate.title[section.index] != blank %}
+                {{ article.metafields.accentuate.title[section.index] }}
+              {% else %}
+                Shop the article
+              {% endif %}
+            </div>
+          {% endcomment %}
+          
+          {% for product in shop_the_article %}
+            {% assign temp_product = all_products[product] %}
+            {% if temp_product.price != blank %}
+              {% render 'card-product-nue', card_product: temp_product %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+    {% endcase %}
+  {% endfor %}
+
+
+
+  {% if article.metafields.custom.featured_products != blank %}
+    {% assign featured_products = article.metafields.custom.featured_products.value %}
+    {% for product in featured_products %}
+
+      {% assign temp_product = all_products[product] %}
+      {% if product.price != blank %}
+        {% render 'card-product-nue', card_product: product %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+</div>
+
+<script type="application/ld+json">
+  {{ article | structured_data }}
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-article.name",
+  "tag": "section",
+  "class": "section"
+}
+{% endschema %}

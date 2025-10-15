@@ -1,0 +1,82 @@
+/* About Hero Specific Styles - Modifies fragrance-hero.css by prepending .about-us */
+
+/* Rich text styles specific to about-us */
+
+.about-us.fragranceHero-wrapper{
+  margin-bottom: 0;
+}
+
+.template-suffix-about .color-scheme-4 .button:hover {
+  background-color: #DDF3E5;
+  border-color: #DDF3E5;
+  color: bisque;
+
+  color: #429348;
+
+}
+
+.about-us .fragranceHero-richtext {
+  font-family: var(--font-body-family);
+  max-width: 90%;
+  text-align: center;
+  transform: translateY(-67%);
+  margin: 0;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: Canela, Assistant, sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.about-us .fragranceHero-title{
+  font-size: 40px;
+  line-height: 40px;
+  margin-bottom: 40px;
+}
+
+@media screen and (min-width: 750px) {
+  .about-us .fragranceHero-richtext {
+    font-size: 32px;
+    line-height: 40px;
+    transform: translateY(-100%);
+    margin-top: 100px;
+    max-width: 870px;
+  }
+
+  .about-us .fragranceHero-title{
+    font-size: 120px;
+    line-height: 120px;
+    max-width: none;
+    margin-bottom: 0px;
+  }
+}
+
+.about-us .fragranceHero-richtext  {
+
+}
+
+.about-us .fragranceHero-richtext p {
+
+}
+
+.about-us .fragranceHero-richtext strong {
+  font-weight: 600;
+}
+
+.about-us .fragranceHero-richtext em {
+  font-style: italic;
+}
+
+/* Any additional about-us specific overrides can go here */
+/* Example: Different animation timing for about page */
+.about-us .fragranceHero-img {
+  animation-range: entry 20% exit 60%;
+}
+
+@media screen and (min-width: 750px) {
+  .about-us .fragranceHero-img {
+    animation-range: entry 15% exit 55%;
+  }
+}

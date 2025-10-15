@@ -1,0 +1,146 @@
+{% comment %}
+  Renders a NUE Bundle 3 Column component within article content
+  
+  Accepts:
+  - block: {Object} Block object with settings
+  - lazy_load: {Boolean} Whether to lazy load images. Default: true (optional)
+  
+  Usage:
+  {% render 'article-bundle-3-column', block: block %}
+{% endcomment %}
+
+{{ 'nue-bundle-3-column.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+<div class="nue-bundle-3-column{% unless block.settings.full_width %} page-width{% endunless %}{% if block.settings.full_width %} full-width color-{{ block.settings.color_scheme }}{% endif %}">
+  <div class="nue-bundle-3-column__container{% if block.settings.full_width %} page-width{% endif %} gradient">
+    {%- if block.settings.product != blank -%}
+      <a href="{{ block.settings.product.url }}" class="nue-bundle-3-column__link">
+    {%- endif -%}
+    <div class="nue-bundle-3-column__content{% unless block.settings.full_width %} color-{{ block.settings.color_scheme }}{% endunless %}">
+      <div class="nue-bundle-3-column__col-1">
+        {%- if block.settings.title != blank -%}
+          <h2 class="nue-bundle-3-column__title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: 1;"
+            {% endif %}
+          >
+            {{ block.settings.title }}
+          </h2>
+        {%- endif -%}
+        
+        <div class="nue-bundle-3-column__details{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+            style="--animation-order: 2;"
+          {% endif %}
+        >
+          {%- if block.settings.product != blank -%}
+            <span class="nue-bundle-3-column__price">{{ block.settings.product.price | money }}</span>
+          {%- endif -%}
+          {%- if block.settings.rating != blank -%}
+            <span class="nue-bundle-3-column__rating">{{ block.settings.rating }}</span>
+          {%- endif -%}
+        </div>
+        
+        {%- if block.settings.description != blank -%}
+          <div class="nue-bundle-3-column__description{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: 3;"
+            {% endif %}
+          >
+            {{ block.settings.description }}
+          </div>
+        {%- endif -%}
+        
+        {%- if block.settings.product != blank -%}
+          <div class="nue-bundle-3-column__button{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: 4;"
+            {% endif %}
+          >
+            <product-form data-section-id="{{ section.id }}-{{ block.id }}">
+              <form method="post" action="/cart/add" id="product-form-{{ section.id }}-{{ block.id }}" accept-charset="UTF-8" class="form" enctype="multipart/form-data" data-type="add-to-cart-form">
+                <input type="hidden" name="form_type" value="product">
+                <input type="hidden" name="utf8" value="✓">
+                <input type="hidden" name="id" value="{{ block.settings.product.selected_or_first_available_variant.id }}" class="product-variant-id">
+                
+                <button
+                  id="ProductSubmitButton-{{ section.id }}-{{ block.id }}"
+                  type="submit"
+                  name="add"
+                  class="nue-bundle-3-column__quick-add-button button"
+                  {% if block.settings.product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                  onclick="event.stopPropagation();"
+                >
+                  <span>
+                    {%- if block.settings.product.selected_or_first_available_variant.available -%}
+                      {{ block.settings.button_label | default: 'Add to Cart' }}
+                    {%- else -%}
+                      {{ 'products.product.sold_out' | t }}
+                    {%- endif -%}
+                  </span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <div class="loading__spinner hidden">
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      class="spinner"
+                      viewBox="0 0 66 66"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                    </svg>
+                  </div>
+                </button>
+              </form>
+            </product-form>
+          </div>
+        {%- endif -%}
+      </div>
+      
+      <div class="nue-bundle-3-column__col-2{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        {% if settings.animations_reveal_on_scroll %}
+          data-cascade
+          style="--animation-order: 5;"
+        {% endif %}
+      >
+        {%- if block.settings.image_1 != blank -%}
+          <img
+            src="{{ block.settings.image_1 | image_url: width: 600 }}"
+            alt="{{ block.settings.image_1.alt | escape }}"
+            loading="{{ lazy_load | default: 'lazy' }}"
+            width="{{ block.settings.image_1.width }}"
+            height="{{ block.settings.image_1.height }}"
+          >
+        {%- endif -%}
+      </div>
+      
+      <div class="nue-bundle-3-column__col-3{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        {% if settings.animations_reveal_on_scroll %}
+          data-cascade
+          style="--animation-order: 6;"
+        {% endif %}
+      >
+        {%- if block.settings.image_2 != blank -%}
+          <img
+            src="{{ block.settings.image_2 | image_url: width: 600 }}"
+            alt="{{ block.settings.image_2.alt | escape }}"
+            loading="{{ lazy_load | default: 'lazy' }}"
+            width="{{ block.settings.image_2.width }}"
+            height="{{ block.settings.image_2.height }}"
+          >
+        {%- endif -%}
+      </div>
+    </div>
+    {%- if block.settings.product != blank -%}
+      </a>
+    {%- endif -%}
+  </div>
+</div>

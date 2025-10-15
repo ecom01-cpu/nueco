@@ -1,0 +1,88 @@
+.pagination-wrapper {
+  margin-top: 4rem;
+}
+
+@media screen and (min-width: 990px) {
+  .pagination-wrapper {
+    margin-top: 5rem;
+  }
+}
+
+.pagination__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.pagination__list > li {
+  flex: 0 0 auto;
+  max-width: none;
+}
+
+.pagination__list > li:not(:last-child) {
+  margin-right: 0;
+}
+
+.pagination__item {
+  color: #201F1B;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 24px;
+  width: auto;
+  padding: 0;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* Remove hover underline effects */
+a.pagination__item:hover::after,
+.pagination__item--current::after,
+.pagination__item:hover::after {
+  display: none;
+}
+
+/* Active/current page styling with black circle */
+.pagination__item--current {
+  color: white;
+  font-weight: 400;
+  opacity: 1;
+}
+
+.pagination__item--current::before {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background-color: #201F1B;
+  border-radius: 50%;
+  top: 46%;
+  left: 46%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+/* Prev/Next text styling */
+.pagination__item--prev .pagination__text,
+.pagination__item--next .pagination__text {
+  font-size: 12px;
+  font-weight: 600;
+  color: #201F1B;
+}
+
+/* Remove icon styles as we're using text now */
+.pagination__item .icon-caret,
+.pagination__item--next .icon,
+.pagination__item--prev .icon {
+  display: none;
+}
+
+/* Remove arrow hover effects */
+.pagination__item--next:hover .icon,
+.pagination__item--prev:hover .icon,
+.pagination__item-arrow:hover::after {
+  display: none;
+}

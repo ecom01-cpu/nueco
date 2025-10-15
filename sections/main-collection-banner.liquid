@@ -1,0 +1,299 @@
+{{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  /* Dynamic height settings for hero layout */
+  .collection-hero--hero-layout {
+    height: {{ section.settings.hero_height_mobile | default: 100 }}vh;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collection-hero--hero-layout {
+      height: {{ section.settings.hero_height_desktop | default: 100 }}vh; 
+    }
+  }
+{%- endstyle -%}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const collectionItems = document.querySelectorAll('.collection-hero__item');
+    const collectionLinks = document.querySelectorAll('.collection-hero__link');
+    const collectionHero = document.querySelector('.collection-hero');
+    
+    // Store the true active item
+    let trueActiveItem = document.querySelector('.collection-hero__item--active');
+    
+    collectionLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        // Remove active class from all items
+        collectionItems.forEach(item => {
+          item.classList.remove('collection-hero__item--active');
+          // Remove active dot if it exists
+          const activeDot = item.querySelector('.collection-hero__active-dot');
+          if (activeDot) {
+            activeDot.remove();
+          }
+        });
+        
+        // Add active class to clicked item
+        const clickedItem = this.closest('.collection-hero__item');
+        clickedItem.classList.add('collection-hero__item--active');
+        trueActiveItem = clickedItem; // Update the true active item
+        
+        // Add active dot
+        const dot = document.createElement('span');
+        dot.className = 'collection-hero__active-dot';
+        this.appendChild(dot);
+      });
+      
+      // Handle hover (desktop only)
+      link.addEventListener('mouseenter', function() {
+        // Skip hover effects on mobile
+        if (window.innerWidth < 750) return;
+        
+        // Remove active class from all items
+        collectionItems.forEach(item => {
+          item.classList.remove('collection-hero__item--active');
+          // Remove active dot if it exists
+          const activeDot = item.querySelector('.collection-hero__active-dot');
+          if (activeDot) {
+            activeDot.style.display = 'none';
+          }
+        });
+        
+        // Add active class to hovered item
+        const hoveredItem = this.closest('.collection-hero__item');
+        hoveredItem.classList.add('collection-hero__item--active');
+        
+        // Add temporary active dot if doesn't exist
+        if (!this.querySelector('.collection-hero__active-dot')) {
+          const dot = document.createElement('span');
+          dot.className = 'collection-hero__active-dot collection-hero__active-dot--temp';
+          this.appendChild(dot);
+        } else {
+          this.querySelector('.collection-hero__active-dot').style.display = 'block';
+        }
+      });
+    });
+    
+    // Handle mouse leave from entire hero section (desktop only)
+    collectionHero.addEventListener('mouseleave', function() {
+      // Skip hover effects on mobile
+      if (window.innerWidth < 750) return;
+      
+      // Remove all active states and temp dots
+      collectionItems.forEach(item => {
+        item.classList.remove('collection-hero__item--active');
+        const tempDot = item.querySelector('.collection-hero__active-dot--temp');
+        if (tempDot) {
+          tempDot.remove();
+        }
+        const activeDot = item.querySelector('.collection-hero__active-dot');
+        if (activeDot) {
+          activeDot.style.display = 'none';
+        }
+      });
+      
+      // Restore true active state
+      if (trueActiveItem) {
+        trueActiveItem.classList.add('collection-hero__item--active');
+        const activeDot = trueActiveItem.querySelector('.collection-hero__active-dot');
+        if (activeDot) {
+          activeDot.style.display = 'block';
+        }
+      }
+    });
+  });
+</script>
+
+
+
+{%- if section.settings.layout == 'hero' -%}
+  <div class="collection-hero collection-hero--hero-layout"{% if section.settings.use_light_header %} data-header-light="true"{% endif %}>
+    {%- if section.settings.hero_image != blank or section.settings.hero_video != blank -%}
+
+      <div class="collection-hero__media">
+        {%- if section.settings.hero_video != blank -%}
+          <video
+            autoplay
+            muted
+            loop
+            playsinline  
+            preload="auto"
+          >
+            {%- for source in section.settings.hero_video.sources -%}
+              <source src="{{ source.url }}" type="{{ source.mime_type }}">
+            {%- endfor -%}
+          </video>
+        {%- elsif section.settings.hero_image != blank -%}
+          {{ section.settings.hero_image | image_url: width: 3840 | image_tag: loading: 'lazy' }}
+        {%- endif -%}
+      </div>
+      <div class="collection-hero__overlay"></div>
+    {%- endif -%}
+    
+    <div class="collection-hero__inner page-width">
+      {% for block in section.blocks %}
+        {% assign selected_collection = collections[block.settings.collection] %}
+        {% if selected_collection %}
+          <div class="collection-hero__item{% if selected_collection.id == collection.id %} collection-hero__item--active{% endif %}" {{ block.shopify_attributes }}>
+            <a href="{{ selected_collection.url }}" class="collection-hero__link">
+              <h2 class="collection-hero__item-title">
+                {% if block.settings.title != blank %}
+                  {{ block.settings.title | escape }}
+                {% else %}
+                  {{ selected_collection.title | escape }}
+                {% endif %}
+              </h2>
+              {% if selected_collection.id == collection.id %}
+                <span class="collection-hero__active-dot"></span>
+              {% endif %}
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% if section.blocks.size == 0 %}
+        <h1 class="collection-hero__title">
+          {{ collection.title | escape }}
+        </h1>
+      {% endif %}
+    </div>
+    
+    <div class="collection-hero__hero-content page-width">
+      {%- if section.settings.hero_title != blank -%}
+        <h1 class="collection-hero__hero-title">{{ section.settings.hero_title }}</h1>
+      {%- endif -%}
+      {%- if section.settings.hero_subtitle != blank -%}
+        <div class="collection-hero__hero-subtitle">{{ section.settings.hero_subtitle }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- else -%}
+  <div class="collection-hero"{% if section.settings.use_light_header %} data-header-light="true"{% endif %}>
+    <div class="collection-hero__inner page-width">
+      {% for block in section.blocks %}
+        {% assign selected_collection = collections[block.settings.collection] %}
+        {% if selected_collection %}
+          <div class="collection-hero__item{% if selected_collection.id == collection.id %} collection-hero__item--active{% endif %}" {{ block.shopify_attributes }}>
+            <a href="{{ selected_collection.url }}" class="collection-hero__link">
+              <h2 class="collection-hero__item-title">
+                {% if block.settings.title != blank %}
+                  {{ block.settings.title | escape }}
+                {% else %}
+                  {{ selected_collection.title | escape }}
+                {% endif %}
+              </h2>
+              {% if selected_collection.id == collection.id %}
+                <span class="collection-hero__active-dot"></span>
+              {% endif %}
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% if section.blocks.size == 0 %}
+        <h1 class="collection-hero__title">
+          {{ collection.title | escape }}
+        </h1>
+      {% endif %}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-banner.name",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "links",
+      "options": [
+        {
+          "value": "links",
+          "label": "Collection links"
+        },
+        {
+          "value": "hero",
+          "label": "Hero banner"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Hero banner settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Background image"
+    },
+    {
+      "type": "video",
+      "id": "hero_video",
+      "label": "Background video",
+      "info": "Video will be used instead of image if provided"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Title",
+      "default": "Functional Fragrances"
+    },
+    {
+      "type": "richtext",
+      "id": "hero_subtitle",
+      "label": "Subtitle",
+      "default": "<p>Mood-elevating fragrance supplements. Developed by the world's most famous noses.</p>"
+    },
+    {
+      "type": "range",
+      "id": "hero_height_mobile",
+      "label": "Hero height - Mobile",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "hero_height_desktop",
+      "label": "Hero height - Desktop",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 100
+    },
+    {
+      "type": "checkbox",
+      "id": "use_light_header",
+      "label": "Use light header",
+      "info": "Display white header text and logo on this collection page",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title override",
+          "info": "Leave blank to use collection title"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,12 @@
+.related-products {
+  display: block;
+}
+
+.related-products__heading {
+  margin: 0 0 3rem;
+}
+@media screen and (max-width: 750px) {
+  .related-products__heading {
+    font-size: 18.5svw !important;
+  }
+}

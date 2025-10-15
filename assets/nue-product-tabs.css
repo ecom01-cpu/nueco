@@ -1,0 +1,857 @@
+.nue-product-tabs-slider {
+  overflow: hidden;
+  padding-bottom: 5.7rem;
+}
+.productCarousel-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.nue-product-swiper {
+  width: 100%;
+  overflow: visible !important;
+}
+.productCarousel-nav {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-bottom: 2.8rem;
+  background-color: var(--nue-light-grey);
+  border-radius: 2.5rem;
+  padding: 0.5rem 0.8rem;
+}
+.nue-product-nav-pill {
+  padding: 0.5rem 1.2rem;
+  border: 0 none;
+  background-color: transparent;
+  color: var(--color-grey-text);
+  cursor: pointer;
+  border-radius: 2rem;
+  font-size: 0.75em;
+  font-weight: 400;
+  line-height: 1.333;
+  letter-spacing: 0;
+  font-family: var(--font-body-family);
+}
+.nue-product-nav-pill.active {
+  border-color: var(--nue-white);
+  background-color: var(--nue-white);
+  color: var(--nue-black);
+  font-weight: 600;
+}
+.nue-product-tabs-slider .swiper-slide {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow: hidden;
+  border-radius: 0.8rem;
+  height: auto;
+}
+
+/* Ensure swiper wrapper uses flexbox for equal heights */
+.nue-product-tabs-slider .swiper-wrapper {
+  display: flex;
+  align-items: stretch; /* All slides match tallest */
+}
+.nue-product-image-item img {
+  max-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 749.99px) {
+  .nue-product-image-item:first-child {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    margin-bottom: 4rem;
+  }
+  .nue-product-image-item:first-child img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Desktop styles */
+@media screen and (min-width: 750px) {
+  .nue-product-tabs-slider {
+    padding-bottom: 15rem;
+  }
+  .productCarousel-nav {
+    margin-bottom: 5.2rem;
+  }
+  .nue-product-image-wrapper {
+    display: flex;
+    background-color: var(--nue-light-grey);
+  }
+  .nue-product-image-item {
+    flex: 1 0 50%;
+    max-width: 50%;
+  }
+}
+
+/* Stats block styles - structure only, no visual styles yet */
+.nue-product-stats-wrapper {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  gap: 40px;
+  height: 100%;
+  width: 100%;
+}
+
+
+
+.nue-product-stats-image {
+  /* height: 100%; */
+/*   
+  width: 100%; */
+  position: relative;
+
+}
+
+.nue-product-stats-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  
+}
+
+.nue-product-stats-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0px;
+  text-align: left;
+  gap: 20px;
+  
+}
+
+.nue-product-stats-content *{
+  margin: 0;
+}
+
+
+.nue-product-stats-title {
+  font-size: 24px;
+  font-weight: 100;
+  line-height: 32px;
+}
+
+.nue-product-stats-list {
+}
+
+.nue-product-stat-item {
+  border-top: 1px solid #E5E5E5EE;  
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.nue-product-stat-item:last-of-type {
+  border-bottom: 1px solid #E5E5E5EE;  
+
+}
+
+.nue-product-stat-heading {
+  font-size: 56px;
+  font-family: Canela, Assistant, sans-serif;
+  font-weight: 100;
+  line-height: 56px;
+}
+
+.nue-product-stat-copy {
+  font-size: 18px;
+  font-family: Canela, Assistant, sans-serif;
+  font-weight: 100;
+  line-height: 24px;
+}
+
+.nue-product-stats-footer {
+  font-size: 8px;
+  font-weight: 400;
+  line-height: 12px;
+}
+
+
+/* Before & After block styles */
+.nue-product-before-after-wrapper {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  gap: 40px;
+  height: 100%;
+}
+
+.nue-product-before-after-image {
+  position: relative;
+}
+
+.nue-product-before-after-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.nue-product-before-after-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0px;
+  text-align: left;
+  gap: 20px;
+}
+
+.nue-product-before-after-content * {
+  margin: 0;
+}
+
+.nue-product-before-after-top {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nue-product-before-after-small-title {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 12px;
+}
+
+.nue-product-before-after-small-image {
+  height: 106px;
+  width: auto;
+}
+
+.nue-product-before-after-small-image img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+.nue-product-before-after-bottom {
+}
+
+.nue-product-before-after-title {
+  font-size: 64px;
+  font-weight: 100;
+  line-height: 56px;
+  font-family: Canela, Assistant, sans-serif;
+}
+
+@media screen and (min-width: 750px) {
+  .nue-product-stats-wrapper {
+    gap: 0;
+  }
+
+  .nue-product-stats-footer {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+  }
+
+  .nue-product-stats-image {
+    flex: 0 0 var(--desktop-image-width);
+    width: var(--desktop-image-width);
+  }
+
+  .nue-product-stats-content {
+    background-color: #F8F8F8;
+    padding: 32px;
+    flex: 1;
+  }
+
+  .nue-product-stats-wrapper.image-right {
+    flex-direction: row-reverse;
+  }
+
+  .nue-product-stats-image img{
+    border-radius: 0;
+  }
+  
+  .nue-product-before-after-wrapper {
+    gap: 0;
+  }
+
+  .nue-product-before-after-image {
+    flex: 0 0 var(--desktop-image-width);
+    width: var(--desktop-image-width);
+  }
+
+  .nue-product-before-after-content {
+    background-color: #F8F8F8;
+    padding: 32px;
+    flex: 1;
+  }
+
+  .nue-product-before-after-wrapper.image-right {
+    flex-direction: row-reverse;
+  }
+
+  .nue-product-before-after-image img {
+    border-radius: 0;
+  } 
+}
+
+/* Timeline block styles */
+.nue-product-timeline-wrapper {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  gap: 40px;
+
+  width: 100%;
+}
+
+.nue-product-timeline-image {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.nue-product-timeline-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.nue-product-timeline-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0px;
+  text-align: left;
+  gap: 20px;
+}
+
+.nue-product-timeline-content * {
+  margin: 0;
+}
+
+.nue-product-timeline-header {
+  font-size: 80px;
+  font-weight: 100;
+  line-height: 80px;
+  font-family: Canela, Assistant, sans-serif;
+}
+
+.nue-product-timeline-list {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 30px;
+}
+
+.nue-product-timeline-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.nue-product-timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Timeline dots and lines */
+.nue-product-timeline-dot {
+  position: absolute;
+  left: -30px;
+  top: 12px;
+  width: 15px;
+  height: 15px;
+  background-color: #04953D;
+  border-radius: 50%;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeInDot 0.5s forwards;
+  display: block !important;
+}
+
+/* Connecting lines between dots - only show if not the last item */
+.nue-product-timeline-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 27px;
+  left: -23px;
+  width: 1px;
+  height: calc(100% + 25px);
+  background-color: #04953D;
+  transform-origin: top;
+  transform: scaleY(0);
+  animation: growLine 0.5s forwards;
+  animation-delay: 0.3s;
+}
+
+.nue-product-timeline-content-item {
+  flex: 1;
+}
+
+.nue-product-timeline-heading {
+  font-size: 32px;
+  font-weight: 100;
+  line-height: 40px;
+  font-family: Canela, Assistant, sans-serif;
+  margin-bottom: 8px;
+}
+
+.nue-product-timeline-subtitle {
+  font-size: 12px;
+  line-height: 16px;
+  color: #595959;
+  font-weight: 400;
+}
+
+/* Desktop specific styles */
+@media screen and (min-width: 750px) {
+  .nue-product-timeline-wrapper {
+    gap: 0;
+    height: 100%;
+    background-color: #F8F8F8 !important;
+  }
+
+  .nue-product-timeline-image {
+    flex: 0 0 var(--desktop-image-width);
+    width: var(--desktop-image-width);
+  }
+
+  .nue-product-timeline-content {
+    
+    padding: 32px;
+    flex: 1;
+  }
+
+  .nue-product-timeline-wrapper.image-right {
+    flex-direction: row-reverse;
+  }
+
+  .nue-product-timeline-image img {
+    border-radius: 0;
+  }
+}
+
+/* Mobile styles */
+@media screen and (max-width: 749.99px) {
+  /* Ensure images come first on mobile for all blocks except text_overlay */
+  .nue-product-stats-wrapper {
+    flex-direction: column;
+  }
+
+  .nue-product-stats-wrapper{
+    gap: 16px;
+  }
+
+  .nue-product-stats-title{
+    font-size: 20px;
+    line-height: 32px;
+  }
+
+  .nue-product-stat-heading{
+    font-size: 32px;
+    line-height: 1;
+  }
+
+  .nue-product-stat-item{
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .nue-product-stat-copy{
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .nue-product-stats-content{
+    gap: 2px
+  }
+
+  
+  .nue-product-stats-image {
+    width: 100%;
+    flex: none;
+    
+    aspect-ratio: 1 / 1;
+  }
+  
+  .nue-product-stats-content {
+    width: 100%;
+    background-color: transparent;
+    padding: 0px;
+    
+
+  }
+  
+  .nue-product-before-after-wrapper {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .nue-product-before-after-title{
+    font-size: 32px;
+    line-height: 1.2;
+  }
+  
+  .nue-product-before-after-image {
+    width: 100%;
+    flex: none;
+    aspect-ratio: 1 / 1;
+    background-color: #F8F8F8;
+  }
+
+  .nue-product-before-after-image  img{
+    padding: 16px;
+    width: calc(100% - 32px);
+    height: calc(100% - 32px);
+    border-radius: 24px;
+  }
+  
+  .nue-product-before-after-content {
+    width: 100%;
+    background-color: #F8F8F8;
+    padding: 16px;
+    width: calc(100% - 32px);
+    padding-top: 2px;
+
+  }
+  
+  .nue-product-timeline-wrapper {
+    flex-direction: column;
+  }
+  
+  .nue-product-timeline-image {
+    width: 100%;
+    flex: none;
+    
+    aspect-ratio: 1 / 1;
+  }
+  
+  .nue-product-timeline-content {
+    width: 100%;
+    background-color: transparent;
+    padding: 0px;
+    border-radius: 0px;
+  }
+  
+  .nue-product-timeline-header {
+    font-size: 80px;
+  }
+  
+  .nue-product-timeline-heading {
+    font-size: 32px;
+    line-height: 32px;
+        margin-bottom: 4px;
+  }
+
+  .nue-product-timeline-wrapper{
+    gap: 16px;
+  }
+
+  .nue-product-timeline-header{
+    font-size: 20px;
+    line-height: 32px;
+  }
+}
+
+/* Animations */
+@keyframes fadeInDot {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes growLine {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* Animation delays for sequential effect */
+.nue-product-timeline-item:nth-child(1) .nue-product-timeline-dot {
+  animation-delay: 0.2s;
+}
+
+.nue-product-timeline-item:nth-child(2) .nue-product-timeline-dot {
+  animation-delay: 0.4s;
+}
+
+.nue-product-timeline-item:nth-child(3) .nue-product-timeline-dot {
+  animation-delay: 0.6s;
+}
+
+.nue-product-timeline-item:nth-child(4) .nue-product-timeline-dot {
+  animation-delay: 0.8s;
+}
+
+/* Connecting line animations - only for items that aren't last */
+.nue-product-timeline-item:nth-child(1):not(:last-child)::before {
+  animation-delay: 0.5s;
+}
+
+.nue-product-timeline-item:nth-child(2):not(:last-child)::before {
+  animation-delay: 0.7s;
+}
+
+.nue-product-timeline-item:nth-child(3):not(:last-child)::before {
+  animation-delay: 0.9s;
+}
+
+/* Text Overlay block styles */
+.nue-product-text-overlay-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.nue-product-text-overlay-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.nue-product-text-overlay-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nue-product-text-overlay-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 40px;
+}
+
+
+
+.nue-product-text-overlay-title {
+  margin: 0 0 20px 0;
+  font-family: Canela, Assistant, sans-serif;
+  font-family: "Canela-light";
+  font-family: Canela, Assistant, sans-serif;
+  font-weight: 100;
+  line-height: 1.2;
+}
+
+.nue-product-text-overlay-title.title-size-medium {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 100;
+}
+
+.nue-product-text-overlay-title.title-size-large {
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  line-height: 40px;
+  font-weight: 100;
+}
+
+.nue-product-text-overlay-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Text positioning classes - Desktop */
+.text-position-top-left {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.text-position-top-center {
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.text-position-top-right {
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.text-position-center-left {
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.text-position-center-center {
+  align-items: center;
+  justify-content: center;
+}
+
+.text-position-center-right {
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.text-position-bottom-left {
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.text-position-bottom-center {
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.text-position-bottom-right {
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+/* Text alignment classes - Desktop */
+.text-align-left .nue-product-text-overlay-inner {
+  text-align: left;
+}
+
+.text-align-center .nue-product-text-overlay-inner {
+  text-align: center;
+}
+
+.text-align-right .nue-product-text-overlay-inner {
+  text-align: right;
+}
+
+/* Desktop specific styles */
+@media screen and (min-width: 750px) {
+  .nue-product-text-overlay-content {
+    padding: 55px;
+  }
+
+  .nue-product-text-overlay-content {
+    position: relative;
+    z-index: 2;
+    width: calc(100% - 80px);
+    height: calc(100% - 80px);
+    display: flex;
+    padding: 40px;
+  }
+
+  .nue-product-text-overlay-title.title-size-medium {
+    font-size: 40px;
+    line-height: 48px;
+
+  }
+  
+  .nue-product-text-overlay-title.title-size-large {
+    font-size: 56px;
+    letter-spacing: -0.02em;
+    line-height: 56px;
+    font-weight: 100;
+  }
+  
+}
+
+.nue-product-text-overlay-inner {
+  width: var(--text-container-width);
+  max-width: 100%;
+}
+
+/* Mobile specific styles */
+@media screen and (max-width: 749.99px) {
+  /* Mobile text positioning */
+  .text-position-mobile-top-left {
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+  }
+
+  .nue-product-timeline-item{
+    margin-bottom: 24px;
+  }
+
+
+
+  .nue-product-text-overlay-content{
+    --text-container-width: 100% !important;
+    padding: 20px !important;
+    width: calc(100% - 40px) !important;
+    height: calc(100% - 41px);
+    
+  }
+
+  .text-position-mobile-top-center {
+    align-items: flex-start !important;
+    justify-content: center !important;
+  }
+
+  .text-position-mobile-top-right {
+    align-items: flex-start !important;
+    justify-content: flex-end !important;
+  }
+
+  .text-position-mobile-center-left {
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+
+  .text-position-mobile-center-center {
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .text-position-mobile-center-right {
+    align-items: center !important;
+    justify-content: flex-end !important;
+  }
+
+  .text-position-mobile-bottom-left {
+    align-items: flex-end !important;
+    justify-content: flex-start !important;
+  }
+
+  .text-position-mobile-bottom-center {
+    align-items: flex-end !important;
+    justify-content: center !important;
+  }
+
+  .text-position-mobile-bottom-right {
+    align-items: flex-end !important;
+    justify-content: flex-end !important;
+  }
+
+  /* Mobile text alignment */
+  .text-align-mobile-left .nue-product-text-overlay-inner {
+    text-align: left !important;
+  }
+
+  .text-align-mobile-center .nue-product-text-overlay-inner {
+    text-align: center !important;
+  }
+
+  .text-align-mobile-right .nue-product-text-overlay-inner {
+    text-align: right !important;
+  }
+}
+

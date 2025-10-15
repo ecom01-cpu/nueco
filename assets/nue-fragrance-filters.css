@@ -1,0 +1,128 @@
+/* NUE Fragrance Filters Styles */
+.nue-fragrance-filters__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 72px;
+  margin-bottom: 72px;
+}
+
+.nue-fragrance-filters__title {
+  font-size: 22px;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+  font-family: "Canela-light";
+  letter-spacing: normal;
+}
+
+.nue-fragrance-filters__title em {
+  font-style: italic;
+}
+
+.nue-fragrance-filters__swatches {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 19px;
+  flex-wrap: wrap;
+}
+
+.nue-fragrance-filter__item {
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 49px;
+  cursor: pointer;
+}
+
+.nue-fragrance-filter__image {
+  width: 49px;
+  height: 49px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.nue-fragrance-filter__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nue-fragrance-filter__label {
+  font-size: 12px;
+  margin-top: 12px;
+  margin-bottom: 0;
+  top: 100%;
+  left: 50%;
+  white-space: nowrap;
+  width: max-content;
+}
+
+.nue-fragrance-filter__item.active .nue-fragrance-filter__label::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: #04953D;
+  border-radius: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -12px;
+}
+
+@media screen and (max-width: 749px) {
+  .nue-fragrance-filters__grid {
+    grid-template-columns: 1fr;
+    margin-top: 55px;
+  }
+  
+  .nue-fragrance-filter__item {
+    width: 42px;
+  }
+
+  .nue-fragrance-filter__label {
+    font-size: 10px;
+  }
+  
+  .nue-fragrance-filter__image {
+    width: 42px;
+    height: 42px;
+  }
+
+  .nue-fragrance-filters__swatches {
+    display: flex;
+    justify-content: center;
+    gap: 19px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 366px) {
+  .nue-fragrance-filters__grid {
+    grid-template-columns: 1fr;
+    margin-top: 55px;
+  }
+  
+  .nue-fragrance-filter__item {
+    width: 30px;
+  }
+
+  .nue-fragrance-filter__label {
+    font-size: 10px;
+  }
+
+  .nue-fragrance-filters__swatches{
+    gap: 10px;
+  }
+  
+  .nue-fragrance-filter__image {
+    width: 30px;
+    height: 30px;
+  }
+
+}

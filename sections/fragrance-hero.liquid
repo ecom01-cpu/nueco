@@ -1,0 +1,160 @@
+{{ 'fragrance-hero.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="fragranceHero-wrapper section-{{ section.id }}-padding">
+  {%- if section.settings.cta_link != blank -%}
+    <a href="{{ section.settings.cta_link }}" class="fragranceHero-clickable-wrapper">
+  {%- endif -%}
+  <div class="sticky-wrapper">
+    <div class="page-width">
+      <div class="fragranceHero-eyebrow">{{ section.settings.eyebrow_title |  newline_to_br }}</div>
+      <h1 class="fragranceHero-title">{{ section.settings.title }}</h1>
+      <div class="page-width fragranceHero-cta">
+        {% render 'button', cta_title: section.settings.cta_title, cta_link: section.settings.cta_link %}
+      </div>
+    </div>
+    <div class="">
+      <div class="fragranceHero-img">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 3840
+            | image_tag:
+              loading: 'lazy',
+              widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+              alt: section.settings.image.alt
+          }}
+        {%- else -%}
+          <img
+            src="{{ 'fragrance-hero.png' | asset_url }}"
+            alt="Functional fragrances"
+            width="1440"
+            height="594"
+          >
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+  {%- if section.settings.cta_link != blank -%}
+    </a>
+  {%- endif -%}
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "Fragrance Hero",
+    "tag": "section",
+    "class": "section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "textarea",
+        "id": "eyebrow_title",
+        "label": "Eyebrow text",
+        "default": "Mood-elevating fragrance supplements. Developed by the world's most famous noses.",
+        "info": "Small text above the main title"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Main title",
+        "default": "Functional Fragrances"
+      },
+      {
+        "type": "header",
+        "content": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Hero image",
+        "info": "Recommended: 1920x800px"
+      },
+      {
+        "type": "header",
+        "content": "Button"
+      },
+      {
+        "type": "text",
+        "id": "cta_title",
+        "label": "Button text",
+        "default": "Shop All Functional Fragrances"
+      },
+      {
+        "type": "url",
+        "id": "cta_link",
+        "label": "Button link",
+        "default": "/collections/all"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.all.padding.section_padding_heading"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 142,
+        "step": 2,
+        "unit": "px",
+        "label": "Desktop padding top",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 142,
+        "step": 2,
+        "unit": "px",
+        "label": "Desktop padding bottom",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile padding top",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile padding bottom",
+        "default": 40
+      }
+    ],
+    "presets": [
+      {
+        "name": "Fragrance Hero",
+        "category": "Hero"
+      }
+    ]
+  }
+  {% endschema %}

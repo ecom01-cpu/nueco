@@ -1,0 +1,162 @@
+.nue-related-products .related-products-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 5rem;
+}
+.nue-related-products .related-products-header h2 {
+  font-size: 8rem;
+  line-height: 0.9;
+  letter-spacing: -2%;
+}
+.nue-related-products .related-products-header p {
+  font-family: var(--font-heading-family);
+  font-weight: 100;
+  font-size: 1.8rem;
+  line-height: 1.33;
+  color: var(--nue-black);
+}
+.nue-related-products .related-product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding-left: 1.4rem;
+  padding-right: 1.4rem;
+  margin-bottom: 5rem;
+  position: relative;
+}
+.nue-related-products .related-product-link,
+.nue-related-products .product-info-link {
+  text-decoration: none;
+  color: inherit;
+}
+.nue-related-products .related-product-form {
+  position: relative;
+  z-index: 2;
+}
+.nue-related-products .related-product-image {
+  flex: 1 0 16.6rem;
+  max-width: 16.6rem;
+  height: 29.6rem;
+}
+.nue-related-products .related-product-image img {
+  max-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
+.nue-related-products .product-title {
+  font-family: var(--font-heading-family);
+  font-weight: 100;
+  font-size: 3.2rem;
+  line-height: 1.33;
+  margin-bottom: 0.8rem;
+  margin-top: 0;
+  color: var(--nue-black);
+}
+.nue-related-products .product-description {
+  font-size: 1.2rem;
+  line-height: 1.33;
+  margin-bottom: 1.7rem;
+  margin-top: 0;
+  min-height: 4.9rem;
+}
+.nue-related-products .fragrance-list {
+  margin: 0 0 2.6rem;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 2rem;
+  text-align: center;
+}
+.nue-related-products .fragrance-list li:first-child {
+  padding-right: 2rem;
+  position: relative;
+}
+.nue-related-products .fragrance-list li:first-child:after {
+  content: '';
+  width: 0.4rem;
+  height: 0.4rem;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 2rem;
+  background-color: #D9D9D9;
+  border-radius: 50%;
+}
+.nue-related-products .fragrance-list li img {
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: 50%;
+}
+.nue-related-products .fragrance-list li span {
+  font-size: 1rem;
+  line-height: 1.33;
+  display: block;
+}
+.nue-related-products .button {
+  /* width: 112;
+  height: 40;
+  border-radius: 25px;
+  justify-content: space-between;
+  padding: 0.9rem 1.6rem;
+  display: flex;
+  align-items: center;
+  background-color: var(--nue-light-green);
+  color: var(--nue-green); */
+  background-color: #EFF8F2;
+  color: #429348;
+  gap: 40px;
+}
+
+.nue-related-products .button svg path {
+  transition: all 0.3s ease;
+}
+
+.nue-related-products .button:hover svg path {
+  /* stroke: white; */
+}
+
+.nue-related-products .button svg{
+  position: relative;
+  top: -1px;
+}
+.nue-related-products .button:hover {
+  background-color: var(--nue-green);
+  color: #429348;
+  background-color: #DDF3E5;
+  
+}
+.nue-related-products .button::before,
+.nue-related-products .button::after {
+  display: none;
+}
+
+@media screen and (min-width: 750px) {
+  .nue-related-products .related-products-header {
+    flex-direction: row;
+    gap: 5.8rem;
+    margin-bottom: 6.5rem;
+  }
+  .nue-related-products .related-products-header > * {
+    flex-basis: calc(50% - 29px);
+  }
+  .nue-related-products .related-products-header h2 {
+    font-size: 10.4rem;
+    line-height: 1;
+  }
+  .nue-related-products .related-products-header p {
+    font-size: 2.4rem;
+  }
+  .nue-related-products .related-product-content {
+    max-width: 29.6rem;  
+  }
+}
+@media screen and (min-width: 1200px) {
+  .nue-related-products .related-product-card {
+    margin-bottom: 0;
+    padding: 0;
+    align-items: center;
+    flex-direction: row;
+    gap: 4.8rem;
+  }
+}

@@ -1,0 +1,196 @@
+{% comment %} Nue Related Products Section {% endcomment %}
+
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'section-related-products.css' | asset_url | stylesheet_tag }}
+{{ 'nue-related-products.css' | asset_url | stylesheet_tag }}
+
+{% if section.settings.image_shape == 'blob' %}
+  {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="page-width">
+
+      <div class="related-products-header">
+        <h2 class="related-products__heading inline-richtext {{ section.settings.heading_size }}">
+          {{ section.settings.heading | newline_to_br }}
+        </h2>
+        <p class="related-products__description">{{ section.settings.description }}</p>
+      </div>
+
+      <div class="grid product-grid grid--2-col-desktop grid--1-col-tablet-down">
+        {% for block in section.blocks %}
+          {% assign product = block.settings.product %}
+          <div class="grid__item related-product-card">
+            <a href="{{ product.url }}" class="related-product-link">
+              <div class="related-product-image">
+                {% if block.settings.image != blank %}
+                  <img src="{{ block.settings.image | image_url }}" alt="{{ product.title }}">
+                {% elsif product.metafields.custom.main_image != blank %}
+                  <img src="{{ product.metafields.custom.main_image | image_url }}" alt="{{ product.title }}">
+                {% else %}
+                  <img src="{{ product.featured_image | image_url }}" alt="{{ product.title }}">
+                {% endif %}
+              </div>
+            </a>
+            <div class="related-product-content">
+              <a href="{{ product.url }}" class="product-info-link">
+                <h3 class="product-title">{{ product.title }}</h3>
+                <p class="product-description">{{ product.metafields.my_fields.short_description | strip_html | truncatewords: 25 }}</p>
+                {% assign fragrance_filter = product.metafields.custom.fragrance_filter.value %}
+                {% if fragrance_filter != blank %}
+                  <ul class="fragrance-list">
+                    {% for fragrance in fragrance_filter %}
+                      <li>
+                        {% if fragrance.image %}
+                          <img src="{{ fragrance.image | image_url }}" alt="{{ fragrance.label }}">
+                        {% endif %}
+                        <span>{{ fragrance.title }}</span>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </a>
+              <product-form data-section-id="{{ section.id }}-{{ forloop.index }}" class="related-product-form">
+                <form method="post" action="/cart/add" id="product-form-{{ section.id }}-{{ forloop.index }}" accept-charset="UTF-8" class="form" enctype="multipart/form-data" data-type="add-to-cart-form">
+                  <input type="hidden" name="form_type" value="product">
+                  <input type="hidden" name="utf8" value="✓">
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" class="product-variant-id">
+                  
+                  <button
+                    id="ProductSubmitButton-{{ section.id }}-{{ forloop.index }}"
+                    type="submit"
+                    name="add"
+                    class="button"
+                    {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                  >
+                    <span>
+                      {%- if product.selected_or_first_available_variant.available -%}
+                        Add
+                      {%- else -%}
+                        {{ 'products.product.sold_out' | t }}
+                      {%- endif -%}
+                    </span>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0.685547 6H6.3424M11.9993 6H6.3424M6.3424 6V0.343146M6.3424 6L6.3424 11.6569" stroke="#04953D"/>
+                    </svg>
+                    
+                    <div class="loading__spinner hidden">
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        class="spinner"
+                        viewBox="0 0 66 66"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                      </svg>
+                    </div>
+                  </button>
+                </form>
+              </product-form>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Nue Related Products",
+  "tag": "section",
+  "class": "section nue-related-products",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "heading",
+      "default": "Layers Well With...",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "default": "Functional fragrances are designed to be layered to amplify benefits.",
+      "label": "Description"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h1", "label": "H1" },
+        { "value": "h0", "label": "H0" },
+        { "value": "hxl", "label": "HXL" },
+        { "value": "hxxl", "label": "HXXL" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "related_product",
+      "name": "Related Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select product"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Nue Related Products",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

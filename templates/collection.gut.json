@@ -1,0 +1,211 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "blocks": {
+        "collection_dfU7cA": {
+          "type": "collection",
+          "settings": {
+            "collection": "all",
+            "title": ""
+          }
+        },
+        "collection_aji4bX": {
+          "type": "collection",
+          "settings": {
+            "collection": "fragrances-2025",
+            "title": "Fragrance"
+          }
+        },
+        "collection_qfCLkL": {
+          "type": "collection",
+          "settings": {
+            "collection": "gut-method",
+            "title": "Gut"
+          }
+        },
+        "collection_qUKdLd": {
+          "type": "collection",
+          "settings": {
+            "collection": "hair",
+            "title": "Hair"
+          }
+        },
+        "collection_WHyMFk": {
+          "type": "collection",
+          "settings": {
+            "collection": "skin-method",
+            "title": "Skin"
+          }
+        },
+        "collection_nBEYJT": {
+          "type": "collection",
+          "settings": {
+            "collection": "bodymethod",
+            "title": "Body"
+          }
+        }
+      },
+      "block_order": [
+        "collection_dfU7cA",
+        "collection_aji4bX",
+        "collection_qfCLkL",
+        "collection_qUKdLd",
+        "collection_WHyMFk",
+        "collection_nBEYJT"
+      ],
+      "settings": {
+        "layout": "links",
+        "hero_title": "Functional Fragrances",
+        "hero_subtitle": "<p>Mood-elevating fragrance supplements. Developed by the world's most famous noses.</p>",
+        "hero_height_mobile": 100,
+        "hero_height_desktop": 100,
+        "use_light_header": false
+      }
+    },
+    "nue_bundle_3_column_pmdYgf": {
+      "type": "nue-bundle-3-column",
+      "name": "NUE Bundle 3 Column",
+      "settings": {
+        "title": "Gut Method",
+        "description": "Support the foundation of your overall health—your gut—with our bestselling duo, expertly formulated to ease bloating and promote better digestion, mood, sleep, skin, and immunity.",
+        "product": "the-gut-method",
+        "button_label": "Add Method to Cart",
+        "image_1": "shopify://shop_images/TNC_WEBSITE25_PDP_GUTMETHODPRODUCT_676x558_e3e7cd2e-9a68-4d19-a0b1-8669224cbce1.png",
+        "image_2": "shopify://shop_images/TNC_WEBSITE25_PDP_GUTMETHOD_794x844_099ce619-08db-4bea-aafa-c854cad01e54.png",
+        "full_width": false,
+        "color_scheme": "scheme-2",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "blocks": {
+        "promo_card_GYkwaz": {
+          "type": "promo_card",
+          "settings": {
+            "position": 1,
+            "image": "shopify://shop_images/9ac67a47b6b791506ff1d93b02e9f75661b89390.png",
+            "mobile_image": "shopify://shop_images/Pre_Pro_Bread_Mobile.png",
+            "heading": "",
+            "subtitle_bold": "",
+            "subtitle_light": "",
+            "description": "",
+            "text_color": "#ffffff",
+            "image_overlay_opacity": 0,
+            "content_position": "bottom-center",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_top_mobile": 73,
+            "padding_bottom_mobile": 0
+          }
+        },
+        "promo_card_eeEAwE": {
+          "type": "promo_card",
+          "disabled": true,
+          "settings": {
+            "position": 6,
+            "image": "shopify://shop_images/JAN-SALE-HP_MOBILE_2.jpg",
+            "heading": "",
+            "subtitle_bold": "",
+            "subtitle_light": "Some light text here",
+            "description": "",
+            "text_color": "#ffffff",
+            "image_overlay_opacity": 0,
+            "content_position": "bottom-center",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0
+          }
+        },
+        "promo_card_side_DepqVw": {
+          "type": "promo_card_side",
+          "disabled": true,
+          "settings": {
+            "position": 8,
+            "background_color": "#000000",
+            "image": "shopify://shop_images/fffffsss.png",
+            "mobile_image": "shopify://shop_images/mob_C202501_JANCOREFOCUS_4x5_1_1.png",
+            "image_position": "right",
+            "heading": "The Gut Health Challenge You Haven't Tried Yet",
+            "description": "",
+            "subtitle": "A soothing spray designed to calm body and mind post-workout or before bed.",
+            "link_text": "Read More",
+            "link_url": "",
+            "text_color": "#ffffff",
+            "section_height": 25,
+            "show_image_only": false,
+            "content_position_mobile": "center",
+            "content_position_desktop": "center",
+            "image_overlay_opacity": 0,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "promo_card_GYkwaz",
+        "promo_card_eeEAwE",
+        "promo_card_side_DepqVw"
+      ],
+      "settings": {
+        "products_per_page": 36,
+        "product_card_type": "center",
+        "columns_desktop": "3",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "nue_blog_posts_B3xRFq": {
+      "type": "nue-blog-posts",
+      "blocks": {
+        "article_JHQXac": {
+          "type": "article",
+          "settings": {
+            "article": "journal/matt-rodwell-on-movement-mindfulness-and-mastering-the-art-of-feeling-well",
+            "title_override": ""
+          }
+        },
+        "article_9pDXty": {
+          "type": "article",
+          "settings": {
+            "article": "journal/the-best-supplements-to-subscribe-to",
+            "title_override": ""
+          }
+        }
+      },
+      "block_order": [
+        "article_JHQXac",
+        "article_9pDXty"
+      ],
+      "name": "NUE Blog Posts",
+      "settings": {
+        "columns_mobile": "1",
+        "columns_desktop": "2",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 100
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "nue_bundle_3_column_pmdYgf",
+    "product-grid",
+    "nue_blog_posts_B3xRFq"
+  ]
+}

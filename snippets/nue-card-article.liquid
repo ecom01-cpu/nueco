@@ -1,0 +1,52 @@
+<article class="nue-card-article{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+  {% if settings.animations_reveal_on_scroll %}
+    data-cascade
+    style="--animation-order: {{ animation_order | default: 1 }};"
+  {% endif %}
+>
+  <a href="{{ article.url }}" class="nue-card-article__link">
+    <div class="nue-card-article__image-wrapper">
+      {%- if article.image -%}
+        <img
+          src="{{ article.image | image_url: width: 686, height: 488 }}"
+          alt="{{ article.image.alt | escape }}"
+          loading="lazy"
+          width="343"
+          height="244"
+          class="nue-card-article__image"
+        >
+      {%- else -%}
+        <div class="nue-card-article__placeholder">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div>
+    
+    <div class="nue-card-article__content">
+
+      {% if template.name == "blog" %}
+        <div class="nue-card-article__tags">
+          {% for tag in article.tags %}
+            <span class="nue-card-article__tag">{{ tag }}</span>
+            {% unless forloop.last %}
+              <span class="nue-card-article__tag-separator">|</span>
+            {% endunless %}
+          {% endfor %}
+        </div>
+      {% endif %}
+      <h3 class="nue-card-article__title">
+        {%- if title_override != blank -%}
+          {{ title_override }}
+        {%- else -%}
+          {{ article.title | escape }}
+        {%- endif -%}
+      </h3>
+
+      {% unless template.name == "blog" %}
+        <span class="nue-card-article__read-more">Read More</span>
+      {% endunless %}
+      
+      
+    </div>
+  </a>
+</article>

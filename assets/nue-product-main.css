@@ -1,0 +1,23 @@
+/* Nue Product Main Custom Styles */
+.rating-star::before{
+  content: '★★★★★';
+  background: linear-gradient(90deg, #04953d var(--percent), rgba(var(--color-foreground), 0.15) var(--percent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.product .rating-star{
+  --letter-spacing: 0.1 !important;
+  font-size: 10px;
+}
+
+.rating-count span{
+  font-size: 10px;
+}
+
+.title-tag{
+  font-size: 10px;
+  line-height: 12px;
+  margin-top: 8px;
+}
+

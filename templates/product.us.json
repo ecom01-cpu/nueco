@@ -1,0 +1,362 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "rating_JJYAN6": {
+          "type": "rating",
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "caption": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.metafields.descriptors.subtitle.value }}",
+            "text_style": "subtitle"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "disabled": true,
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "custom_description": "<p>{{ product.metafields.my_fields.short_description.value }}</p>"
+          }
+        },
+        "fragrance_details_Q4iMiV": {
+          "type": "fragrance_details",
+          "settings": {
+            "perfumer": "The Perfumer: Christine Hassan",
+            "notes_content": "<p><strong>Top Notes</strong><br/>Bergamot, Orange, Pear</p><p><strong>Heart Notes</strong><br/>Moss, Orris, Cedarwood </p><p><strong>Base Notes</strong><br/>Ambrofix, Vetiver, Musk</p>",
+            "footer_text": "",
+            "accord_1_name": "Woody",
+            "accord_1_image": "shopify://shop_images/SCENT_WOOD_400x400_c0bc1ba9-c65f-4bb4-b732-53e69ce23c7b.png",
+            "accord_1_intensity": 4,
+            "accord_2_name": "Musky",
+            "accord_2_image": "shopify://shop_images/SCENT_MUSK_400x400_a9b86050-e097-49bd-8d98-f0c088be86d5.png",
+            "accord_2_intensity": 3,
+            "accord_3_name": "Warm Spicy",
+            "accord_3_image": "shopify://shop_images/SCENT_SPICY_400x400_ffd4a7e7-626b-4bb3-b432-b1962b7b1bac.png",
+            "accord_3_intensity": 5,
+            "accord_4_name": "Iris",
+            "accord_4_image": "shopify://shop_images/SCENT_IRIS_400x400_fbf52bd0-4281-4e2d-8f15-c6d859d2495e.png",
+            "accord_4_intensity": 2,
+            "accord_5_name": "",
+            "accord_5_intensity": 1,
+            "accord_6_name": "",
+            "accord_6_intensity": 1
+          }
+        },
+        "price": {
+          "type": "price",
+          "disabled": true,
+          "settings": {}
+        },
+        "recharge_FVf8PB": {
+          "type": "recharge",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": false
+          }
+        }
+      },
+      "block_order": [
+        "rating_JJYAN6",
+        "title",
+        "caption",
+        "variant_picker",
+        "description",
+        "fragrance_details_Q4iMiV",
+        "price",
+        "recharge_FVf8PB",
+        "buy_buttons"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "",
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "image_with_text_4ycdnz": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_fqdNPC": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Science",
+            "heading_size": "hxxl"
+          }
+        },
+        "text_X7TNBY": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Pheromones are natural chemicals our bodies produce that others can detect. Their expression is influenced by factors like skin pH, stress, diet and genetics. US uses olfactory chemistry to enhance feelings of confidence and assurance which can, in turn, affect how we smell to others. As it adapts to your unique chemistry, it evolves into a scent that’s warm, intimate, and deeply magnetic.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_fqdNPC",
+        "text_X7TNBY"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/TNC_WEBSITE25_PLP_FRAGRANCE_US_1280x1280_dfc3e322-1540-4a2f-9352-70744d7925ef.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "center",
+        "mobile_content_alignment": "center",
+        "section_color_scheme": "scheme-2",
+        "color_scheme": "scheme-2",
+        "padding_top": 92,
+        "padding_bottom": 100
+      }
+    },
+    "multicolumn_XVgNJ6": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_RNHY8A": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/TNC_WEBSITE25_PDP_US_SMELLS_LIKE_787x787_2943d404-5520-42f8-af22-ebf3c6be01fe.png",
+            "title": "Smells Like",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_E3kCJr": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/TNC_WEBSITE25_PDP_US_FEELS_LIKE_787x787_0be27da0-a1ee-4881-869d-166484893b5d.png",
+            "title": "Feels Like",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_RNHY8A",
+        "column_E3kCJr"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 2,
+        "column_alignment": "center",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 100,
+        "padding_bottom": 84
+      }
+    },
+    "video_jH869r": {
+      "type": "video",
+      "name": "t:sections.video.presets.name",
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "enable_video_looping": false,
+        "video": "shopify://files/videos/TNC_WEBSITE25_PDP_FRAGRANCE_US-VIDEO_2644x1314_1.mp4",
+        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "description": "Nue video",
+        "mobile_video": "shopify://files/videos/TNC_US-FRAGRANCE_RORYWHITNEY_1080x1350_SUBS.mp4",
+        "mobile_video_url": "",
+        "full_width": false,
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 84
+      }
+    },
+    "nue_related_products_XCxQyk": {
+      "type": "nue-related-products",
+      "blocks": {
+        "related_product_RxpQXt": {
+          "type": "related_product",
+          "settings": {
+            "product": "functional-fragrance"
+          }
+        },
+        "related_product_MJhgQj": {
+          "type": "related_product",
+          "settings": {
+            "product": "water-therapy"
+          }
+        }
+      },
+      "block_order": [
+        "related_product_RxpQXt",
+        "related_product_MJhgQj"
+      ],
+      "name": "Nue Related Products",
+      "settings": {
+        "heading": "Layers \nWell With...",
+        "description": "Just as nature blends scents with purpose, our functional fragrances are designed to be layered. Combining them not only creates unique olfactory profiles but also amplifies their benefits – activating synergistic interactions between active ingredients like phytoncides, adaptogens, and nootropics.",
+        "heading_size": "h2",
+        "color_scheme": "scheme-2",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "heading": "",
+        "heading_size": "hxxl",
+        "products_to_show": 2,
+        "columns_desktop": 2,
+        "columns_mobile": "1",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": true,
+        "show_rating": true,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "image_with_text_i63fgf": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_pDQamE": {
+          "type": "heading",
+          "settings": {
+            "heading": "Customer Reviews",
+            "heading_size": "hxxl"
+          }
+        },
+        "reviews_xNpEQy": {
+          "type": "reviews",
+          "settings": {
+            "product_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_pDQamE",
+        "reviews_xNpEQy"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/TNC_WEBSITE25_PDP_US_WHAT_PEOPLE_SAY_1268x954_81c133dd-1050-455f-af4f-2427b3c6fe0f.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "nue_blog_posts_fbjaA7": {
+      "type": "nue-blog-posts",
+      "blocks": {
+        "article_cYN9dz": {
+          "type": "article",
+          "settings": {
+            "article": "news/about-us-whitney-and-rory",
+            "title_override": ""
+          }
+        },
+        "article_L6gj7Y": {
+          "type": "article",
+          "settings": {
+            "article": "news/about-us-cobbie-and-joe",
+            "title_override": ""
+          }
+        }
+      },
+      "block_order": [
+        "article_cYN9dz",
+        "article_L6gj7Y"
+      ],
+      "name": "NUE Blog Posts",
+      "settings": {
+        "columns_mobile": "1",
+        "columns_desktop": "2",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "175930973435f18d7e": {
+      "type": "apps",
+      "blocks": {
+        "yotpo_product_reviews_reviews_c9LpWM": {
+          "type": "shopify://apps/yotpo-product-reviews/blocks/reviews/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
+          "settings": {
+            "product": "{{product}}"
+          }
+        }
+      },
+      "block_order": [
+        "yotpo_product_reviews_reviews_c9LpWM"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_with_text_4ycdnz",
+    "multicolumn_XVgNJ6",
+    "video_jH869r",
+    "nue_related_products_XCxQyk",
+    "related-products",
+    "175930973435f18d7e",
+    "image_with_text_i63fgf",
+    "nue_blog_posts_fbjaA7"
+  ]
+}
