@@ -2060,9 +2060,12 @@ a.product__text {
 }
 .product-form__submit.sticky span.one_time_price {
     font-size: 0;
+    position: relative;
+    top: -5px;
 }
 .product-form__submit.sticky span.button__price {
     position: relative;
+    top: -5px;
 }
 .product__info-wrapper:has(.product-form__submit.sticky) {
     transform: none !important;
