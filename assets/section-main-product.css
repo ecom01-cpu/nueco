@@ -2049,7 +2049,7 @@ a.product__text {
     left: 50%;
     max-width: 400px;
     width: 100%;
-    padding: 5px;
+    padding: 10px;
 }
 .product-form__submit.sticky span.button__text {
     margin-left: auto;
@@ -2059,14 +2059,10 @@ a.product__text {
     padding: 12px;
 }
 .product-form__submit.sticky span.one_time_price {
-    position: absolute;
-    left: 15px;
-    bottom: 5px;
     font-size: 0;
 }
 .product-form__submit.sticky span.button__price {
     position: relative;
-    top: -6px;
 }
 .product__info-wrapper:has(.product-form__submit.sticky) {
     transform: none !important;
@@ -2075,6 +2071,15 @@ a.product__text {
 }
 .sticky:has(span.one_time_price[style="display: none;"]) span.button__price {
     top: 0;
+}
+.free_shipping_text {
+  display:none;
+}
+.sticky span.free_shipping_text {
+    display: block;
+    position: absolute;
+    bottom: 5px;
+    left: 20px;
 }
 /* Mobile responsiveness - Keep same layout */
 @media screen and (max-width: 749px) {
