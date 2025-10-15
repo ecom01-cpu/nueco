@@ -83,6 +83,10 @@
             {% endif %}
             data-variant-id="{{ product.selected_or_first_available_variant.id }}"
           >
+            <span class="button__price" data-price-regular="{{ product.selected_or_first_available_variant.price }}" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+              {{ product.selected_or_first_available_variant.price | money }}
+            </span>
+            <span class="one_time_price"><small class="comp_price">{{ product.selected_or_first_available_variant.price | money }}</small> |</span>
             <span class="button__text">
               {%- if product.selected_or_first_available_variant == null -%}
                 {{ 'products.product.unavailable' | t }}
@@ -92,10 +96,6 @@
                 {{ 'products.product.add_to_cart' | t }}
               {%- endif -%}
             </span>
-            <span class="button__price" data-price-regular="{{ product.selected_or_first_available_variant.price }}" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
-              {{ product.selected_or_first_available_variant.price | money }}
-            </span>
-            <span class="one_time_price">{{ product.selected_or_first_available_variant.price | money }}</span>
             {%- render 'loading-spinner' -%}
           </button>
           {%- if show_dynamic_checkout -%}
@@ -156,7 +156,6 @@
     <script src="{{ 'pickup-availability.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 </div>
-
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const interval = setInterval(() => {
@@ -170,6 +169,14 @@
         clearInterval(interval);
       }
     }, 100);
+    const btnprice = document.querySelector(".button__price");
+    const comp_price = document.querySelector(".comp_price");
+    if (comp_price.innerText == btnprice.innerText) {
+      document.querySelector(".one_time_price").style.display = "none";
+    }
+    else {
+      document.querySelector(".one_time_price").style.display = "block";
+    }
     const addToCartBtn = document.querySelector(".product-form__submit");
     const productInfoWrapper = document.querySelector(".product__info-wrapper");
     window.addEventListener("scroll", function () {

@@ -368,6 +368,8 @@
     function changeToSubscription() {
       console.log('🔀 Recharge Widget: Switching to subscription');
       document.querySelector("span.one_time_price").style.display = "block";
+      const btn = document.querySelector(".button__text");
+      btn.innerText = "Add to Subscription"; 
       if (oneoffTrigger) oneoffTrigger.classList.remove('active');
       if (subscriptionTrigger) subscriptionTrigger.classList.add('active');
       
@@ -389,6 +391,8 @@
     function changeToOneoff() {
       console.log('🔀 Recharge Widget: Switching to one-time purchase');
       document.querySelector("span.one_time_price").style.display = "none";
+      const btn = document.querySelector(".button__text");
+      btn.innerText = "Add to Cart"; 
       if (oneoffTrigger) oneoffTrigger.classList.add('active');
       if (subscriptionTrigger) subscriptionTrigger.classList.remove('active');
       
@@ -449,6 +453,8 @@
     }
 
     if (subscriptionTrigger) {
+      const btn = document.querySelector(".button__text");
+      btn.innerText = "Add to Subscription"; 
       // Only add click listener if not subscription-only (allows switching)
       if (!isSubscriptionOnly) {
         subscriptionTrigger.addEventListener('click', changeToSubscription);
@@ -458,6 +464,7 @@
       }
     } else {
       console.error('❌ Recharge Widget: Subscription trigger not found!');
+      document.querySelector("span.one_time_price").style.display = "none";
     }
     
     // Frequency selection
@@ -501,6 +508,7 @@
       frequencyOptionsCount: frequencies.length,
       isSubscriptionOnly: isSubscriptionOnly,
       defaultState: 'subscription' // Always subscription when selling plans exist
+      
     });
     
     // Add form submit listener for debugging

@@ -214,14 +214,13 @@ product-info {
 .product-form__submit {
   margin-bottom: 1rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 14px 16px;
   margin-top: 16px;
 }
 
 .product-form__submit .button__text {
-  flex: 1;
   text-align: left;
 }
 
@@ -2037,11 +2036,11 @@ a.product__text {
   line-height: 1.33;
   margin-top: 16px !important;
 }
-span.one_time_price {
+.comp_price {
     text-decoration: line-through;
+    margin-right: 5px;
+    font-size: 12px;
 }
-button#ProductSubmitButton-template--18104659640397__main {}
-
 .product-form__submit.sticky {
     position: fixed;
     bottom: 20px;
