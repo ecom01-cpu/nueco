@@ -703,9 +703,9 @@ cart-drawer-items::after {
   z-index: 10;
 }
 
-cart-drawer-items.has-scroll-indicator::after {
+/*cart-drawer-items.has-scroll-indicator::after {
   opacity: 1;
-}
+}*/
 
 .cart-drawer .quantity-popover-container {
   padding: 0;
