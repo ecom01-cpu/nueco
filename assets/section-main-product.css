@@ -2040,6 +2040,22 @@ a.product__text {
 span.one_time_price {
     text-decoration: line-through;
 }
+button#ProductSubmitButton-template--18104659640397__main {}
+
+.product-form__submit.sticky {
+    position: fixed;
+    bottom: 20px;
+    transform: translateX(-50%);
+    z-index: 1000;
+    left: 50%;
+    max-width: 400px;
+    width: 100%;
+}
+.product__info-wrapper:has(.product-form__submit.sticky) {
+    transform: none !important;
+    animation: none !important;
+    opacity: 1;
+}
 /* Mobile responsiveness - Keep same layout */
 @media screen and (max-width: 749px) {
   .fragrance-details__container {

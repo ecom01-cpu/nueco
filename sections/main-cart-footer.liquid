@@ -57,8 +57,32 @@
                     </ul>
                   {%- endif -%}
                 </div>
+                  {% assign total_compare_at = 0 %}
+                  {% assign total_price = 0 %}
 
-                <div class="totals">
+                  {% for item in cart.items %}
+                    {% assign one_time_price = item.variant.price %}
+                    {% assign actual_price = item.final_price %}
+
+                    {% if item.selling_plan_allocation %}
+                      {% assign actual_price = item.selling_plan_allocation.price %}
+                    {% endif %}
+
+                    {% assign item_compare_total = one_time_price | times: item.quantity %}
+                    {% assign item_price_total = actual_price | times: item.quantity %}
+
+                    {% assign total_compare_at = total_compare_at | plus: item_compare_total %}
+                    {% assign total_price = total_price | plus: item_price_total %}
+                  {% endfor %}
+
+                  {% if total_compare_at > total_price %}
+                    {% assign total_saving = total_compare_at | minus: total_price %}
+                    {% assign total_saving_percent = total_saving | times: 100 | divided_by: total_compare_at %}
+                    <p class="cart-savings">
+                    You're saving <strong>{{ total_saving | money }} ({{ total_saving_percent | round: 0 }}%)</strong> on your cart!
+                    </p>
+                {% endif %}
+                <div class="totals cartpagetotal">
                   <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
                   <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
                 </div>

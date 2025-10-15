@@ -33,7 +33,9 @@
 .cart__ctas + .totals {
   margin-top: 2rem;
 }
-
+.totals.cartpagetotal {
+ justify-content: flex-start;
+}
 @media all and (min-width: 750px) {
   .totals {
     justify-content: flex-end;

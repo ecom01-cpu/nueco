@@ -170,5 +170,16 @@
         clearInterval(interval);
       }
     }, 100);
+    const addToCartBtn = document.querySelector(".product-form__submit");
+    const productInfoWrapper = document.querySelector(".product__info-wrapper");
+    window.addEventListener("scroll", function () {
+      const productInfoRect = productInfoWrapper.getBoundingClientRect();
+      if (productInfoRect.bottom <= 50) {
+        addToCartBtn.classList.add("sticky");
+      } else {
+        addToCartBtn.classList.remove("sticky");
+      }
+   });
+
   });
 </script>
