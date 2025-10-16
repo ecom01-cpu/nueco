@@ -226,7 +226,6 @@ product-info {
 
 .product-form__submit .button__price {
   font-weight: 600;
-  margin-left: 1rem;
 }
 
 .product-form__submit[disabled] .button__price,
