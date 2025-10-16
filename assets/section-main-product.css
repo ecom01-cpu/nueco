@@ -2052,12 +2052,7 @@ a.product__text {
     width: 100%;
     padding: 10px;
 }
-.product-form__submit.sticky span.button__text {
-    background: #04953d;
-    border-radius: 50px;
-    color: #fff;
-    padding: 12px;
-}
+
 .product-form__submit.sticky span.one_time_price {
     position: relative;
 }
