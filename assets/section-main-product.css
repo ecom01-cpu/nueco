@@ -2041,6 +2041,7 @@ a.product__text {
     margin-right: 5px;
     font-size: 12px;
     color: #000000bf;
+    font-weight: 400;
 }
 .product-form__submit.sticky {
     position: fixed;
