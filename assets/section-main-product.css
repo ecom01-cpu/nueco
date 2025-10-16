@@ -2053,7 +2053,6 @@ a.product__text {
     padding: 10px;
 }
 .product-form__submit.sticky span.button__text {
-    margin-left: auto;
     background: #04953d;
     border-radius: 50px;
     color: #fff;
