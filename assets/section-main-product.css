@@ -2059,9 +2059,11 @@ a.product__text {
     padding: 12px;
 }
 .product-form__submit.sticky span.one_time_price {
-    font-size: 0;
     position: relative;
     top: -2px;
+}
+span.one_time_price {
+    font-size: 0;
 }
 .product-form__submit.sticky span.button__price {
     position: relative;
