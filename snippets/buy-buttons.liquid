@@ -92,12 +92,13 @@
                 {{ 'products.product.add_to_cart' | t }}
               {%- endif -%}
             </span>
+            <div class="add_btn_text">
             <span class="button__price" data-price-regular="{{ product.selected_or_first_available_variant.price }}" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
               {{ product.selected_or_first_available_variant.price | money }}
             </span>
             <span class="one_time_price"><small class="comp_price">{{ product.selected_or_first_available_variant.price | money }}</small> |</span>
             {% if settings.cart_free_shipping_threshold != blank %}<span class="free_shipping_text">Free shipping over ${{ settings.cart_free_shipping_threshold }}</span>{% endif %}
-            
+            </div>
             {%- render 'loading-spinner' -%}
           </button>
           {%- if show_dynamic_checkout -%}
