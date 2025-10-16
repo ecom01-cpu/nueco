@@ -2090,7 +2090,7 @@ span.one_time_price {
 .add_btn_text {
     display: flex;
     position: relative;
-    gap: 5px 10px;
+    gap: 5px;
     flex-wrap: wrap;
     justify-content: flex-end;
 }
