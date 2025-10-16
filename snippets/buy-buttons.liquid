@@ -119,7 +119,7 @@
       </div>
     </div>    
   {%- endif -%}
-   {% if product.handle  == 'skin-filter' %}
+   {% if product.tags  contains 'minimum_3' %}
       <p class="min_msg">We recommend a minimum of 3 of consistent use to see results</p>
     {% endif %}
   {%- if show_pickup_availability -%}
