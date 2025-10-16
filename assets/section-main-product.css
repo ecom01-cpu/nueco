@@ -2040,6 +2040,7 @@ a.product__text {
     text-decoration: line-through;
     margin-right: 5px;
     font-size: 12px;
+    color: #000000bf;
 }
 .product-form__submit.sticky {
     position: fixed;
