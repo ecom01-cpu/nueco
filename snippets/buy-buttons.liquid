@@ -83,11 +83,6 @@
             {% endif %}
             data-variant-id="{{ product.selected_or_first_available_variant.id }}"
           >
-            <span class="button__price" data-price-regular="{{ product.selected_or_first_available_variant.price }}" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
-              {{ product.selected_or_first_available_variant.price | money }}
-            </span>
-            <span class="one_time_price"><small class="comp_price">{{ product.selected_or_first_available_variant.price | money }}</small> |</span>
-            {% if settings.cart_free_shipping_threshold != blank %}<span class="free_shipping_text">Free shipping over ${{ settings.cart_free_shipping_threshold }}</span>{% endif %}
             <span class="button__text">
               {%- if product.selected_or_first_available_variant == null -%}
                 {{ 'products.product.unavailable' | t }}
@@ -97,6 +92,12 @@
                 {{ 'products.product.add_to_cart' | t }}
               {%- endif -%}
             </span>
+            <span class="button__price" data-price-regular="{{ product.selected_or_first_available_variant.price }}" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+              {{ product.selected_or_first_available_variant.price | money }}
+            </span>
+            <span class="one_time_price"><small class="comp_price">{{ product.selected_or_first_available_variant.price | money }}</small> |</span>
+            {% if settings.cart_free_shipping_threshold != blank %}<span class="free_shipping_text">Free shipping over ${{ settings.cart_free_shipping_threshold }}</span>{% endif %}
+            
             {%- render 'loading-spinner' -%}
           </button>
           {%- if show_dynamic_checkout -%}
