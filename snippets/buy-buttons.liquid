@@ -97,7 +97,9 @@
             <span class="button__price" data-price-regular="{{ product.selected_or_first_available_variant.price }}" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
               {{ product.selected_or_first_available_variant.price | money }}
             </span>
+            {% comment %}
             {% if settings.cart_free_shipping_threshold != blank %}<span class="free_shipping_text">Free shipping over ${{ settings.cart_free_shipping_threshold }}</span>{% endif %}
+            {% endcomment %}
             </div>
             {%- render 'loading-spinner' -%}
           </button>
