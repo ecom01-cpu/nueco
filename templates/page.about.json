@@ -1,1 +1,322 @@
-{"sections":{"main":{"type":"main-page","disabled":true,"settings":{"padding_top":28,"padding_bottom":28}},"about_hero_EaXBb6":{"type":"about-hero","name":"About Hero","settings":{"eyebrow_title":"","title":"Tools For Wellbeing","image":"shopify:\/\/shop_images\/nue-about.png","richtext":"The Nue Co. exists to bridge the space between <em>science and sensibility<\/em>, between <em>function and feeling<\/em>. We create products that support the <em>physical and emotional body<\/em>, designed not just to work, but to shift something within.","padding_top":164,"padding_bottom":0}},"image_with_text_b4DqBN":{"type":"image-with-text","blocks":{"heading_xjEHka":{"type":"heading","settings":{"heading":"Whole Body Health","heading_size":"hxxl"}},"text_wHYMMP":{"type":"text","settings":{"text":"<h5>Guided by the philosophy of ‘Whole Body Health,’ The Nue Co. curates a holistic portfolio spanning functional fragrances, topicals, and ingestibles — each designed to deliver effective, science-backed solutions that excite the senses. From easing stress and improving sleep to restoring gut balance, every innovation is created to support the body and mind in unison, redefining what modern wellness can feel like.<\/h5>","text_style":"body"}},"button_nMEQja":{"type":"button","settings":{"button_label":"Explore Our Methods","button_link":"shopify:\/\/collections\/all","button_style_secondary":false}}},"block_order":["heading_xjEHka","text_wHYMMP","button_nMEQja"],"name":"t:sections.image-with-text.presets.name","settings":{"image":"shopify:\/\/shop_images\/EXTRA_3_5X4_1.png","height":"adapt","desktop_image_width":"medium","layout":"text_first","image_behavior":"none","content_layout":"no-overlap","desktop_content_position":"top","desktop_content_alignment":"left","mobile_content_alignment":"left","section_color_scheme":"scheme-2","color_scheme":"scheme-2","padding_top":76,"padding_bottom":76}},"nue_collapsible_content_gabGxz":{"type":"nue-collapsible-content","blocks":{"heading_8jMwBq":{"type":"heading","settings":{"nue_heading":"What’s In. \nWhat’s Out.","heading_size":"h1"}},"text_yQVieH":{"type":"text","settings":{"nue_text":"<p>“Clean” has no single definition, so we created our own, one that puts your endocrine system and microbiome first. Our fragrances are formulated to be endocrine-safe and our ingestibles are designed to support microbiome diversity. There are over 200 ingredients we exclude from our formulas. What remains is innovation and purity, with formulas created to work in harmony with your health. <\/p>","enable_modal":true,"modal_label":"<p>We have banned over 200 ingredients from our formulas, <a href=\"\/pages\/about-us\" title=\"About Us\"><span style=\"text-decoration:underline\">view the full list<\/span><\/a>.<\/p>","modal_label_color":"#ffffff","modal_image_desktop":"shopify:\/\/shop_images\/banned_ingredients.jpg","modal_image_mobile":"shopify:\/\/shop_images\/banned_ingredients.jpg","modal_alt_text":""}},"collapsible_row_DamL8x":{"type":"collapsible_row","settings":{"heading":"Fragrance Ingredients We Don’t Use","icon":"none","row_content":"<p>We Never Use: Phthalates, nitromusks, polycyclic musks, parabens, synthetic fixatives<\/p><p><br\/>Why: Known endocrine disruptors that can mimic or interfere with your hormones<\/p>","page":""}},"collapsible_row_gcgYUA":{"type":"collapsible_row","settings":{"heading":"Ingestible Ingredients We Don’t Use","icon":"none","row_content":"<p>We Never Use: Artificial colors, artificial flavors, unnecessary fillers, GMO ingredients, refined sugars, preservatives<br\/><br\/>Why: Compromise purity, potency, and can disrupt metabolic and gut health<\/p>","page":""}}},"block_order":["heading_8jMwBq","text_yQVieH","collapsible_row_DamL8x","collapsible_row_gcgYUA"],"name":"Nue Collapsible Content","settings":{"caption":"","heading":"","heading_size":"h1","heading_alignment":"center","layout":"none","container_color_scheme":"","color_scheme":"","open_first_collapsible_row":false,"image":"shopify:\/\/shop_images\/aboutEXTRA_3_5X4_1.png","image_ratio":"adapt","desktop_layout":"image_first","padding_top":76,"padding_bottom":96}},"image_banner_rgWqtz":{"type":"image-banner","blocks":{"heading_VXdXrr":{"type":"heading","settings":{"heading":"Our Fragrances","heading_size":"h0"}},"text_GPQcdq":{"type":"text","settings":{"text":"Fragrance is one of the fastest ways to shift how you feel. Our Functional Fragrances are safe, endocrine-friendly, and crafted with natural, innovative, and upcycled ingredients by world-class perfumers — scents that are both responsible and transformative","text_style":"subtitle"}},"buttons_VPpDAL":{"type":"buttons","settings":{"button_label_1":"Shop Fragrances","button_link_1":"shopify:\/\/collections\/fragrances-2025","button_style_secondary_1":false,"button_label_2":"","button_link_2":"#","button_style_secondary_2":true}}},"block_order":["heading_VXdXrr","text_GPQcdq","buttons_VPpDAL"],"settings":{"image":"shopify:\/\/shop_images\/14a7baa4837f09de355f77a0df3c74e3b001884a.jpg","mobile_image":"shopify:\/\/shop_images\/TNC_WEBSITE25_ABOUT_FRAGRANCES_1_5df22bbb-0eb2-44d3-8e75-fc242fd7cd76.png","image_overlay_opacity":20,"media_blur":0,"image_height":"custom","custom_height_mobile":150,"custom_height_desktop":50,"image_behavior":"none","desktop_content_position":"middle-left","desktop_content_alignment":"left","show_text_box":false,"color_scheme":"scheme-4","mobile_content_alignment":"left","show_text_below":false,"promo_card_title":"Us","promo_card_subtitle":"Fragrance","promo_card_link":"shopify:\/\/products\/us"}},"image_with_text_8fxBCz":{"type":"image-with-text","blocks":{"heading_ywCXqK":{"type":"heading","disabled":true,"settings":{"heading":"Whole \u2028Body Health","heading_size":"hxxl"}},"text_ctLpz4":{"type":"text","settings":{"text":"<h4>“Health has always felt intuitive to me. Growing \u2028up in a Colombian family rooted in plant-based healing, and influenced by my grandfather, a chemist at Cambridge who devoted his career\u2028 to supplement research, shaped my approach early on. <\/h4><h4>I started The Nue Co. to share that perspective: helping people connect with their bodies through products and rituals that are both beautiful \u2028and effective.”<\/h4><h4>– Jules Miller, Founder and CEO<\/h4>","text_style":"body"}},"button_7wyx47":{"type":"button","disabled":true,"settings":{"button_label":"Explore Our Methods","button_link":"#","button_style_secondary":false}}},"block_order":["heading_ywCXqK","text_ctLpz4","button_7wyx47"],"name":"t:sections.image-with-text.presets.name","settings":{"image":"shopify:\/\/shop_images\/EXTRA_3_5X4s_2.png","height":"adapt","desktop_image_width":"medium","layout":"image_first","image_behavior":"none","content_layout":"no-overlap","desktop_content_position":"top","desktop_content_alignment":"left","mobile_content_alignment":"left","section_color_scheme":"scheme-1","color_scheme":"scheme-1","padding_top":96,"padding_bottom":36}},"nue_product_slider_pEwCHw":{"type":"nue-product-slider","blocks":{"product_LfdpJL":{"type":"product","settings":{"product":"collagen-gut-barrier","custom_image":"shopify:\/\/shop_images\/Group_1244_3.png"}},"product_yjUrMi":{"type":"product","settings":{"product":"debloat-3-month","custom_image":"shopify:\/\/shop_images\/Group_1243_2.png"}},"product_Dwhkrb":{"type":"product","settings":{"product":"forest-lungs","custom_image":"shopify:\/\/shop_images\/Group_1242_1.png"}},"product_pALfwz":{"type":"product","settings":{"product":"functional-fragrance-free-tester","custom_image":"shopify:\/\/shop_images\/Group_1243_2.png"}},"product_iqzpTJ":{"type":"product","settings":{"product":"skin-filter-set","custom_image":"shopify:\/\/shop_images\/Group_1244_3.png"}},"product_RTVrJq":{"type":"product","settings":{"product":"skin-filter-serum","custom_image":"shopify:\/\/shop_images\/Group_1242_1.png"}}},"block_order":["product_LfdpJL","product_yjUrMi","product_Dwhkrb","product_pALfwz","product_iqzpTJ","product_RTVrJq"],"name":"Nue Product Slider","settings":{"heading":"Bestsellers","collection":"best-sellers","padding_top":40,"padding_bottom":40,"padding_top_mobile":30,"padding_bottom_mobile":30}}},"order":["main","about_hero_EaXBb6","image_with_text_b4DqBN","nue_collapsible_content_gabGxz","image_banner_rgWqtz","image_with_text_8fxBCz","nue_product_slider_pEwCHw"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "about_hero_EaXBb6": {
+      "type": "about-hero",
+      "name": "About Hero",
+      "settings": {
+        "eyebrow_title": "",
+        "title": "Tools For Wellbeing",
+        "image": "shopify://shop_images/nue-about.png",
+        "richtext": "The Nue Co. exists to bridge the space between <em>science and sensibility</em>, between <em>function and feeling</em>. We create products that support the <em>physical and emotional body</em>, designed not just to work, but to shift something within.",
+        "padding_top": 164,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_b4DqBN": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_xjEHka": {
+          "type": "heading",
+          "settings": {
+            "heading": "Whole Body Health",
+            "heading_size": "hxxl"
+          }
+        },
+        "text_wHYMMP": {
+          "type": "text",
+          "settings": {
+            "text": "<h5>Guided by the philosophy of ‘Whole Body Health,’ The Nue Co. curates a holistic portfolio spanning functional fragrances, topicals, and ingestibles — each designed to deliver effective, science-backed solutions that excite the senses. From easing stress and improving sleep to restoring gut balance, every innovation is created to support the body and mind in unison, redefining what modern wellness can feel like.</h5>",
+            "text_style": "body"
+          }
+        },
+        "button_nMEQja": {
+          "type": "button",
+          "settings": {
+            "button_label": "Explore Our Methods",
+            "button_link": "shopify://collections/all",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_xjEHka",
+        "text_wHYMMP",
+        "button_nMEQja"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/EXTRA_3_5X4_1.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-2",
+        "color_scheme": "scheme-2",
+        "padding_top": 76,
+        "padding_bottom": 76
+      }
+    },
+    "nue_collapsible_content_gabGxz": {
+      "type": "nue-collapsible-content",
+      "blocks": {
+        "heading_8jMwBq": {
+          "type": "heading",
+          "settings": {
+            "nue_heading": "What’s In. \nWhat’s Out.",
+            "heading_size": "h1"
+          }
+        },
+        "text_yQVieH": {
+          "type": "text",
+          "settings": {
+            "nue_text": "<p>“Clean” has no single definition, so we created our own, one that puts your endocrine system and microbiome first. Our fragrances are formulated to be endocrine-safe and our ingestibles are designed to support microbiome diversity. There are over 200 ingredients we exclude from our formulas. What remains is innovation and purity, with formulas created to work in harmony with your health. </p>",
+            "enable_modal": true,
+            "modal_label": "<p>We have banned over 200 ingredients from our formulas, <a href=\"/pages/about-us\" title=\"About Us\"><span style=\"text-decoration:underline\">view the full list</span></a>.</p>",
+            "modal_label_color": "#ffffff",
+            "modal_image_desktop": "shopify://shop_images/banned_ingredients.jpg",
+            "modal_image_mobile": "shopify://shop_images/banned_ingredients.jpg",
+            "modal_alt_text": ""
+          }
+        },
+        "collapsible_row_DamL8x": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Fragrance Ingredients We Don’t Use",
+            "icon": "none",
+            "row_content": "<p>We Never Use: Phthalates, nitromusks, polycyclic musks, parabens, synthetic fixatives</p><p><br/>Why: Known endocrine disruptors that can mimic or interfere with your hormones</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_gcgYUA": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Ingestible Ingredients We Don’t Use",
+            "icon": "none",
+            "row_content": "<p>We Never Use: Artificial colors, artificial flavors, unnecessary fillers, GMO ingredients, refined sugars, preservatives<br/><br/>Why: Compromise purity, potency, and can disrupt metabolic and gut health</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_8jMwBq",
+        "text_yQVieH",
+        "collapsible_row_DamL8x",
+        "collapsible_row_gcgYUA"
+      ],
+      "name": "Nue Collapsible Content",
+      "settings": {
+        "caption": "",
+        "heading": "",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image": "shopify://shop_images/aboutEXTRA_3_5X4_1.png",
+        "image_ratio": "adapt",
+        "desktop_layout": "image_first",
+        "padding_top": 76,
+        "padding_bottom": 96
+      }
+    },
+    "image_banner_rgWqtz": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_VXdXrr": {
+          "type": "heading",
+          "settings": {
+            "heading": "Our Fragrances",
+            "heading_size": "h0"
+          }
+        },
+        "text_GPQcdq": {
+          "type": "text",
+          "settings": {
+            "text": "Fragrance is one of the fastest ways to shift how you feel. Our Functional Fragrances are safe, endocrine-friendly, and crafted with natural, innovative, and upcycled ingredients by world-class perfumers — scents that are both responsible and transformative",
+            "text_style": "body"
+          }
+        },
+        "buttons_VPpDAL": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop Fragrances",
+            "button_link_1": "shopify://collections/fragrances-2025",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "#",
+            "button_style_secondary_2": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_VXdXrr",
+        "text_GPQcdq",
+        "buttons_VPpDAL"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/14a7baa4837f09de355f77a0df3c74e3b001884a.jpg",
+        "mobile_image": "shopify://shop_images/TNC_WEBSITE25_ABOUT_FRAGRANCES_1_5df22bbb-0eb2-44d3-8e75-fc242fd7cd76.png",
+        "image_overlay_opacity": 20,
+        "media_blur": 0,
+        "image_height": "custom",
+        "custom_height_mobile": 150,
+        "custom_height_desktop": 50,
+        "image_behavior": "none",
+        "desktop_content_position": "middle-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": false,
+        "color_scheme": "scheme-4",
+        "mobile_content_alignment": "left",
+        "show_text_below": false,
+        "promo_card_title": "Us",
+        "promo_card_subtitle": "Fragrance",
+        "promo_card_link": "shopify://products/us"
+      }
+    },
+    "image_with_text_8fxBCz": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_ywCXqK": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "Whole  Body Health",
+            "heading_size": "hxxl"
+          }
+        },
+        "text_ctLpz4": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>“Health has always felt intuitive to me. Growing  up in a Colombian family rooted in plant-based healing, and influenced by my grandfather, a chemist at Cambridge who devoted his career  to supplement research, shaped my approach early on. </h4><h4>I started The Nue Co. to share that perspective: helping people connect with their bodies through products and rituals that are both beautiful  and effective.”</h4><h4>– Jules Miller, Founder and CEO</h4>",
+            "text_style": "body"
+          }
+        },
+        "button_7wyx47": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "Explore Our Methods",
+            "button_link": "#",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_ywCXqK",
+        "text_ctLpz4",
+        "button_7wyx47"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/EXTRA_3_5X4s_2.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-1",
+        "color_scheme": "scheme-1",
+        "padding_top": 96,
+        "padding_bottom": 36
+      }
+    },
+    "nue_product_slider_pEwCHw": {
+      "type": "nue-product-slider",
+      "blocks": {
+        "product_LfdpJL": {
+          "type": "product",
+          "settings": {
+            "product": "collagen-gut-barrier",
+            "custom_image": "shopify://shop_images/Group_1244_3.png"
+          }
+        },
+        "product_yjUrMi": {
+          "type": "product",
+          "settings": {
+            "product": "debloat-3-month",
+            "custom_image": "shopify://shop_images/Group_1243_2.png"
+          }
+        },
+        "product_Dwhkrb": {
+          "type": "product",
+          "settings": {
+            "product": "forest-lungs",
+            "custom_image": "shopify://shop_images/Group_1242_1.png"
+          }
+        },
+        "product_pALfwz": {
+          "type": "product",
+          "settings": {
+            "product": "functional-fragrance-free-tester",
+            "custom_image": "shopify://shop_images/Group_1243_2.png"
+          }
+        },
+        "product_iqzpTJ": {
+          "type": "product",
+          "settings": {
+            "product": "skin-filter-set",
+            "custom_image": "shopify://shop_images/Group_1244_3.png"
+          }
+        },
+        "product_RTVrJq": {
+          "type": "product",
+          "settings": {
+            "product": "skin-filter-serum",
+            "custom_image": "shopify://shop_images/Group_1242_1.png"
+          }
+        }
+      },
+      "block_order": [
+        "product_LfdpJL",
+        "product_yjUrMi",
+        "product_Dwhkrb",
+        "product_pALfwz",
+        "product_iqzpTJ",
+        "product_RTVrJq"
+      ],
+      "name": "Nue Product Slider",
+      "settings": {
+        "heading": "Bestsellers",
+        "collection": "best-sellers",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30
+      }
+    }
+  },
+  "order": [
+    "main",
+    "about_hero_EaXBb6",
+    "image_with_text_b4DqBN",
+    "nue_collapsible_content_gabGxz",
+    "image_banner_rgWqtz",
+    "image_with_text_8fxBCz",
+    "nue_product_slider_pEwCHw"
+  ]
+}
