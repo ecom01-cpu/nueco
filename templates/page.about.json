@@ -175,6 +175,9 @@
         "text_GPQcdq",
         "buttons_VPpDAL"
       ],
+      "custom_css": [
+        "p {font-weight: 100;}"
+      ],
       "settings": {
         "image": "shopify://shop_images/14a7baa4837f09de355f77a0df3c74e3b001884a.jpg",
         "mobile_image": "shopify://shop_images/TNC_WEBSITE25_ABOUT_FRAGRANCES_1_5df22bbb-0eb2-44d3-8e75-fc242fd7cd76.png",
