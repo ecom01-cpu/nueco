@@ -79,7 +79,7 @@
   .promo-card-double__image-wrapper {
     position: relative;
     height: 0;
-    padding-bottom: 43%; /* Aspect ratio for image area */
+    padding-bottom: 50%; /* Aspect ratio for image area */
     overflow: hidden;
   }
   
@@ -88,7 +88,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
   }
   
