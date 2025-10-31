@@ -293,7 +293,7 @@
             </h1>
           {%- when 'text' -%}
             <div class="banner__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
-              <p>{{ block.settings.text }}</p>
+              <p>{{ block.settings.text | newline_to_br }}</p>
             </div>
           {%- when 'buttons' -%}
             <div
