@@ -2108,4 +2108,7 @@ span.one_time_price {
   .product-form__submit.sticky {
     width: 90%;
 }
+.overflow-hidden .product-form__submit.sticky {
+  display:none;
+}
 }
