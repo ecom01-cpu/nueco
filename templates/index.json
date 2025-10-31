@@ -1,1 +1,275 @@
-{"sections":{"image_banner":{"type":"image-banner","blocks":{"heading":{"type":"heading","settings":{"heading":"New: Comfort, Bottled","heading_size":"h0"}},"text":{"type":"text","settings":{"text":"Meet The Nostalgia Collection: Harnessing the power of gourmand and neuroscience to create the ultimate sense of comfort","text_style":"body"}},"button":{"type":"buttons","settings":{"button_label_1":"Discover","button_link_1":"shopify:\/\/collections\/fragrances-2025","button_style_secondary_1":false,"button_label_2":"","button_link_2":"#","button_style_secondary_2":true}}},"block_order":["heading","text","button"],"settings":{"image":"shopify:\/\/shop_images\/NOSTALGIA-IMAGEBANNER-DESKTOP.png","mobile_image":"shopify:\/\/shop_images\/NOSTALGIA-IMAGEBANNER-MOBILE.png","image_overlay_opacity":20,"media_blur":0,"image_height":"custom","custom_height_mobile":150,"custom_height_desktop":50,"image_behavior":"none","desktop_content_position":"bottom-left","desktop_content_alignment":"left","show_text_box":false,"color_scheme":"scheme-4","mobile_content_alignment":"left","show_text_below":false,"promo_card_image":"shopify:\/\/shop_images\/NOSTALGIA_HOMEPAGE_PACKSHOTS.png","promo_card_title":"Nostalgia","promo_card_subtitle":"Fragrances","promo_card_link":"https:\/\/thenueco.com\/collections\/fragrances-2025?filter_type=emotion&filter=Comfort"}},"fragrance_hero":{"type":"fragrance-hero","settings":{"eyebrow_title":"Mood-elevating functional fragrances.\nDeveloped by the world's most famous noses.","title":"Functional Fragrances","image":"shopify:\/\/shop_images\/TNC_WEBSITE25_HOMEPAGE_FUNCTIONAL_FRAGRANCES_3256x1344_783f32d0-ee40-4792-b811-d422b27c02ed.png","cta_title":"Shop Fragrances","cta_link":"shopify:\/\/collections\/fragrances-2025","padding_top":142,"padding_bottom":0,"padding_top_mobile":65,"padding_bottom_mobile":65}},"fragrance_filter":{"type":"fragrance-filter","settings":{"title":"Browse fragrance by","emotion_image_1":"shopify:\/\/shop_images\/EMOTION_GROUNDING_400x400_d52fd0e3-c1f8-4613-a55d-1bae37e15533.png","emotion_text_1":"Grounding","emotion_image_2":"shopify:\/\/shop_images\/EMOTION_DESTRESS_400x400_5a760633-4ff4-4407-a715-84e854d2a343.png","emotion_text_2":"Destress","emotion_image_3":"shopify:\/\/shop_images\/EMOTION_RELAX_400x400_b89fb9d2-a1c5-4d92-b9e0-fc3bea3c3275.png","emotion_text_3":"Relax","emotion_image_4":"shopify:\/\/shop_images\/EMOTION_COMFORT_400x400_2e5667ca-aca0-45d8-a1ee-d0ae308a919e.png","emotion_text_4":"Comfort","emotion_image_5":"shopify:\/\/shop_images\/EMOTION_CONNECT_400x400_d523c488-4d2d-4f95-b534-13242573f798.png","emotion_text_5":"Connect","emotion_image_6":"shopify:\/\/shop_images\/EMOTION_ENERGY_400x400_9319d785-bec5-4759-b8f9-4935fee1298c.png","emotion_text_6":"Energy","emotion_modal_1":false,"emotion_modal_2":false,"emotion_modal_3":false,"emotion_modal_4":false,"emotion_modal_5":false,"emotion_modal_6":false,"scent_image_1":"shopify:\/\/shop_images\/SCENT_SPICY_400x400_ffd4a7e7-626b-4bb3-b432-b1962b7b1bac.png","scent_text_1":"Spicy","scent_image_2":"shopify:\/\/shop_images\/SCENT_GOURMAND_400x400_d56b8a70-a61b-437f-97c5-3c04b1e04306.png","scent_text_2":"Gourmand","scent_image_3":"shopify:\/\/shop_images\/SCENT_FRESH_400x400_497a0b37-1493-4fdd-9763-9075ed7acf4d.png","scent_text_3":"Citrus","scent_image_4":"shopify:\/\/shop_images\/SCENT_CITRUS_400x400_d0ea2c77-845f-42e8-a6d5-00041b754c3a.png","scent_text_4":"Fresh","scent_image_5":"shopify:\/\/shop_images\/SCENT_WOOD_400x400_24e61937-ca7f-4741-8c7a-18bea676f89b.png","scent_text_5":"Wood","scent_image_6":"shopify:\/\/shop_images\/SCENT_MUSK_400x400_a9b86050-e097-49bd-8d98-f0c088be86d5.png","scent_text_6":"Musk","scent_modal_1":false,"scent_modal_2":false,"scent_modal_3":false,"scent_modal_4":false,"scent_modal_5":false,"scent_modal_6":false,"modal_heading":"Comfort, Bottled.","modal_richtext":"<p>There's a fragrance that feels like home. <br\/>A fragrance that stirs memories you can't quite place.<\/p><p>Our next chapter in functional fragrance explores the science of nostalgia: how familiarity can calm the body, soften the edges of stress, and remind you of the comfort you've always carried within.<\/p><p>It's not about going back in time, <br\/>it's about finding a way back to yourself.<\/p>","modal_form_label":"Be the first to know.\nSign up to unlock early access.","modal_background_color":"#000000","modal_text_color":"#ffffff","modal_background_image":"shopify:\/\/shop_images\/35a7557c778023eb324cb610bcc7158c8996042a.png","padding_top":128,"padding_bottom":100,"padding_top_mobile":0,"padding_bottom_mobile":40}},"method_carousel":{"type":"method-carousel","blocks":{"method_slide_HffMLF":{"type":"method_slide","settings":{"main_image":"shopify:\/\/shop_images\/TNC_WEBSITE25_HOMEPAGE_MAGNESIUM_EASE_1692x1064_ba1053be-2adb-4f76-b85a-93c817bfaa09.png","nav_text":"Body Method","title":"Body Method","small_image":"shopify:\/\/shop_images\/TNC_WEBSITE25_HOMEPAGE_BODY_METHOD_PDP_296x290_x2_3666c70c-c154-4c7a-ac5f-042d66641345.png","small_image_mobile":"shopify:\/\/shop_images\/TNC_WEBSITE25_HOMEPAGE_BODY_METHOD_PDP_296x290_MOB.png","text":"Target stress, sleep and immunity with liquid and transdermal formulas that work with your body’s natural rhythms—day and night.","button_text":"Shop Body Method","button_link":"shopify:\/\/collections\/bodymethod"}},"method_slide_8GM7Q8":{"type":"method_slide","settings":{"main_image":"shopify:\/\/shop_images\/TNC_WEBSITE25_HOMEPAGE_GUT_METHOD_1692x1064_2b7b555b-d6dd-4b44-a4e8-b5f2be8bc0a2.png","nav_text":"Gut Method","title":"Gut Method","small_image":"shopify:\/\/shop_images\/TNC_WEBSITE25_HOMEPAGE_GUT_METHOD_PDP_296x290_NEW2.png","small_image_mobile":"shopify:\/\/shop_images\/TNC_WEBSITE25_HOMEPAGE_GUT_METHOD_PDP_296x290-MOB_d9d2acd6-dcec-48af-bc5d-ab7bbdd8d318.png","text":"Support the foundation of your overall health—your gut—with our bestselling duo, expertly formulated to ease bloating and promote better digestion, mood, sleep, skin, and immunity.","button_text":"Shop Gut Method","button_link":"shopify:\/\/collections\/gut-method"}},"method_slide_4nnVkp":{"type":"method_slide","settings":{"main_image":"shopify:\/\/shop_images\/TNC_WEBSITE25_HOMEPAGE_SKIN_METHOD_1692x1064_c2658594-5c79-4d68-a69a-ee942b8d0382.png","nav_text":"Skin Method","title":"Skin Method","small_image":"shopify:\/\/shop_images\/TNC_WEBSITE25_HOMEPAGE_SKIN_METHOD_PDP_296x290_22.png","small_image_mobile":"shopify:\/\/shop_images\/TNC_WEBSITE25_HOMEPAGE_SKIN_METHOD_PDP_296x290_MOB.png","text":"Support hydration, brightness and repair from within with our clinically proven formulas.\nDesigned to feed the skin from the inside out, for visible results that last.","button_text":"Shop Skin Method","button_link":"shopify:\/\/collections\/skin"}}},"block_order":["method_slide_HffMLF","method_slide_8GM7Q8","method_slide_4nnVkp"],"settings":{"title":"For Whole Body Health","body_text":"Taking care of your health is as much an art as it is a science. We pair potent ingredients with proven formulations to craft supplements for whole body health. You’ll find us in every room of your home and every part of your day.","cta_title":"Explore Our Methods","cta_link":"shopify:\/\/collections\/all","padding_top":142,"padding_bottom":142,"padding_top_mobile":40,"padding_bottom_mobile":0}},"nuecode":{"type":"nuecode","blocks":{"accordion_item_WbU4Db":{"type":"accordion_item","settings":{"heading":"Research","content":"<p>We work at the forefront of innovation, drawing on the latest advancements in olfactory chemistry and neuroscent technology to shape the future of functional wellness.<\/p>","enable_modal":false,"modal_label":"SEE FULL DETAILS","modal_label_color":"","modal_alt_text":""}},"accordion_item_ie6AF6":{"type":"accordion_item","settings":{"heading":"Ingredients","content":"<p>Across our formulas—from ingestible supplements to functional fragrances—we use clinically studied, ethically sourced ingredients chosen for their proven benefits. Over 50% are organic or community-sourced, non-GMO, and free from artificial additives, colourings, flavourings, and unnecessary fillers. We prioritise environmentally sensitive sourcing and work with community projects that support the ecosystems and people behind each ingredient.<\/p>","enable_modal":false,"modal_label":"SEE FULL DETAILS","modal_label_color":"","modal_alt_text":""}},"accordion_item_AzjbBw":{"type":"accordion_item","settings":{"heading":"Safety","content":"<p>There’s no universal definition of “clean,” so we created our own—centered on crafting formulas that are safe for your endocrine system. We maintain a strict list of over 200 ingredients that will never make it into our products, including phthalates, polycyclic musks, parabens, and hexanes. Taking great care of your health is at the heart of everything we do, from formulation to production, ensuring every ingredient supports your wellbeing safely and effectively.<\/p>","enable_modal":true,"modal_label":"We have banned over 200 ingredients from our formulas, view the full list.","modal_label_color":"#ffffff","modal_image_desktop":"shopify:\/\/shop_images\/banned_ingredients.jpg","modal_image_mobile":"shopify:\/\/shop_images\/banned_ingredients.jpg","modal_alt_text":""}}},"block_order":["accordion_item_WbU4Db","accordion_item_ie6AF6","accordion_item_AzjbBw"],"settings":{"bg_image":"shopify:\/\/shop_images\/TNC_WEBSITE25_HOMEPAGE_FRAGRANCE_PDP_2656x1844_508345bd-919f-4299-a645-e7813c4d3b18.png","bg_image_mobile":"shopify:\/\/shop_images\/nuecode-mob.png","logo_image":"shopify:\/\/shop_images\/nue_head.svg","intro":"The Nue Co.de is our method for creating the cleanest, safest, and most effective formulas—prioritizing ingredient quality, rigorous testing and responsible sourcing. Rooted in science, guided by ethics and driven by purpose.","padding_top":0,"padding_bottom":100,"padding_top_mobile":40,"padding_bottom_mobile":35}},"nue_product_slider_xwM4QC":{"type":"nue-product-slider","name":"Nue Product Slider","settings":{"heading":"Bestsellers","collection":"best-sellers","padding_top":42,"padding_bottom":0,"padding_top_mobile":25,"padding_bottom_mobile":0}},"prefooter":{"type":"prefooter","settings":{"title":"Take Great Care"}}},"order":["image_banner","fragrance_hero","fragrance_filter","method_carousel","nuecode","nue_product_slider_xwM4QC","prefooter"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "New: <>Comfort, Bottled",
+            "heading_size": "h0"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "Meet The Nostalgia Collection: Harnessing the power of gourmand and neuroscience to create the ultimate sense of comfort",
+            "text_style": "body"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Discover",
+            "button_link_1": "shopify://collections/fragrances-2025",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "#",
+            "button_style_secondary_2": true
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text",
+        "button"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/NOSTALGIA-IMAGEBANNER-DESKTOP.png",
+        "mobile_image": "shopify://shop_images/NOSTALGIA-IMAGEBANNER-MOBILE.png",
+        "image_overlay_opacity": 20,
+        "media_blur": 0,
+        "image_height": "custom",
+        "custom_height_mobile": 150,
+        "custom_height_desktop": 50,
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": false,
+        "color_scheme": "scheme-4",
+        "mobile_content_alignment": "left",
+        "show_text_below": false,
+        "promo_card_image": "shopify://shop_images/NOSTALGIA_HOMEPAGE_PACKSHOTS.png",
+        "promo_card_title": "Nostalgia",
+        "promo_card_subtitle": "Fragrances",
+        "promo_card_link": "https://thenueco.com/collections/fragrances-2025?filter_type=emotion&filter=Comfort"
+      }
+    },
+    "fragrance_hero": {
+      "type": "fragrance-hero",
+      "settings": {
+        "eyebrow_title": "Mood-elevating functional fragrances.\nDeveloped by the world's most famous noses.",
+        "title": "Functional Fragrances",
+        "image": "shopify://shop_images/TNC_WEBSITE25_HOMEPAGE_FUNCTIONAL_FRAGRANCES_3256x1344_783f32d0-ee40-4792-b811-d422b27c02ed.png",
+        "cta_title": "Shop Fragrances",
+        "cta_link": "shopify://collections/fragrances-2025",
+        "padding_top": 142,
+        "padding_bottom": 0,
+        "padding_top_mobile": 65,
+        "padding_bottom_mobile": 65
+      }
+    },
+    "fragrance_filter": {
+      "type": "fragrance-filter",
+      "settings": {
+        "title": "Browse fragrance by",
+        "emotion_image_1": "shopify://shop_images/EMOTION_GROUNDING_400x400_d52fd0e3-c1f8-4613-a55d-1bae37e15533.png",
+        "emotion_text_1": "Grounding",
+        "emotion_image_2": "shopify://shop_images/EMOTION_DESTRESS_400x400_5a760633-4ff4-4407-a715-84e854d2a343.png",
+        "emotion_text_2": "Destress",
+        "emotion_image_3": "shopify://shop_images/EMOTION_RELAX_400x400_b89fb9d2-a1c5-4d92-b9e0-fc3bea3c3275.png",
+        "emotion_text_3": "Relax",
+        "emotion_image_4": "shopify://shop_images/EMOTION_COMFORT_400x400_2e5667ca-aca0-45d8-a1ee-d0ae308a919e.png",
+        "emotion_text_4": "Comfort",
+        "emotion_image_5": "shopify://shop_images/EMOTION_CONNECT_400x400_d523c488-4d2d-4f95-b534-13242573f798.png",
+        "emotion_text_5": "Connect",
+        "emotion_image_6": "shopify://shop_images/EMOTION_ENERGY_400x400_9319d785-bec5-4759-b8f9-4935fee1298c.png",
+        "emotion_text_6": "Energy",
+        "emotion_modal_1": false,
+        "emotion_modal_2": false,
+        "emotion_modal_3": false,
+        "emotion_modal_4": false,
+        "emotion_modal_5": false,
+        "emotion_modal_6": false,
+        "scent_image_1": "shopify://shop_images/SCENT_SPICY_400x400_ffd4a7e7-626b-4bb3-b432-b1962b7b1bac.png",
+        "scent_text_1": "Spicy",
+        "scent_image_2": "shopify://shop_images/SCENT_GOURMAND_400x400_d56b8a70-a61b-437f-97c5-3c04b1e04306.png",
+        "scent_text_2": "Gourmand",
+        "scent_image_3": "shopify://shop_images/SCENT_FRESH_400x400_497a0b37-1493-4fdd-9763-9075ed7acf4d.png",
+        "scent_text_3": "Citrus",
+        "scent_image_4": "shopify://shop_images/SCENT_CITRUS_400x400_d0ea2c77-845f-42e8-a6d5-00041b754c3a.png",
+        "scent_text_4": "Fresh",
+        "scent_image_5": "shopify://shop_images/SCENT_WOOD_400x400_24e61937-ca7f-4741-8c7a-18bea676f89b.png",
+        "scent_text_5": "Wood",
+        "scent_image_6": "shopify://shop_images/SCENT_MUSK_400x400_a9b86050-e097-49bd-8d98-f0c088be86d5.png",
+        "scent_text_6": "Musk",
+        "scent_modal_1": false,
+        "scent_modal_2": false,
+        "scent_modal_3": false,
+        "scent_modal_4": false,
+        "scent_modal_5": false,
+        "scent_modal_6": false,
+        "modal_heading": "Comfort, Bottled.",
+        "modal_richtext": "<p>There's a fragrance that feels like home. <br/>A fragrance that stirs memories you can't quite place.</p><p>Our next chapter in functional fragrance explores the science of nostalgia: how familiarity can calm the body, soften the edges of stress, and remind you of the comfort you've always carried within.</p><p>It's not about going back in time, <br/>it's about finding a way back to yourself.</p>",
+        "modal_form_label": "Be the first to know.\nSign up to unlock early access.",
+        "modal_background_color": "#000000",
+        "modal_text_color": "#ffffff",
+        "modal_background_image": "shopify://shop_images/35a7557c778023eb324cb610bcc7158c8996042a.png",
+        "padding_top": 128,
+        "padding_bottom": 100,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "method_carousel": {
+      "type": "method-carousel",
+      "blocks": {
+        "method_slide_HffMLF": {
+          "type": "method_slide",
+          "settings": {
+            "main_image": "shopify://shop_images/TNC_WEBSITE25_HOMEPAGE_MAGNESIUM_EASE_1692x1064_ba1053be-2adb-4f76-b85a-93c817bfaa09.png",
+            "nav_text": "Body Method",
+            "title": "Body Method",
+            "small_image": "shopify://shop_images/TNC_WEBSITE25_HOMEPAGE_BODY_METHOD_PDP_296x290_x2_3666c70c-c154-4c7a-ac5f-042d66641345.png",
+            "small_image_mobile": "shopify://shop_images/TNC_WEBSITE25_HOMEPAGE_BODY_METHOD_PDP_296x290_MOB.png",
+            "text": "Target stress, sleep and immunity with liquid and transdermal formulas that work with your body’s natural rhythms—day and night.",
+            "button_text": "Shop Body Method",
+            "button_link": "shopify://collections/bodymethod"
+          }
+        },
+        "method_slide_8GM7Q8": {
+          "type": "method_slide",
+          "settings": {
+            "main_image": "shopify://shop_images/TNC_WEBSITE25_HOMEPAGE_GUT_METHOD_1692x1064_2b7b555b-d6dd-4b44-a4e8-b5f2be8bc0a2.png",
+            "nav_text": "Gut Method",
+            "title": "Gut Method",
+            "small_image": "shopify://shop_images/TNC_WEBSITE25_HOMEPAGE_GUT_METHOD_PDP_296x290_NEW2.png",
+            "small_image_mobile": "shopify://shop_images/TNC_WEBSITE25_HOMEPAGE_GUT_METHOD_PDP_296x290-MOB_d9d2acd6-dcec-48af-bc5d-ab7bbdd8d318.png",
+            "text": "Support the foundation of your overall health—your gut—with our bestselling duo, expertly formulated to ease bloating and promote better digestion, mood, sleep, skin, and immunity.",
+            "button_text": "Shop Gut Method",
+            "button_link": "shopify://collections/gut-method"
+          }
+        },
+        "method_slide_4nnVkp": {
+          "type": "method_slide",
+          "settings": {
+            "main_image": "shopify://shop_images/TNC_WEBSITE25_HOMEPAGE_SKIN_METHOD_1692x1064_c2658594-5c79-4d68-a69a-ee942b8d0382.png",
+            "nav_text": "Skin Method",
+            "title": "Skin Method",
+            "small_image": "shopify://shop_images/TNC_WEBSITE25_HOMEPAGE_SKIN_METHOD_PDP_296x290_22.png",
+            "small_image_mobile": "shopify://shop_images/TNC_WEBSITE25_HOMEPAGE_SKIN_METHOD_PDP_296x290_MOB.png",
+            "text": "Support hydration, brightness and repair from within with our clinically proven formulas.\nDesigned to feed the skin from the inside out, for visible results that last.",
+            "button_text": "Shop Skin Method",
+            "button_link": "shopify://collections/skin"
+          }
+        }
+      },
+      "block_order": [
+        "method_slide_HffMLF",
+        "method_slide_8GM7Q8",
+        "method_slide_4nnVkp"
+      ],
+      "settings": {
+        "title": "For Whole Body Health",
+        "body_text": "Taking care of your health is as much an art as it is a science. We pair potent ingredients with proven formulations to craft supplements for whole body health. You’ll find us in every room of your home and every part of your day.",
+        "cta_title": "Explore Our Methods",
+        "cta_link": "shopify://collections/all",
+        "padding_top": 142,
+        "padding_bottom": 142,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nuecode": {
+      "type": "nuecode",
+      "blocks": {
+        "accordion_item_WbU4Db": {
+          "type": "accordion_item",
+          "settings": {
+            "heading": "Research",
+            "content": "<p>We work at the forefront of innovation, drawing on the latest advancements in olfactory chemistry and neuroscent technology to shape the future of functional wellness.</p>",
+            "enable_modal": false,
+            "modal_label": "SEE FULL DETAILS",
+            "modal_label_color": "",
+            "modal_alt_text": ""
+          }
+        },
+        "accordion_item_ie6AF6": {
+          "type": "accordion_item",
+          "settings": {
+            "heading": "Ingredients",
+            "content": "<p>Across our formulas—from ingestible supplements to functional fragrances—we use clinically studied, ethically sourced ingredients chosen for their proven benefits. Over 50% are organic or community-sourced, non-GMO, and free from artificial additives, colourings, flavourings, and unnecessary fillers. We prioritise environmentally sensitive sourcing and work with community projects that support the ecosystems and people behind each ingredient.</p>",
+            "enable_modal": false,
+            "modal_label": "SEE FULL DETAILS",
+            "modal_label_color": "",
+            "modal_alt_text": ""
+          }
+        },
+        "accordion_item_AzjbBw": {
+          "type": "accordion_item",
+          "settings": {
+            "heading": "Safety",
+            "content": "<p>There’s no universal definition of “clean,” so we created our own—centered on crafting formulas that are safe for your endocrine system. We maintain a strict list of over 200 ingredients that will never make it into our products, including phthalates, polycyclic musks, parabens, and hexanes. Taking great care of your health is at the heart of everything we do, from formulation to production, ensuring every ingredient supports your wellbeing safely and effectively.</p>",
+            "enable_modal": true,
+            "modal_label": "We have banned over 200 ingredients from our formulas, view the full list.",
+            "modal_label_color": "#ffffff",
+            "modal_image_desktop": "shopify://shop_images/banned_ingredients.jpg",
+            "modal_image_mobile": "shopify://shop_images/banned_ingredients.jpg",
+            "modal_alt_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "accordion_item_WbU4Db",
+        "accordion_item_ie6AF6",
+        "accordion_item_AzjbBw"
+      ],
+      "settings": {
+        "bg_image": "shopify://shop_images/TNC_WEBSITE25_HOMEPAGE_FRAGRANCE_PDP_2656x1844_508345bd-919f-4299-a645-e7813c4d3b18.png",
+        "bg_image_mobile": "shopify://shop_images/nuecode-mob.png",
+        "logo_image": "shopify://shop_images/nue_head.svg",
+        "intro": "The Nue Co.de is our method for creating the cleanest, safest, and most effective formulas—prioritizing ingredient quality, rigorous testing and responsible sourcing. Rooted in science, guided by ethics and driven by purpose.",
+        "padding_top": 0,
+        "padding_bottom": 100,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 35
+      }
+    },
+    "nue_product_slider_xwM4QC": {
+      "type": "nue-product-slider",
+      "name": "Nue Product Slider",
+      "settings": {
+        "heading": "Bestsellers",
+        "collection": "best-sellers",
+        "padding_top": 42,
+        "padding_bottom": 0,
+        "padding_top_mobile": 25,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "prefooter": {
+      "type": "prefooter",
+      "settings": {
+        "title": "Take Great Care"
+      }
+    }
+  },
+  "order": [
+    "image_banner",
+    "fragrance_hero",
+    "fragrance_filter",
+    "method_carousel",
+    "nuecode",
+    "nue_product_slider_xwM4QC",
+    "prefooter"
+  ]
+}
