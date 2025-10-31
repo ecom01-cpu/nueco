@@ -40,8 +40,8 @@
           {%- if block.settings.product != blank -%}
             <span class="nue-bundle-3-column__price">{{ block.settings.product.price | money }}</span>
           {%- endif -%}
-          {%- if section.settings.product != blank -%}
-            <span class="nue-bundle-3-column__rating aaaaaa" data-product-id="{{ section.settings.product.id }}">
+          {%- if block.settings.product != blank -%}
+            <span class="nue-bundle-3-column__rating aaaaaa" data-product-id="{{ block.settings.product.id }}">
               <span class="rating-placeholder">Loading...</span>
             </span>
           {%- endif -%}
