@@ -2105,4 +2105,7 @@ span.one_time_price {
     margin-right: 8px;
     width: 60px;
   }
+  .product-form__submit.sticky {
+    width: 90%;
+}
 }
