@@ -534,7 +534,7 @@
     const response = await originalFetch(...args);
     const url = args[0];
     if (typeof url === 'string' && (url.includes('/cart/add') || url.includes('/cart/change'))) {
-      setTimeout(ensureGift, 800); // slight delay so cart updates first
+      setTimeout(ensureGift, 200); // slight delay so cart updates first
     }
     return response;
   };
