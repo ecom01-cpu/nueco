@@ -452,5 +452,75 @@
         }
       });
     </script>
+    <script id="gwp-config" type="application/json">
+      {
+        "startDate": "2025-11-13T01:30:00-05:00",
+        "endDate":   "2025-11-13T00:00:00-05:00",
+        "minSpend":  125,
+        "giftVariantId": "42143832506445"
+      }
+      </script>
+
+<script>
+(function () {
+  const configEl = document.getElementById('gwp-config');
+  if (!configEl) return;
+
+  const cfg = JSON.parse(configEl.textContent || '{}');
+  if (!cfg.giftVariantId) return;
+
+  // ✅ Declare all variables first
+  const start = new Date(cfg.startDate);
+  const end = new Date(cfg.endDate);
+  const minSpend = Number(cfg.minSpend || 0);
+  const giftVariantId = Number(cfg.giftVariantId);
+
+  // ✅ Now it's safe to use
+  console.log('Gift variant ID:', giftVariantId);
+
+  function isActive(now = new Date()) {
+    return now >= start && now < end;
+  }
+
+  async function getCart() {
+    const res = await fetch('/cart.js');
+    return res.ok ? res.json() : null;
+  }
+
+  async function addGift() {
+    await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: giftVariantId, quantity: 1 })
+    });
+  }
+
+  async function removeGift(line) {
+    await fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ line, quantity: 0 })
+    });
+  }
+
+  async function ensureGift() {
+    const cart = await getCart();
+    if (!cart) return;
+
+    const now = new Date();
+    const qualifies = cart.total_price >= minSpend && isActive(now);
+    const giftItem = cart.items.find(i => Number(i.variant_id) === giftVariantId);
+
+    if (qualifies && !giftItem) {
+      await addGift();
+    } else if (!qualifies && giftItem) {
+      const line = cart.items.findIndex(i => Number(i.variant_id) === giftVariantId) + 1;
+      await removeGift(line);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', ensureGift);
+})();
+</script>
   </body>
 </html>
