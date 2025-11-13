@@ -452,7 +452,7 @@
         }
       });
     </script>
-    <script id="gwp-config" type="application/json">
+   <script id="gwp-config" type="application/json">
 {
   "startDate": "2025-11-13T01:00:00-05:00",
   "endDate":   "2025-11-13T02:00:00-05:00",
@@ -490,6 +490,26 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: giftVariantId, quantity: 1 })
     });
+
+    // 🔹 Refresh cart drawer after adding gift
+    refreshCartDrawer();
+  }
+
+  async function refreshCartDrawer() {
+    try {
+      const response = await fetch('/?section_id=cart-drawer');
+      const html = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const newDrawer = doc.querySelector('cart-drawer');
+      const currentDrawer = document.querySelector('cart-drawer');
+      if (newDrawer && currentDrawer) {
+        currentDrawer.innerHTML = newDrawer.innerHTML;
+        console.log('🛒 Cart drawer refreshed');
+      }
+    } catch (err) {
+      console.error('❌ Error refreshing cart drawer:', err);
+    }
   }
 
   async function ensureGift() {
@@ -508,19 +528,19 @@
   // 🔹 Run when page loads
   document.addEventListener('DOMContentLoaded', ensureGift);
 
-  // 🔹 Detect cart updates (e.g. when user adds/removes items)
-  // Shopify’s cart.js doesn’t emit custom events, so we hook into fetch()
+  // 🔹 Detect cart updates (via /cart/add.js or /cart/change.js)
   const originalFetch = window.fetch;
   window.fetch = async function (...args) {
     const response = await originalFetch(...args);
     const url = args[0];
     if (typeof url === 'string' && (url.includes('/cart/add') || url.includes('/cart/change'))) {
-      setTimeout(ensureGift, 800); // small delay to let cart update
+      setTimeout(ensureGift, 800); // slight delay so cart updates first
     }
     return response;
   };
 })();
 </script>
+
 
   </body>
 </html>
