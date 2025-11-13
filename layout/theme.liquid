@@ -461,94 +461,92 @@
     }
     </script-->
    <script id="gwp-config" type="application/json">
-{
-  "startDate": "2025-11-13T01:00:00-05:00",
-  "endDate":   "2025-11-13T02:00:00-05:00",
-  "minSpend":  125,
-  "giftVariantId": 42143832506445
-}
-</script>
+    {
+      "startDate": "2025-11-13T01:00:00-05:00",
+      "endDate":   "2025-11-13T02:00:00-05:00",
+      "minSpend":  125,
+      "giftVariantId": 42143832506445
+    }
+    </script>
 
-<script>
-(function () {
-  const configEl = document.getElementById('gwp-config');
-  if (!configEl) return;
+  <script>
+  (function () {
+    const configEl = document.getElementById('gwp-config');
+    if (!configEl) return;
 
-  const cfg = JSON.parse(configEl.textContent || '{}');
-  if (!cfg.giftVariantId) return;
+    const cfg = JSON.parse(configEl.textContent || '{}');
+    if (!cfg.giftVariantId) return;
 
-  const start = new Date(cfg.startDate);
-  const end = new Date(cfg.endDate);
-  const minSpend = Number(cfg.minSpend || 0);
-  const giftVariantId = Number(cfg.giftVariantId);
+    const start = new Date(cfg.startDate);
+    const end = new Date(cfg.endDate);
+    const minSpend = Number(cfg.minSpend || 0);
+    const giftVariantId = Number(cfg.giftVariantId);
 
-  function isActive(now = new Date()) {
-    return now >= start && now < end;
-  }
+    function isActive(now = new Date()) {
+      return now >= start && now < end;
+    }
 
-  async function getCart() {
-    const res = await fetch('/cart.js');
-    return res.ok ? res.json() : null;
-  }
+    async function getCart() {
+      const res = await fetch('/cart.js');
+      return res.ok ? res.json() : null;
+    }
 
-  async function addGift() {
-    console.log('🎁 Adding gift to cart');
-    await fetch('/cart/add.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: giftVariantId, quantity: 1 })
-    });
+    async function addGift() {
+      console.log('🎁 Adding gift to cart');
+      await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: giftVariantId, quantity: 1 })
+      });
 
-    // 🔹 Refresh cart drawer after adding gift
-    refreshCartDrawer();
-  }
+      // 🔹 Refresh cart drawer after adding gift
+      refreshCartDrawer();
+    }
 
-  async function refreshCartDrawer() {
-    try {
-      const response = await fetch('/?section_id=cart-drawer');
-      const html = await response.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const newDrawer = doc.querySelector('cart-drawer');
-      const currentDrawer = document.querySelector('cart-drawer');
-      if (newDrawer && currentDrawer) {
-        currentDrawer.innerHTML = newDrawer.innerHTML;
-        console.log('🛒 Cart drawer refreshed');
+    async function refreshCartDrawer() {
+      try {
+        const response = await fetch('/?section_id=cart-drawer');
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const newDrawer = doc.querySelector('cart-drawer');
+        const currentDrawer = document.querySelector('cart-drawer');
+        if (newDrawer && currentDrawer) {
+          currentDrawer.innerHTML = newDrawer.innerHTML;
+          console.log('🛒 Cart drawer refreshed');
+        }
+      } catch (err) {
+        console.error('❌ Error refreshing cart drawer:', err);
       }
-    } catch (err) {
-      console.error('❌ Error refreshing cart drawer:', err);
     }
-  }
 
-  async function ensureGift() {
-    const cart = await getCart();
-    if (!cart) return;
+    async function ensureGift() {
+      const cart = await getCart();
+      if (!cart) return;
 
-    const now = new Date();
-    const qualifies = cart.total_price >= minSpend && isActive(now);
-    const giftItem = cart.items.find(i => Number(i.variant_id) === giftVariantId);
+      const now = new Date();
+      const qualifies = cart.total_price >= minSpend && isActive(now);
+      const giftItem = cart.items.find(i => Number(i.variant_id) === giftVariantId);
 
-    if (qualifies && !giftItem) {
-      await addGift();
+      if (qualifies && !giftItem) {
+        await addGift();
+      }
     }
-  }
 
-  // 🔹 Run when page loads
-  document.addEventListener('DOMContentLoaded', ensureGift);
+    // 🔹 Run when page loads
+    document.addEventListener('DOMContentLoaded', ensureGift);
 
-  // 🔹 Detect cart updates (via /cart/add.js or /cart/change.js)
-  const originalFetch = window.fetch;
-  window.fetch = async function (...args) {
-    const response = await originalFetch(...args);
-    const url = args[0];
-    if (typeof url === 'string' && (url.includes('/cart/add') || url.includes('/cart/change'))) {
-      setTimeout(ensureGift, 200); // slight delay so cart updates first
-    }
-    return response;
-  };
-})();
-</script>
-
-
-  </body>
+    // 🔹 Detect cart updates (via /cart/add.js or /cart/change.js)
+    const originalFetch = window.fetch;
+    window.fetch = async function (...args) {
+      const response = await originalFetch(...args);
+      const url = args[0];
+      if (typeof url === 'string' && (url.includes('/cart/add') || url.includes('/cart/change'))) {
+        setTimeout(ensureGift, 200); // slight delay so cart updates first
+      }
+      return response;
+    };
+  })();
+  </script>
+</body>
 </html>
