@@ -452,6 +452,14 @@
         }
       });
     </script>
+    <!--script id="gwp-config" type="application/json">
+    {
+      "startDate": "{{ shop.metafields.gwp.start_date | date: '%Y-%m-%dT%H:%M:%S%:z' }}",
+      "endDate":   "{{ shop.metafields.gwp.end_date | date: '%Y-%m-%dT%H:%M:%S%:z' }}",
+      "minSpend":  {{ shop.metafields.gwp.min_spend | default: 0 }},
+      "giftVariantId": "{{ shop.metafields.gwp.gift_variant_id }}"
+    }
+    </script-->
    <script id="gwp-config" type="application/json">
 {
   "startDate": "2025-11-13T01:00:00-05:00",
