@@ -453,13 +453,13 @@
       });
     </script>
     <script id="gwp-config" type="application/json">
-      {
-        "startDate": "2025-11-13T01:00:00-05:00",
-        "endDate":   "2025-11-13T02:00:00-05:00",
-        "minSpend":  124,
-        "giftVariantId": 42143832506445
-      }
-      </script>
+{
+  "startDate": "2025-11-13T01:00:00-05:00",
+  "endDate":   "2025-11-13T02:00:00-05:00",
+  "minSpend":  124,
+  "giftVariantId": 42143832506445
+}
+</script>
 
 <script>
 (function () {
@@ -469,14 +469,10 @@
   const cfg = JSON.parse(configEl.textContent || '{}');
   if (!cfg.giftVariantId) return;
 
-  // ✅ Declare all variables first
   const start = new Date(cfg.startDate);
   const end = new Date(cfg.endDate);
   const minSpend = Number(cfg.minSpend || 0);
   const giftVariantId = Number(cfg.giftVariantId);
-
-  // ✅ Now it's safe to use
-  console.log('Gift variant ID:', giftVariantId);
 
   function isActive(now = new Date()) {
     return now >= start && now < end;
@@ -488,18 +484,11 @@
   }
 
   async function addGift() {
+    console.log('🎁 Adding gift to cart');
     await fetch('/cart/add.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: giftVariantId, quantity: 1 })
-    });
-  }
-
-  async function removeGift(line) {
-    await fetch('/cart/change.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ line, quantity: 0 })
     });
   }
 
@@ -513,14 +502,25 @@
 
     if (qualifies && !giftItem) {
       await addGift();
-    } else if (!qualifies && giftItem) {
-      const line = cart.items.findIndex(i => Number(i.variant_id) === giftVariantId) + 1;
-      await removeGift(line);
     }
   }
 
+  // 🔹 Run when page loads
   document.addEventListener('DOMContentLoaded', ensureGift);
+
+  // 🔹 Detect cart updates (e.g. when user adds/removes items)
+  // Shopify’s cart.js doesn’t emit custom events, so we hook into fetch()
+  const originalFetch = window.fetch;
+  window.fetch = async function (...args) {
+    const response = await originalFetch(...args);
+    const url = args[0];
+    if (typeof url === 'string' && (url.includes('/cart/add') || url.includes('/cart/change'))) {
+      setTimeout(ensureGift, 800); // small delay to let cart update
+    }
+    return response;
+  };
 })();
 </script>
+
   </body>
 </html>
