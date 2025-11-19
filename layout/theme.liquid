@@ -461,98 +461,122 @@
     }
     </script--> 
    <script id="gwp-config" type="application/json">
-    {
-      "startDate": "2025-11-19T00:00:00-05:00",
-      "endDate":   "2025-11-20T05:00:00-05:00",
-      "minSpend":  125,
-      "giftVariantId": 42143832506445
-    }
-    </script>
+{
+  "startDate": "2025-11-19T00:00:00-05:00",
+  "endDate":   "2025-11-20T05:00:00-05:00",
+  "minSpend":  125,
+  "giftVariantId": 42143832506445
+}
+</script>
 
-  <script>
-  (function () {
-    const configEl = document.getElementById('gwp-config');
-    if (!configEl) return;
+<script>
+(function () {
+  const configEl = document.getElementById('gwp-config');
+  if (!configEl) return;
 
-    const cfg = JSON.parse(configEl.textContent || '{}');
-    if (!cfg.giftVariantId) return;
+  const cfg = JSON.parse(configEl.textContent || '{}');
+  if (!cfg.giftVariantId) return;
 
-    const start = new Date(cfg.startDate);
-    const end = new Date(cfg.endDate);
-    const minSpend = Number(cfg.minSpend || 0);
-    const giftVariantId = Number(cfg.giftVariantId);
+  const start = new Date(cfg.startDate);
+  const end = new Date(cfg.endDate);
+  const minSpend = Number(cfg.minSpend || 0);
+  const giftVariantId = Number(cfg.giftVariantId);
 
-    function isActive(now = new Date()) {
-      return now >= start && now < end;
-    }
+  function isActive(now = new Date()) {
+    return now >= start && now < end;
+  }
 
-    async function getCart() {
-      const res = await fetch('/cart.js');
-      return res.ok ? res.json() : null;
-    }
+  async function getCart() {
+    const res = await fetch('/cart.js');
+    return res.ok ? res.json() : null;
+  }
 
-    async function addGift() {
-      console.log('🎁 Adding gift to cart');
-      await fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: giftVariantId, quantity: 1 })
-      });
+  async function addGift() {
+    console.log('🎁 Adding gift to cart');
+    await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: giftVariantId, quantity: 1 })
+    });
+    refreshCartDrawer();
+  }
 
-      // 🔹 Refresh cart drawer after adding gift
-      refreshCartDrawer();
-    }
+  async function removeGift() {
+    console.log('🗑 Removing gift');
+    const cart = await getCart();
+    if (!cart) return;
 
-    async function refreshCartDrawer() {
-      try {
-        const response = await fetch('/?section_id=cart-drawer');
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const newDrawer = doc.querySelector('cart-drawer');
-        const currentDrawer = document.querySelector('cart-drawer');
-        if (newDrawer && currentDrawer) {
-          currentDrawer.innerHTML = newDrawer.innerHTML;
-          console.log('🛒 Cart drawer refreshed');
-        }
-      } catch (err) {
-        console.error('❌ Error refreshing cart drawer:', err);
+    const giftItem = cart.items.find(i => Number(i.variant_id) === giftVariantId);
+    if (!giftItem) return;
+
+    await fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: giftVariantId, quantity: 0 })
+    });
+    refreshCartDrawer();
+  }
+
+  async function refreshCartDrawer() {
+    try {
+      const response = await fetch('/?section_id=cart-drawer');
+      const html = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const newDrawer = doc.querySelector('cart-drawer');
+      const currentDrawer = document.querySelector('cart-drawer');
+      if (newDrawer && currentDrawer) {
+        currentDrawer.innerHTML = newDrawer.innerHTML;
       }
+    } catch (err) {
+      console.error('❌ Error refreshing cart drawer:', err);
+    }
+  }
+
+  async function ensureGift() {
+    const cart = await getCart();
+    if (!cart) return;
+
+    const now = new Date();
+    const minSpendCents = minSpend * 100; // convert to cents
+
+    const qualifies = cart.total_price >= minSpendCents && isActive(now);
+    const giftItem = cart.items.find(i => Number(i.variant_id) === giftVariantId);
+
+    if (qualifies && !giftItem) {
+      await addGift();
     }
 
-    async function ensureGift() {
-      const cart = await getCart();
-      if (!cart) return;
+    if (!qualifies && giftItem) {
+      await removeGift();
+    }
+  }
 
-      const now = new Date();
-      const qualifies = cart.total_price >= minSpend && isActive(now);
-      const giftItem = cart.items.find(i => Number(i.variant_id) === giftVariantId);
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', ensureGift);
 
-      if (qualifies && !giftItem) {
-        await addGift();
-      }
+  // Detect *any* cart update
+  const originalFetch = window.fetch;
+  window.fetch = async function (...args) {
+    const response = await originalFetch(...args);
+    const url = args[0];
+
+    if (
+      typeof url === 'string' &&
+      (
+        url.includes('/cart/add') ||
+        url.includes('/cart/change') ||
+        url.includes('/cart/update') ||
+        (url.includes('/cart') && args[1]?.method === 'POST')
+      )
+    ) {
+      setTimeout(ensureGift, 300);
     }
 
-    // 🔹 Run when page loads
-    document.addEventListener('DOMContentLoaded', ensureGift);
+    return response;
+  };
 
-    // 🔹 Detect cart updates (via /cart/add.js or /cart/change.js)
-    const originalFetch = window.fetch;
-    window.fetch = async function (...args) {
-      const response = await originalFetch(...args);
-      const url = args[0];
-
-      if (typeof url === 'string' && (
-          url.includes('/cart/add') ||
-          url.includes('/cart/change') ||
-          url.includes('/cart/update') ||
-          (url.includes('/cart') && args[1]?.method === 'POST')
-        )) {
-        setTimeout(ensureGift, 200);
-      }
-      return response;
-    };
-  })();
-  </script>
+})();
+</script>
 </body>
 </html>
