@@ -234,7 +234,8 @@
         "text_jpiQmr"
       ],
       "custom_css": [
-        ".image-with-text__content--desktop-center .image-with-text__heading {max-width: 300px; }"
+        ".image-with-text__content--desktop-center .image-with-text__heading {max-width: 300px;}",
+        "@media only screen and (max-width: 768px) and (min-width: 600px) {.image-with-text__content--desktop-center .image-with-text__heading {font-size: 7.9rem; }}"
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
