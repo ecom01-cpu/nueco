@@ -233,6 +233,9 @@
         "heading_Xd6EkJ",
         "text_jpiQmr"
       ],
+      "custom_css": [
+        ".image-with-text__content--desktop-center .image-with-text__heading {max-width: 300px; }"
+      ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
         "image": "shopify://shop_images/C202505_NOSTALGIA_PRODUCT-PHOTOGRAPHY_6_1080x1350_bafd9517-6053-40e5-bb19-bc9bc7a8baa5.png",
