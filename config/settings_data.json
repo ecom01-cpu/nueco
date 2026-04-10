@@ -123,7 +123,7 @@
     "cart_drawer_collection": "",
     "recommendations_collection": "best-sellers",
     "cart_free_shipping_threshold": "75",
-    "free_samples_collection": "collection-for-the-free-sample",
+    "free_samples_collection": "hidden-collection",
     "free_samples_title": "Choose Your Free Samples",
     "sections": {
       "main-password-header": {
